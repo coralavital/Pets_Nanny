@@ -8,5 +8,7 @@
         "ecmaVersion": "latest"
     },
     "rules": {
+		"position": "above",
+		"extends": "eslint:recommended"
     }
 }

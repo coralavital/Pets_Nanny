@@ -1,10 +1,13 @@
 {
   "name": "pets_nanny",
   "version": "1.0.0",
-  "description": "��#\u0000 \u0000p\u0000e\u0000t\u0000s\u0000_\u0000n\u0000a\u0000n\u0000n\u0000y\u0000\r\u0000 \u0000",
+  "description": "pets_nanny",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+	"dev": "node server.js",
+    "start": "node server.js",
+    "test": "mocha tests/*.spec.js --color",
+    "lint": "eslint --ext js,jsk src --color"
   },
   "repository": {
     "type": "git",
@@ -16,8 +19,23 @@
     "url": "https://github.com/coralavital/pets_nanny/issues"
   },
   "homepage": "https://github.com/coralavital/pets_nanny#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "ejs": "^3.1.7",
+    "express": "^4.18.1",
+    "feather": "^0.0.6",
+    "feather-icons": "^4.29.0",
+    "firebase": "^9.7.0",
+    "firestore": "^1.1.6",
+    "fullcalendar": "^5.11.0",
+    "multer": "^1.4.4",
+    "save": "^2.5.0"
+  },
   "devDependencies": {
+    "@types/chai": "^4.3.1",
+    "@types/mocha": "^9.1.1",
+    "chai": "^4.3.6",
     "eslint": "^8.15.0",
-    "express": "^4.18.1"
+    "mocha": "^10.0.0"
   }
 }
