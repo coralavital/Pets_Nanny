@@ -1,0 +1,23 @@
+{
+  "name": "pets_nanny",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000p\u0000e\u0000t\u0000s\u0000_\u0000n\u0000a\u0000n\u0000n\u0000y\u0000\r\u0000 \u0000",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coralavital/pets_nanny.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coralavital/pets_nanny/issues"
+  },
+  "homepage": "https://github.com/coralavital/pets_nanny#readme",
+  "devDependencies": {
+    "eslint": "^8.15.0",
+    "express": "^4.18.1"
+  }
+}
