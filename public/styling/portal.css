@@ -1,0 +1,176 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&display=swap);
+
+main{
+	background: rgba(185, 185, 185, 0.5);
+	max-width: 100%;
+	font-family: "Nunito" !important;
+}
+
+
+/* search table  */
+#search-form {
+    border: 1px solid #573b8a;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+	border-radius: 20px;
+}
+
+#header {
+    height: 80px;
+    background-image: linear-gradient(180deg, #573b8a 10%, #8260c1 100%);	border: 4px solid #DDD;    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+	border-radius: 20px;
+}
+#header h1 {
+    color: #FFF;
+    margin-left: 20px;
+    font-size: 1.3em
+}
+
+.flight {
+    padding: 20px;
+}
+.flight input, select {
+    color: #6B6A6A;
+}
+
+.info-box {
+    padding: 10px 0;
+    margin-top: 20px;
+    flex: 1;
+    border-right: 20px solid transparent;
+
+}
+.info-box:last-child {
+    border-right: none;
+}
+.info-box label {
+    display: block;
+    color: #6B6A6A;
+    font-size: .9em;
+}
+.info-box input[type=text], input[type=submit] {
+    border: none;
+    outline: none;
+    background-color: #d2bee1;
+    margin-top: 10px;
+    width: 100%;
+    padding: 5px;
+    height: 15px;
+    border-radius: 3px;
+    color: white;
+}
+/* for dropdwon  */
+.bootstrap-select.btn-group .dropdown-toggle .filter-option{
+    font-size: initial;
+}
+.bootstrap-select.btn-group.show-tick .dropdown-menu li a span.text {
+    font-size: initial;
+}
+#flight-type {
+    display: flex;
+    justify-content: flex-start;
+    border-bottom: 1px dotted silver;
+}
+#flight-type .info-box {
+    flex: 0 1 25%;
+    display:flex;
+    align-items: center;
+}
+
+#flight-depart {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dotted silver;
+}
+#flight-depart .info-box {
+    position: relative;
+}
+#depart-res, #arrive-res {
+    position: absolute;
+    background: #FFFFFF;
+}
+#depart-res p, #arrive-res p {
+    padding: 7px 2px;
+    border-bottom: 1px dotted silver;
+}
+#depart-res p:hover, #arrive-res p:hover {
+    background: #EDEDED;
+    cursor: pointer;
+}
+
+#flight-dates {
+    display: flex;
+    border-bottom: 1px dotted silver;
+}
+
+#flight-info {
+    display: flex;
+    border-bottom: 1px dotted silver;
+}
+
+#flight-search .info-box {
+    display: flex;
+    justify-content: center;
+}
+#flight-search input[type=submit] {
+    background: a58dd1;
+    color: white;
+    padding: 0;
+    height: 50px;
+    font-size: 1.2em;
+}
+
+#field_2.jumbotron.text-center.disabledbutton{
+    padding: 0px;
+}
+
+.info-box select{
+    margin-top: 0px;
+    width: 100%;
+    padding: 5px;
+    height: 40px;
+    border-radius: 3px;
+    outline-width: 10px;
+    border-width: 1px;
+    border-bottom-color: black;
+
+}
+.bs-caret{
+    display: none;
+}
+#slidebarInput{
+	padding: 0px !important;
+    background-color:rgb(201 201 201 / 46%);
+}
+
+button.search{
+	width: 30%;
+	height: 40px;
+	margin: 10px auto;
+	justify-content: center;
+	display: block;
+	color: #fff;
+	background: #573b8a;
+	font-size: 1em;
+	font-weight: bold;
+	margin-top: 20px;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	transition: .2s ease-in;
+	cursor: pointer;
+}
+button.search:hover{
+	background: #6d44b8;
+}
+/* area sity delet to icon  */
+.bootstrap-select > .dropdown-toggle {
+    width: 100%;
+    padding-right: 28px;
+    z-index: 1;
+}
+/* search table end */

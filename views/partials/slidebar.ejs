@@ -1,0 +1,34 @@
+<div class="slidecontainer">
+	<strong>Price per hour</strong>
+
+    <p><span id="demo"></span>₪</p>
+     <input type="range" min="1" max="200" value="100" class="slider" id="myRange" name="price">
+    
+</div>
+   
+   <script>
+   var slider = document.getElementById("myRange");
+   var output = document.getElementById("demo");
+   output.innerHTML = slider.value;
+   
+   slider.oninput = function() {
+     output.innerHTML = this.value;
+   }
+   </script>
+
+   <style>
+       .slidecontainer{
+           background-color: rgb(238 238 238);
+		   padding-left: 40%;
+       }
+       .jumbotron p{
+         font-size: small;
+         background-color: rgb(238 238 238);
+       }
+	   input#myRange.slider{
+		   width: 200px;
+		   
+	   }
+  
+
+   </style>

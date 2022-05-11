@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%- include('../partials/head'); %>
+	<link rel="stylesheet" href="styling/index.css"></link>
+</head>
+<body class="container">
+
+
+<%- include('../partials/errorMsg'); %>
+
+<main>
+  <div class="jumbotron">
+	<div id="content">
+		<!-- <nav class="navbar navbar-light navbar-expand shadow mb-4 topbar static-top">
+			<div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button></div>
+		</nav> -->
+		<h3 class="text-dark mb-0">Enter your personal info</h3>
+		<div class="container">
+			<div class="col text-center">
+				<div class="card shadow mb-3">
+					<div class="card-body text-center">
+						<form id='enter-personal-info' action="/personalInfo_client" method="post">
+							<%- include('../partials/NamePhoneAgeEmail'); %>
+                            <br>
+                            <div class="row">
+                                <div class="mb-3"><label class="form-label" for="address"><strong>Address</strong><br></label><input class="form-control" type="text" id="address" placeholder="Enter your address" name="address"></div>
+                            </div>
+							<br>
+							<%- include('../partials/about_me'); %>
+						</div>
+					</div>
+					<button class="btn btn-primary btn-sm border rounded-pill float-end align-content-center" id='save' type="submit">Save</button>
+				</form>
+			</div>
+			
+		</div>
+	</div>
+</main>
+
+<footer>
+  <%- include('../partials/footer'); %>
+</footer>
+
+</body>
+</html>
+<style>
+		.pcoded {
+		display: none;
+	}
+
+	/* to center the address  */
+	.mb-3{
+		margin-left: auto;
+		margin-right: auto;
+	}
+	#save{
+		width: 20%;
+		height: 40px;
+		margin: 10px auto;
+		justify-content: center;
+		display: block;
+		color: #fff;
+		background: #573b8a;
+		font-size: 1em;
+		font-weight: bold;
+		margin-top: 20px;
+		outline: none;
+		border: none;
+		border-radius: 5px;
+		transition: .2s ease-in;
+		cursor: pointer;
+	}
+	#save:hover{
+		background: #6d44b8;
+
+	}
+
+</style>

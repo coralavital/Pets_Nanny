@@ -1,0 +1,86 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&display=swap);
+body{
+  display: contents;
+  font-family: "Nunito" !important;
+  width: 100% !important;
+  float: left !important;
+}
+
+.footer { 
+  font-family: "Nunito" !important;
+  font-size: x-large;
+}
+
+.mainImg{
+	max-width: 80%!important;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 5%;;
+}
+
+.profile-img {
+  height:100%;
+  width: 50%;
+}
+
+
+main ul{
+  	font-family: "Nunito";
+	position: relative;
+	display: flex;
+ 	margin-bottom: 5% !important;
+
+}
+/* was main li */
+main .lil{ 
+  font-family: "Nunito";
+	border-radius: 15px;
+	border: 6px solid #DDD;
+	width: 30%;
+	text-align: center;
+	margin: 0 8px;
+	padding: 40px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+}
+.card{
+
+  border:none;
+  background: none;
+ 
+
+}
+
+main .card .product-info{
+  margin-top: 50px;
+}
+main .card .product-info .title{
+
+  font-size: 20px;
+  letter-spacing: 0.5px;
+  line-height: 26px;
+  margin-bottom: 6px;
+  margin-top: 0;
+}
+
+main .card .product-info .categories{
+  font-size: 25px;
+  font-weight: normal;
+  color: black;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  line-height: 26px;
+}
+.star-img{
+  position: relative;
+  margin-top: 10px;
+  height: 30px;
+  width: 30px;
+}
+
+.jumbotron h1, .jumbotron .h1 {
+    font-size: xx-large !important;
+}
