@@ -93,7 +93,7 @@ module.exports = function (app) {
     
     const { email, password, fullname, phone, type } = req.body;
 
-    firebase.signup(email, password, fullname, phone, type, () => {
+    firebase.signup(email, password, fullname, phone, parseInt(type), () => {
       if(type == 1){
 		  res.redirect('/enter_personal_p');
 	  } else {
@@ -294,10 +294,10 @@ app.post('/myProfile', async function (req, res) {
 
   });
 
-  app.post('/mySchedule', async function (req, res) {
-	res.redirect("/mySchedule")
+	app.post('/mySchedule', async function (req, res) {
+		res.redirect("/mySchedule")
+	});
 
-  });
   app.post('/mySetting', async function (req, res) {
 	res.redirect("/mySetting")
 
@@ -378,7 +378,7 @@ app.post('/updateP', async function (req, res) {
 	app.post('/addFreeTime', async function (req, res) {
 	const { date, from, to } = req.body
     firebase.addFreeTime(date, from, to, () => {
-        res.redirect('/mySchedule');
+        res.redirect('/myScheduleP');
       })
 	
 	});
@@ -391,7 +391,26 @@ app.post('/updateP', async function (req, res) {
 			})
 		
 	});
+///////////////////////////////////////////////////////////////////////////////////////////////
+	//add reservation to the documents
+	app.post('/addReservation', function (req, res) {
+    
+		const { emailClient, emailProvider, date, from, to, address, price_per_hour } = req.body;
+	
+		firebase.addReservation(emailClient, emailProvider, date, from, to, address, price_per_hour, () => {
+			res.redirect('/mySchedule');
+	  })
+	  });
 
 
+	//add message to the documents
+	app.post('/addMessage', function (req, res) {
+    
+		const { emailSender, emailReciver, date, time, message_text, price_per_hour } = req.body;
+	
+		firebase.addMessage(emailSender, emailReciver, date, time, message_text, price_per_hour, () => {
+			res.redirect('/myMessage');
+	  })
+	  });
 	
 }

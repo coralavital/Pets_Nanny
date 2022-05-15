@@ -36,7 +36,7 @@ class Firebase {
       callback();
     });
   }
-
+  //
   async signup(email, password, fullname, phone, type, callback, callbackErr) {
     createUserWithEmailAndPassword(this.auth, email, password).then(async (cred) => {
       const coll = collection(this.db, 'users');
@@ -232,6 +232,49 @@ async filtering(ar,price,typeP,typeS) {
 			console.log(e)
 		})
 	}
+
+	//saving reservations details
+	async addReservation(emailClient, emailProvider, date, from, to, price_per_hour, callback, callbackErr) {
+
+		try {
+		const reservation = doc(this.db, 'reservations', emailClient)
+		const result = await setDoc(reservation, {
+			emailClient: emailClient,
+			emailProvider: emailProvider,
+			date: date,
+			fromT: from,
+			toT: to,
+			price_per_hour: price_per_hour
+		});
+		callback();
+		} catch (error) {
+		console.log(emailClient);
+		console.log(error);
+		}
+
+	};
+
+	//saving message details
+	async addMessage(emailSend, emailReasiver, date, time, messageText, callback, callbackErr) {
+
+			try {
+			const message = doc(this.db, 'messeages', emailSend)
+			const result = await setDoc(message, {
+				emailSend: emailSend,
+				emailReasiver: emailReasiver,
+				date: date,
+				time: time,
+				messageText: messageText
+			});
+			callback();
+			} catch (error) {
+			console.log(emailSend);
+			console.log(error);
+			}
+	
+	}
+	
+		
 	
 }
 
