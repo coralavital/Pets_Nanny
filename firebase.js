@@ -273,6 +273,25 @@ async filtering(ar,price,typeP,typeS) {
 			}
 	
 	}
+
+	//saving message details
+	async addContactMsg(name, emailSend, messageText, callback) {
+		try {
+			const date = Date.now();
+			const user = doc(this.db, 'contact', emailSend)
+			const result = await setDoc(user, {
+			name: name,
+			emailSend: emailSend,
+			time: date.toUTCString(),
+			messageText: messageText
+		});
+		callback();
+		} catch (error) {
+		console.log(emailSend);
+		console.log(error);
+		}
+
+}
 	
 		
 	

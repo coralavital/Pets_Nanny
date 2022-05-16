@@ -7,6 +7,8 @@ const editFlag = require('./controllers/editor');
 const times = require('./controllers/time');
 const areaCities = require('./controllers/areaCities');
 const event = require('./controllers/eventer')
+const schedule = require('./controllers/schedule');
+const { async } = require('@firebase/util');
 
 
 module.exports = function (app) {
@@ -93,7 +95,7 @@ module.exports = function (app) {
     
     const { email, password, fullname, phone, type } = req.body;
 
-    firebase.signup(email, password, fullname, phone, parseInt(type), () => {
+    firebase.signup(email, password, fullname, phone, type, () => {
       if(type == 1){
 		  res.redirect('/enter_personal_p');
 	  } else {
@@ -295,6 +297,7 @@ app.post('/myProfile', async function (req, res) {
   });
 
 	app.post('/mySchedule', async function (req, res) {
+		//schedule.calendar.render();
 		res.redirect("/mySchedule")
 	});
 
@@ -377,7 +380,14 @@ app.post('/updateP', async function (req, res) {
 	//add free time 
 	app.post('/addFreeTime', async function (req, res) {
 	const { date, from, to } = req.body
-    firebase.addFreeTime(date, from, to, () => {
+    firebase.addFreeTime(date, from, to, () => {	
+		//schedule.events.push(
+		//	{
+		//		title: "freeTime",
+		//		start: from,
+		//		end:to 
+		//	}
+		//)
         res.redirect('/myScheduleP');
       })
 	
@@ -412,5 +422,27 @@ app.post('/updateP', async function (req, res) {
 			res.redirect('/myMessage');
 	  })
 	  });
-	
+
+	//add message to the documents
+	app.post('/contact', async function (req, res) {
+		const { name, emailSender, message } = req.body;
+		
+		if(firebase.auth._currentUser == null) {
+			firebase.addContactMsg(name, emailSender, message, () => {
+				res.redirect('/contact');
+			});
+		}
+		else{
+			const userData = await firebase.CurrentUserData();
+			if(emailSender == userData.email) {
+				firebase.addContactMsg(name, emailSender, message_text, () => {
+					res.redirect('/contact');
+				});
+			}
+			else {
+				console.log("the email is not match to the current user email")
+				res.redirect('/contact');
+			}
+		}
+	});
 }
