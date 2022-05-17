@@ -23,18 +23,17 @@
 <main>
   
 
-  <form  id="search-form" action="/filtering/" method="post">
+  <form  id="search-form" action="filtering" method="post">
     <div id="header">
       <h1>Find your pets nanny</h1>
     </div>
     <section>
-      <div class="flight" id="flightbox">
+      <div class="searchT" id="searchbox">
         
-        <form id="flight-form">
     
         
        <!-- Area/City -->
-       <div id="flight-depart">
+       <div id="depart">
         <div class="info-box">
           <label for="">Area/City</label>
           <select class="selectpicker" id='area_city' multiple data-live-search="true" name ="area_city" >
@@ -62,7 +61,7 @@
         </div>
             
         <!-- Type of pets-->
-        <div id="flight-dates">
+        <div id="dates">
           <div class="info-box">
             <label for="">Type of pets</label>
             <select class="selectpicker" multiple data-live-search="true" name="typeP">
@@ -86,43 +85,34 @@
         </div>
         
         <!-- date from to -->
-        <div id="flight-info">
-          <div class="info-box">
-           
-            <label for="adults">Date</label>
-            <input type="date" id="date" name="date">
 
+			<div id="info">
+				<div class="info-box">
+				
+					<label for="adults">Date</label>
+					<input type="date" id="date" name="date">
 
-          </div>
-          <div class="info-box">
-        
-            <label for="children" >From</label>
+					<label for="children">From</label>
+					<select id="from" name="from">
+					<% for(var i = 0 ; i < times.length ; i++) { %>
+						<option><%= times[i] %></option>
+					<% }; %>
+					</select>
+					<label for="children">To</label>
+					<select id="to" name="to">
+					<% for(var i = 0 ; i < times.length ; i++) { %>
+						<option><%= times[i] %></option>
+					<% }; %>
+					</select>
+				</div>
+			</div>
 
-            <select id="from" name="from">
-				<% for(var i = 0 ; i < times.length ; i++) { %>
-					<option><%= times[i] %></option>
-				<% }; %>
-             
-
-            </select>
-            </div>
-          
-          <div class="info-box">
-            <label for="class-type">To</label>
-            <select id="to" name="to" >
-				<% for(var i = 0 ; i < times.length ; i++) { %>
-					<option><%= times[i] %></option>
-				<% }; %>
-            
-            </select>
-
-          </div>
-          <div class="info-box">
+          <!--<div class="info-box">
             <label for="class-type">Add</label>
             <input type="button" id="myButton" value="+" onlick="duplicate()" name="add">
-          </div>
+          </div>-->
       </div>
-      <script>
+      <!--<script>
         document.getElementById('myButton').onclick = duplicate;
 
         var i = 0;
@@ -147,24 +137,21 @@
         }
 
     </script>
-    
+    -->
       <button type="submit" onclick="myFunction()" class="search">SEARCH</button>
 
-      </form> 
    
     </form>
 
    
 </main>
 <section class="tablee">
-<% if (currentUser.typeOfUser == 0) { %>
+<% if (userData.typeOfUser == 0) { %>
     <%- include('../partials/tableClient'); %>
 <% } else { %>
     <%- include('../partials/tableProviders'); %>
 <% } %>
 </section>
-
-
 
 
 <footer>

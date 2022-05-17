@@ -52,17 +52,17 @@
 				<option disabled>Area</option>
 				<% for(var i = 0 ; i < areas.length ; i++) { %>
 					<option><%= areas[i] %></option>
-					<% }; %>
+				<% }; %>
 				<option disabled>Cities</option>
 				<% for(var i = 0 ; i < cities.length ; i++) { %>
 					<option><%= cities[i] %></option>
-					<% }; %>
-				</select>
-			</div>
+				<% }; %>
+			</select>
+		</div>
 </div>
 </div>
 
-<div id="flight-dates">
+<div id="dates">
 	<div class="info-box">
 		<div class="col-md-6"><label class="form-label" for="first_name"><strong>Type of pets</strong><br></label>
 			<select class="selectpicker" multiple data-live-search="true" title='<%= type_of_pet %>' id="field" disabled name="typeP">

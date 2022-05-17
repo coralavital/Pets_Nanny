@@ -8,8 +8,12 @@
 <!-- The Modal -->
 <div id="popup" class="modal">
 	<!-- Modal content -->
+
 	<div class="modal-content">
-		<span class="close" onclick='closep()'>&times;</span>			 
+    <div class="modal-title">
+      Add free time
+      <span class="close" onclick='closep()'>&times;</span>			 
+    </div>
 			  <label for="adults">Date</label>
 			  <input type="date" id="date" name="date">
   
@@ -127,6 +131,14 @@ cursor: pointer;
 
   margin-top: auto;
 }
+.fc-daygrid-event-dot {
+		margin: 0 4px;
+		box-sizing: content-box;
+		width: 0;
+		height: 0;
+		border: 4px solid #1e7531;
+		border: calc(var(--fc-daygrid-event-dot-width,8px)/ 2) solid var(--fc-event-border-color,#1e7531);
+}
 </style>
 
 
@@ -135,17 +147,19 @@ cursor: pointer;
 	
 document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
+  var freeTime = Array.from(<%- JSON.stringify(freeTime) %>)
+  var reservations = Array.from(<%- JSON.stringify(reservations) %>)
 
   var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
-    initialDate: '2021-04-07',
+    initialDate: new Date(),
     themeSystem: "bootstrap",
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
-    events: []
+    events: freeTime.concat(reservations)
 	
 });
 

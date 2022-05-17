@@ -31,75 +31,36 @@
 
   margin-top: auto;
 }
+.fc-daygrid-event-dot {
+		margin: 0 4px;
+		box-sizing: content-box;
+		width: 0;
+		height: 0;
+		border: 4px solid #a41a1a;
+		border: calc(var(--fc-daygrid-event-dot-width,8px)/ 2) solid var(--fc-event-border-color,#a41a1a);
+	}
 </style>
 
-
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.js'></script>
-<!--<script>
+<script>
 
 document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
+  var reservations = Array.from(<%- JSON.stringify(reservations) %>)
 
   var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
-    initialDate: '2021-04-07',
+    initialDate: new Date(),
     themeSystem: "bootstrap",
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
-	event: []
-    //events: [
-    //  {
-    //    title: 'All Day Event',
-    //    start: '2021-04-01'
-    //  },
-    //  {
-    //    title: 'Long Event',
-    //    start: '2021-04-07',
-    //    end: '2021-04-10'
-    //  },
-    //  {
-    //    groupId: '999',
-    //    title: 'Repeating Event',
-    //    start: '2021-04-09T16:00:00'
-    //  },
-    //  {
-    //    groupId: '999',
-    //    title: 'Repeating Event',
-    //    start: '2021-04-16T16:00:00'
-    //  },
-    //  {
-    //    title: 'Conference',
-    //    start: '2021-04-11',
-    //    end: '2021-04-13'
-    //  },
-    //  {
-    //    title: 'Meeting',
-    //    start: '2021-04-12T10:30:00',
-    //    end: '2021-04-12T12:30:00'
-    //  },
-    //  {
-    //    title: 'Lunch',
-    //    start: '2021-04-12T12:00:00'
-    //  },
-    //  {
-    //    title: 'Meeting',
-    //    start: '2021-04-12T14:30:00'
-    //  },
-    //  {
-    //    title: 'Birthday Party',
-    //    start: '2021-04-13T07:00:00'
-    //  },
-    //  {
-    //    title: 'Click for Google',
-    //    url: 'http://google.com/',
-    //    start: '2021-04-28'
-    //  }
-    //]
-  });
+    events: reservations
+	
+});
 
   calendar.render();
 });
-</script>-->
+</script>

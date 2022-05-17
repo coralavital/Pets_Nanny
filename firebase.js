@@ -3,6 +3,7 @@ const { initializeApp } = require('firebase/app');
 const { getFirestore, collection, doc, setDoc, getDoc, updateDoc, query, where, getDocs, deleteDoc, arrayUnion } = require('firebase/firestore');
 const { use } = require("chai");
 const { async } = require('@firebase/util');
+
 function containsAny(source,target)
 {
     var result = source.filter(function(item){ return target.indexOf(item) > -1});   
@@ -121,7 +122,7 @@ class Firebase {
 async filtering(ar,price,typeP,typeS) {
 	var providersResult =[];
 	var i;
-  
+
 	const coll = query(collection(this.db, 'users'), 
 	 where("type_of_pet", "array-contains-any", typeP),
 	 );
@@ -131,17 +132,17 @@ async filtering(ar,price,typeP,typeS) {
 	  result.push(doc.data())
 	
 	});
-  
+	
 	for ( i=0 ; i< result.length; i++){
 	  if(result[i].price_per_hour <= price ) {
 		if(containsAny(result[i].area_city ,ar)) {
-		  if(containsAny(result[i].type_of_service ,typeS)){
+		  if(containsAny(result[i].type_of_service ,typeS))
+		  {
 			 providersResult.push(result[i]);
 		  }
 		}
 	  }
 	}
-
 	result = providersResult 
 	return result;
   }
@@ -201,22 +202,24 @@ async filtering(ar,price,typeP,typeS) {
 	
 	//update provider document
 	async addFreeTime(date, from, to, callback) {
-		const washingtonRef = doc(this.db, "users", this.auth._currentUser.email);
+		const userRef = doc(this.db, "users", this.auth._currentUser.email);
 		from = from.concat(":00")
 		to = to.concat(":00")
 		const sdate = date.concat("T", from)
-		const start = new Date(sdate)
+		const start = +new Date(sdate)
 		const edate = date.concat("T", to)
-		const end = new Date(edate)
+		const end = +new Date(edate)
 		const userData = await this.CurrentUserData()
 
-		await EnterTime(start);
-		await EnterTime(end);
+		await EnterTime({start, end});
 
 
-		async function EnterTime(data){
-			await updateDoc(washingtonRef, {
-				freeTime: arrayUnion(data)
+		async function EnterTime({start, end}){
+			let freeTimeObj = {start, end, title: "Free Time"};
+			const freeTime = userData.freeTime !== undefined ? userData.freeTime :[];
+			freeTime.push(freeTimeObj);
+			await updateDoc(userRef, {
+				freeTime
 			});
 
 		}
@@ -234,45 +237,56 @@ async filtering(ar,price,typeP,typeS) {
 	}
 
 	//saving reservations details
-	async addReservation(emailClient, emailProvider, date, from, to, price_per_hour, callback, callbackErr) {
+	async addReservation(date, from, to, providerEmail, callback, callbackErr) {
+		const clientRef = doc(this.db, "users", this.auth._currentUser.email);
+		//const providerRef = doc(this.db, "users", providerEmail);
+		from = from.concat(":00")
+		to = to.concat(":00")
+		const sdate = date.concat("T", from)
+		const start = +new Date(sdate)
+		const edate = date.concat("T", to)
+		const end = +new Date(edate)
+		const userData = await this.CurrentUserData()
 
-		try {
-		const reservation = doc(this.db, 'reservations', emailClient)
-		const result = await setDoc(reservation, {
-			emailClient: emailClient,
-			emailProvider: emailProvider,
-			date: date,
-			fromT: from,
-			toT: to,
-			price_per_hour: price_per_hour
-		});
-		callback();
-		} catch (error) {
-		console.log(emailClient);
-		console.log(error);
+		await EnterTime({start, end});
+
+
+		async function EnterTime({start, end}){
+			let reservationObj = {start, end, title: "Reservation"};
+			const reservations = userData.reservations !== undefined ? userData.reservations :[];
+			reservations.push(reservationObj);
+      
+			await updateDoc(clientRef, {
+				reservations
+			});
+			//await updateDoc(providerRef, {
+			//	reservations
+			//});
+
 		}
+		callback()
 
 	};
 
-	//saving message details
-	async addMessage(emailSend, emailReasiver, date, time, messageText, callback, callbackErr) {
+	////saving message details
+	//async addMessage(emailSend, emailReasiver, date, time, messageText, callback, callbackErr) {
 
-			try {
-			const message = doc(this.db, 'messeages', emailSend)
-			const result = await setDoc(message, {
-				emailSend: emailSend,
-				emailReasiver: emailReasiver,
-				date: date,
-				time: time,
-				messageText: messageText
-			});
-			callback();
-			} catch (error) {
-			console.log(emailSend);
-			console.log(error);
-			}
+	//		try {
+	//		const message = doc(this.db, 'messeages', emailSend)
+	//		const result = await setDoc(message, {
+	//			emailSend: emailSend,
+	//			emailReasiver: emailReasiver,
+	//			date: date,
+	//			time: time,
+	//			messageText: messageText
+	//		});
+	//		callback();
+	//		} catch (error) {
+	//		console.log(emailSend);
+	//		console.log(error);
+	//		}
 	
-	}
+	//}
 
 	//saving message details
 	async addContactMsg(name, emailSend, messageText, callback) {

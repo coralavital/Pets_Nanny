@@ -30,10 +30,10 @@ main{
     font-size: 1.3em
 }
 
-.flight {
+.searchT {
     padding: 20px;
 }
-.flight input, select {
+.searchT input, select {
     color: #6B6A6A;
 }
 
@@ -70,23 +70,23 @@ main{
 .bootstrap-select.btn-group.show-tick .dropdown-menu li a span.text {
     font-size: initial;
 }
-#flight-type {
+#type {
     display: flex;
     justify-content: flex-start;
     border-bottom: 1px dotted silver;
 }
-#flight-type .info-box {
+#type .info-box {
     flex: 0 1 25%;
     display:flex;
     align-items: center;
 }
 
-#flight-depart {
+#depart {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px dotted silver;
 }
-#flight-depart .info-box {
+#depart .info-box {
     position: relative;
 }
 #depart-res, #arrive-res {
@@ -102,21 +102,21 @@ main{
     cursor: pointer;
 }
 
-#flight-dates {
+#dates {
     display: flex;
     border-bottom: 1px dotted silver;
 }
 
-#flight-info {
+#info {
     display: flex;
     border-bottom: 1px dotted silver;
 }
 
-#flight-search .info-box {
+#search .info-box {
     display: flex;
     justify-content: center;
 }
-#flight-search input[type=submit] {
+#search input[type=submit] {
     background: a58dd1;
     color: white;
     padding: 0;

@@ -41,7 +41,7 @@ class Filter{
     async changeProvider(ar, price, type_of_pet, type_of_service, callback){
         this.flag=false
         this.result = await firebase.filtering(ar, price, type_of_pet, type_of_service)
-        callback();
+		callback();
     }
     
     toArray(tmp){

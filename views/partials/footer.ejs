@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="styling/footer.css"></link>
 </br>
 </br>
 </br>
@@ -123,151 +124,60 @@
 </div>
 
 
-<style>
 
-    footer .bottom-nav{
-        font-family: "Nunito";
-        background-color: #3E3E3E;
-    	position:fixed;
-        bottom: 0;
-		width: 100%;
-		max-height: 80px;
-
-
-    }
-    footer input{
-        background-color:#3E3E3E ;
-        font-family: "Nunito";
-        color: #FFF;
-        font-size: 20px;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        line-height: 30px;
-        margin-top: 0;
-        text-decoration: none;
-        border: none;
-            
-    }
-    footer .bottom-nav .container{
-        max-width: 995px;
-        display: flex;
-        justify-content: space-between;
-    }
-
-
-    footer .copyright-text{
-        font-family: "Nunito";
-        background-color: #2B2B2B;
-        color: #E0E0E0;
-        height: 60px;
-        font-size: 10px;
-        display: flex;
-        justify-content: center;
-        letter-spacing: 0.4px;
-        line-height: 22px;
-        align-items: center;
-    }
-
-    
-    footer p{
-        text-align: center;
-
-    }
-  
-   
-    footer button { 
-        background-color:#3E3E3E ;
-        color: #FFF;
-        font-size: 20px;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        line-height: 26px;
-        margin-top: 0;
-
-        text-decoration: none;
-        border: none;
-    }
-
-    footer .modal {
-		background-color: #ffff;
-	display: none; /* Hidden by default */
-	position: fixed; /* Stay in place */
-	padding-top: 100px; /* Location of the box */
-	left: 0;
-	top: 0;
-	width: 100%; /* Full width */
-	height: 100%; /* Full height */
-	overflow: auto; /* Enable scroll if needed */
-	background-color: rgb(0,0,0); /* Fallback color */
-	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-
-  
-  /* Modal Content */
-footer .modal-content {
-
-	background-color: #ffff;
-	margin: auto;
-	padding-right: 30px;
-	padding: 20px;
-	/*border: 1px solid #888;*/
-	width: 60%;
-	text-align: center;
-	font-size: 15px;
-  
-  }
-
-footer h5{
-	text-align: left;
-	
-	
-}
-  /* The Close Button */
-footer .close {
-
-	text-align: right;
-    color: black;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-footer .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-  </style>
 <script>
+	function displayNoneDropdown(){
+		// Area/Cities
+		document.getElementsByClassName('btn-group')[0].style.display ='none';
+		// Type of pets
+		document.getElementsByClassName('btn-group')[1].style.display ='none';
+		// Type of service
+		document.getElementsByClassName('btn-group')[2].style.display ='none';
+	}
+	function displayInlineBlockDropdown(){
+		// Area/Cities
+		document.getElementsByClassName('btn-group')[0].style.display ='inline-block';
+		// Type of pets
+		document.getElementsByClassName('btn-group')[1].style.display ='inline-block';
+		// Type of service
+		document.getElementsByClassName('btn-group')[2].style.display ='inline-block';
+	}
+
      function myBtn() {
+	displayNoneDropdown()
     document.getElementById('myModal').style.display ='block';
     };
 
     function myBtn1() {
+	displayNoneDropdown()
     document.getElementById('myModal1').style.display ='block';
     };
 
     function myBtn2() {
+	displayNoneDropdown()
     document.getElementById('myModal2').style.display ='block';
     };
 
     function myBtn3() {
+	displayNoneDropdown()
     document.getElementById('myModal3').style.display ='block';
     };
 
     // When the user clicks on <span> (x), close the modal
     function close1() {
+	displayInlineBlockDropdown()
     document.getElementById('myModal').style.display = 'none';
     };
     function close2() {
+	displayInlineBlockDropdown()
     document.getElementById('myModal1').style.display = 'none';
     };
     function close3() {
+	displayInlineBlockDropdown()
     document.getElementById('myModal2').style.display = 'none';
     };
     function close4() {
+	displayInlineBlockDropdown()
     document.getElementById('myModal3').style.display = 'none';
     };
 
