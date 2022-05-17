@@ -4,6 +4,7 @@
 	<%- include('../partials/head'); %>
 	<link rel="stylesheet" href="styling/index.css"></link>
 
+
 </head>
 <body class="container">
 <style>
@@ -36,18 +37,18 @@
 				<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='changep' href="#myMessage" type="submit">Change</button>
 			</form>	
 						
-			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='open' onclick="popup()" type="submit">Delete my account</button>
+			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='open' onclick="popupp()" type="submit">Delete my account</button>
 			<!-- The Modal -->
 				<div id="myModal" class="modal">
 					<!-- Modal content -->
 					<div class="modal-content">
-						<span class="close" onclick='close1()'>&times;</span>
+						<span class="close" onclick='closep()'>&times;</span>
 						<h2>Are you sure that you want to delete your account?</h2>
 						<br>
 						<form action="deleteAccount" method="post">
 							<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='yes' type="submit">Yes</button>
 						</form>
-						<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='no' onclick="close1()" type="submit">No</button>
+						<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='no' onclick="closep()" type="submit">No</button>
 
 					</div>
 				</div>
@@ -81,7 +82,7 @@
 			background: #6d44b8;
 	
 		}
-		.modal-content {
+		main .modal-content {
 			margin:  auto;
 			margin-top: 10%;
 			padding-right: 30px;
@@ -92,7 +93,7 @@
 			font-size: 22px;
 		
 		}
-		.close {
+		main .close {
 
 		text-align: right;
 		width: 15px;
@@ -102,7 +103,7 @@
 		font-weight: bold;
 		}
 
-		.close:hover,
+		main .close:hover,
 		.close:focus {
 		color: black;
 		text-decoration: none;
@@ -112,14 +113,12 @@
 	
 	</style>	
 <script>
-	function popup() {
+	function popupp() {
    document.getElementById('myModal').style.display ='block';
    };
 
-
-
    // When the user clicks on <span> (x), close the modal
-   function close1() {
+   function closep() {
    document.getElementById('myModal').style.display = 'none';
    };
    

@@ -6,47 +6,108 @@
 <button class="fc-dayGridMonth-button btn btn-primary" onclick="popup()" id='plus' type='submit'>+</button>
 <form action="addFreeTime" method="post">
 <!-- The Modal -->
-<div id="popup" class="modal">
+	<div id="popup" class="modal">
+		<!-- Modal content -->
+
+		<div class="modal-content">
+		<div class="modal-title" style='font-size:xx-large; font-size:xx-large;'>
+		Add free time
+		<span class="close" onclick='closep()'>&times;</span>			 
+		</div>
+			<label for="adults">Date</label>
+			<input type="date" id="date" name="date">
+
+			<label for="children">From</label>
+			<select id="from" name="from">
+				<% for(var i = 0 ; i < times.length ; i++) { %>
+					<option><%= times[i] %></option>
+				<% }; %>
+			</select>
+			<label for="children">To</label>
+			<select id="to" name="to">
+				<% for(var i = 0 ; i < times.length ; i++) { %>
+					<option><%= times[i] %></option>
+				<% }; %>
+			</select>
+
+			<br>
+			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='add' type="submit">Add</button>
+				
+		</div>
+	</div>
+</form>
+<div id='calendar'>
+</div>
+<ul style='border-color:rgb(195, 39, 39); margin-top: 10px;'>
+		<li class="Legend-item">
+		  <span class="Legend-colorBox" style="background-color: green;">
+		  </span>
+		  <span class="Legend-label">
+			Free time
+		  </span>
+		</li>
+		<li class="Legend-item"style='margin-left:20px;'>
+			<span class="Legend-colorBox" style="background-color: rgb(195, 39, 39);">
+			</span>
+			<span class="Legend-label">
+			  Reservations
+			</span>
+		  </li>
+	</ul>	
+
+<button class="fc-dayGridMonth-button btn btn-primary" onclick="popupD()" id='statis' type='submit'>Staticstical info</button>
+
+<div id="popupD" class="modal">
 	<!-- Modal content -->
 
 	<div class="modal-content">
-    <div class="modal-title">
-      Add free time
-      <span class="close" onclick='closep()'>&times;</span>			 
-    </div>
-			  <label for="adults">Date</label>
-			  <input type="date" id="date" name="date">
-  
-			  <label for="children">From</label>
-			  <select id="from" name="from">
-				<% for(var i = 0 ; i < times.length ; i++) { %>
-					<option><%= times[i] %></option>
-				<% }; %>
-			  </select>
-			  <label for="children">To</label>
-			  <select id="to" name="to">
-				<% for(var i = 0 ; i < times.length ; i++) { %>
-					<option><%= times[i] %></option>
-				<% }; %>
-			  </select>
+	<div class="modal-title" style='font-size:xx-large; font-size:xx-large;'>
+	Statistical info
+	<span class="close" onclick='closepD()'>&times;</span>			 
+	</div>
+		
+	<table class="graph">
+		<thead>
+			<tr>
+				<th scope="col">Item</th>
+				<th scope="col">Percent</th>
+			</tr>
+		</thead><tbody>
+			<tr style="height:85%">
+				<th scope="row">Keep at home</th>
+				<td><span>85%</span></td>
+			</tr>
+			<tr style="height:23%">
+				<th scope="row">Take for a walk</th>
+				<td><span>23%</span></td>
+			</tr>
+		</tbody>
+	</table>
 
 		<br>
-			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='add' type="submit">Add</button>
-		</form>
 
+			
 	</div>
 </div>
-<div id='calendar'></div>
+
+
+
+
 <script>
 	function popup() {
    	document.getElementById('popup').style.display ='block';
    };
-
-
-
+   function popupD() {
+   	document.getElementById('popupD').style.display ='block';
+   };
    // When the user clicks on <span> (x), close the modal
    function closep() {
    	document.getElementById('popup').style.display = 'none';
+   };
+
+      // When the user clicks on <span> (x), close the modal
+	function closepD() {
+   	document.getElementById('popupD').style.display = 'none';
    };
    
    // When the user clicks anywhere outside of the modal, close it
@@ -60,32 +121,179 @@
 
 
 <style>
+	::marker{
+		display: none !important;
+	}
+	.Legend-colorBox {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: inline-block;
+}
+	.graph {
+	margin-bottom:1em;
+  font:normal 100%/150% arial,helvetica,sans-serif;
+}
 
+.graph caption {
+	font:bold 150%/120% arial,helvetica,sans-serif;
+	padding-bottom:0.33em;
+}
+
+.graph tbody th {
+	text-align:right;
+}
+
+@supports (display:grid) {
+
+	@media (min-width:32em) {
+
+		.graph {
+			display:block;
+      width:600px;
+      height:300px;
+		}
+
+		.graph caption {
+			display:block;
+		}
+
+		.graph thead {
+			display:none;
+		}
+
+		.graph tbody {
+			position:relative;
+			display:grid;
+			grid-template-columns:repeat(auto-fit, minmax(2em, 1fr));
+			column-gap:2.5%;
+			align-items:end;
+			height:100%;
+			margin-left: 40%;
+			margin-top:7%;
+			width: 70%;
+			border-bottom:2px solid rgba(0,0,0,0.5);
+			background:repeating-linear-gradient(
+				180deg,
+				rgba(170,170,170,0.7) 0,
+				rgba(170,170,170,0.7) 1px,
+				transparent 1px,
+				transparent 20%
+			);
+		}
+
+		.graph tbody:before,
+		.graph tbody:after {
+			position:absolute;
+			left:-3.2em;
+			width:2.8em;
+			text-align:right;
+			font:bold 80%/120% arial,helvetica,sans-serif;
+		}
+
+		.graph tbody:before {
+			content:"100%";
+			top:-0.6em;
+		}
+
+		.graph tbody:after {
+			content:"0%";
+			bottom:-0.6em;
+		}
+
+		.graph tr {
+			position:relative;
+			display:block;
+		}
+
+		.graph tr:hover {
+			z-index:999;
+		}
+
+		.graph th,
+		.graph td {
+			display:block;
+			text-align:center;
+		}
+
+		.graph tbody th {
+			position:absolute;
+			top:-1.2em;
+			left:0;
+			width:100%;
+			font-weight:normal;
+			text-align:center;
+      		white-space:nowrap;
+			text-indent:0;
+			font-weight: bold;
+			
+		}
+
+		.graph tbody th:after {
+			content:"";
+		}
+
+		.graph td {
+			width:100%;
+			height:100%;
+			background:#573b8a;
+			border-radius:0.5em 0.5em 0 0;
+			transition:background 0.5s;
+		}
+
+		.graph tr:hover td {
+			opacity:0.7;
+		}
+
+		.graph td span {
+			overflow:hidden;
+			position:absolute;
+			left:50%;
+			top:50%;
+			width:0;
+			padding:0.5em 0;
+			margin:-1em 0 0;
+			font:normal 85%/120% arial,helvetica,sans-serif;
+/* 			background:white; */
+/* 			box-shadow:0 0 0.25em rgba(0,0,0,0.6); */
+			font-weight:bold;
+			opacity:0;
+			transition:opacity 0.5s;
+      color:white;
+		}
+
+		.toggleGraph:checked + table td span,
+		.graph tr:hover td span {
+			width:4em;
+			margin-left:-2em; /* 1/2 the declared width */
+			opacity:1;
+		}
+
+	} /* min-width:32em */
+
+} /* grid only */
 .btn {
 	background: #573b8a !important;
 	border-color: #573b8a !important;
 }
-
-#add{
-		width: 22%;
-		height: 40px;
-		margin: 10px auto;
-		justify-content: center;
-		display: block;
-		color: #fff;
-		background: #573b8a;
-		font-size: 2rem;
-		font-weight: bold;
-		margin-top: 15px;
-		outline: none;
-		border: none;
-		border-radius: 10px;
-		transition: .2s ease-in;
-		cursor: pointer;
-	}
+#add, #statis{
+	width: 22%;
+	height: 40px;
+	margin: 10px auto;
+	justify-content: center;
+	display: block;
+	color: #fff;
+	background: #573b8a;
+	font-size: 2rem;
+	font-weight: bold;
+	margin-top: 15px;
+	outline: none;
+	border: none;
+	border-radius: 10px;
+	transition: .2s ease-in;
+	cursor: pointer;
+}
 #add:hover, #open:hover{
 	background: #573b8a;
-
 }
 .btn:hover{
 	background-color: #573b8a;
@@ -103,42 +311,39 @@
 	padding: 20px;
 	width: 60%;
 	text-align: center;
-	font-size: 22px;
-
+	font-size: 15px;
 }
-.close {
-
-text-align: right;
-width: 15px;
-color: black;
-float: right;
-font-size: 28px;
-font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-color: black;
-text-decoration: none;
-cursor: pointer;
-}
-.jumbotron{
-	width: 1250px;
-}
-#calendar {
-  height: 420px !important;
-  width: 100% !important;
-
-  margin-top: auto;
-}
-.fc-daygrid-event-dot {
+	.close {
+	text-align: right;
+	width: 15px;
+	color: black;
+	float: left !important;
+	font-size: 28px;
+	font-weight: bold;
+	}
+	.close:hover,
+	.close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+	}
+	.jumbotron{
+		width: 1250px;
+	}
+	#calendar {
+	height: 420px !important;
+	width: 100% !important;
+	margin-top: auto;
+	
+	}
+	.fc-daygrid-event-dot {
 		margin: 0 4px;
 		box-sizing: content-box;
 		width: 0;
 		height: 0;
 		border: 4px solid #1e7531;
 		border: calc(var(--fc-daygrid-event-dot-width,8px)/ 2) solid var(--fc-event-border-color,#1e7531);
-}
+	}
 </style>
 
 
@@ -149,7 +354,6 @@ document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
   var freeTime = Array.from(<%- JSON.stringify(freeTime) %>)
   var reservations = Array.from(<%- JSON.stringify(reservations) %>)
-
   var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
     initialDate: new Date(),
@@ -162,8 +366,6 @@ document.addEventListener('DOMContentLoaded', function() {
     events: freeTime.concat(reservations)
 	
 });
-
-
   calendar.render();
 });
 </script>

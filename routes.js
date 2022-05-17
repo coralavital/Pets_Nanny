@@ -411,8 +411,8 @@ module.exports = function (app) {
 	//add reservation to the documents
 	app.post('/addReservation', function (req, res) {
 		const { providerRef } = req.body
-		console.log(providerRef.email)
-		firebase.addReservation(dateTime.date, dateTime.from, dateTime.to, providerRef.email, () => {
+		console.log(providerRef)
+		firebase.addReservation(dateTime.date, dateTime.from, dateTime.to, providerRef, () => {
 			res.redirect('/portal')
 		})
 

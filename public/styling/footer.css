@@ -6,8 +6,6 @@
         bottom: 0;
 		width: 100%;
 		max-height: 80px;
-
-
     }
     footer input{
         background-color:#3E3E3E ;
@@ -27,8 +25,6 @@
         display: flex;
         justify-content: space-between;
     }
-
-
     footer .copyright-text{
         font-family: "Nunito";
         background-color: #2B2B2B;
@@ -41,11 +37,9 @@
         line-height: 22px;
         align-items: center;
     }
-
     
     footer p{
         text-align: center;
-
     }
   
    
@@ -57,58 +51,39 @@
         letter-spacing: 0.5px;
         line-height: 26px;
         margin-top: 0;
-
         text-decoration: none;
         border: none;
     }
 
-    footer .modal {
-		background-color: #ffff;
-	display: none; /* Hidden by default */
-	position: fixed; /* Stay in place */
-	padding-top: 100px; /* Location of the box */
-	left: 0;
-	top: 0;
-	width: 100%; /* Full width */
-	height: 100%; /* Full height */
-	overflow: auto; /* Enable scroll if needed */
-	background-color: rgb(0,0,0); /* Fallback color */
-	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-
   
-  /* Modal Content */
-footer .modal-content {
-
-	background-color: #ffff;
-	margin: auto;
-	padding-right: 30px;
-	padding: 20px;
-	/*border: 1px solid #888;*/
-	width: 60%;
-	text-align: center;
-	font-size: 15px;
-  
-  }
-
-footer h5{
-	text-align: left;
+	/* Modal Content */
+	footer .modal-content {
+		margin:  auto;
+		margin-top: 10%;
+		padding-right: 30px;
+		padding: 20px;
+		width: 60%;
+		text-align: center;
+		font-size: 15px;
 	
+	}
+	footer h5{
+		text-align: left;
+		
+		
+	}
+	/* The Close Button */
+	footer .close {
+		text-align: right;
+		color: black;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+	}
 	
-}
-  /* The Close Button */
-footer .close {
-
-	text-align: right;
-    color: black;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-footer .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
+	footer .close:hover,
+	.close:focus {
+		color: black;
+		text-decoration: none;
+		cursor: pointer;
+	}
