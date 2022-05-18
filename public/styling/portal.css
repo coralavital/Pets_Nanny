@@ -35,11 +35,13 @@ main{
 }
 .searchT input, select {
     color: #6B6A6A;
+
 }
 
 .info-box {
+	margin-left: 10%;
     padding: 10px 0;
-    margin-top: 20px;
+    margin-top: 1%;
     flex: 1;
     border-right: 20px solid transparent;
 
@@ -173,4 +175,10 @@ button.search:hover{
     padding-right: 28px;
     z-index: 1;
 }
+.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+    width: 150px;
+}
+
+
+
 /* search table end */

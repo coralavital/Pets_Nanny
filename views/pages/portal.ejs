@@ -21,19 +21,14 @@
 </header>
 
 <main>
-  
-
   <form  id="search-form" action="filtering" method="post">
     <div id="header">
       <h1>Find your pets nanny</h1>
     </div>
     <section>
-      <div class="searchT" id="searchbox">
-        
-    
-        
+    <div class="searchT" id="searchbox">
        <!-- Area/City -->
-       <div id="depart">
+        <div id="depart">
         <div class="info-box">
           <label for="">Area/City</label>
           <select class="selectpicker" id='area_city' multiple data-live-search="true" name ="area_city" >
@@ -51,98 +46,57 @@
           <div class="info-box" id="arrive-box">
             <label for="">Price</label>
 
-            <div class="jumbotron text-center disabledbutton" id='field_2'>
+            <div class="jumbotron text-center disabledbutton" id='field_2' style='max-width: 60%;'>
               <!-- need to fix slidebar -->
               <%- include('../partials/rangebar'); %>
-
-
             </div>
           </div>
         </div>
             
         <!-- Type of pets-->
         <div id="dates">
-          <div class="info-box">
-            <label for="">Type of pets</label>
-            <select class="selectpicker" multiple data-live-search="true" name="typeP">
-                <option disabled>Type of pets</option>
-                <option id ='type_dog'>Dog</option>
-                <option id ='type_dog'>Cat</option>
-                <option id ='type_other'>Other pet</option>
-            </select>
-
-          </div>
-
-
-          <div class="info-box" id="return-box">
-            <label for="">Type of Service</label>
-            <select class="selectpicker" multiple data-live-search="true" name="typeS">
-                <option disabled>Type of Service</option>
-                <option  id='take_for_walk'>Take for a walk</option>
-                <option  id='keep_at_home' >Keep at home</option>
-            </select> 
+        	<div class="info-box">
+				<label for="">Type of pets</label>
+				<select class="selectpicker" multiple data-live-search="true" name="typeP">
+					<option disabled>Type of pets</option>
+					<option id ='type_dog'>Dog</option>
+					<option id ='type_dog'>Cat</option>
+					<option id ='type_other'>Other pet</option>
+				</select>
+        	</div>
+			<div class="info-box" id="return-box">
+				<label for="">Type of Service</label>
+				<select class="selectpicker" multiple data-live-search="true" name="typeS">
+					<option disabled>Type of Service</option>
+					<option  id='take_for_walk'>Take for a walk</option>
+					<option  id='keep_at_home' >Keep at home</option>
+				</select> 
+			</div>
         </div>
-        </div>
-        
         <!-- date from to -->
 
-			<div id="info">
-				<div class="info-box">
-				
-					<label for="adults">Date</label>
-					<input type="date" id="date" name="date">
+			<label style='margin-left: 8%; margin-top:3%;'>Date</label>
+			<input type="date" id="date" name="date">
 
-					<label for="children">From</label>
-					<select id="from" name="from">
-					<% for(var i = 0 ; i < times.length ; i++) { %>
-						<option><%= times[i] %></option>
-					<% }; %>
-					</select>
-					<label for="children">To</label>
-					<select id="to" name="to">
-					<% for(var i = 0 ; i < times.length ; i++) { %>
-						<option><%= times[i] %></option>
-					<% }; %>
-					</select>
-				</div>
-			</div>
+			<label>From</label>
+			<select class="selectpicker" id="from" name="from">
+			<% for(var i = 0 ; i < times.length ; i++) { %>
+				<option><%= times[i] %></option>
+			<% }; %>
+			</select>
+			<label>To</label>
+			<select class="selectpicker" id="to" name="to">
+			<% for(var i = 0 ; i < times.length ; i++) { %>
+				<option><%= times[i] %></option>
+			<% }; %>
+			</select>
 
-          <!--<div class="info-box">
-            <label for="class-type">Add</label>
-            <input type="button" id="myButton" value="+" onlick="duplicate()" name="add">
-          </div>-->
-      </div>
-      <!--<script>
-        document.getElementById('myButton').onclick = duplicate;
-
-        var i = 0;
-        var j = 0;
-        var k = 0;
-        var original = document.getElementById('date');
-        var original1 = document.getElementById('from');
-        var original2 = document.getElementById('to');
-        var o = document.getElementById("duplicator")
-        function duplicate() {
-            var clone = original.cloneNode(true);
-            var clone1 = original1.cloneNode(true);
-            var clone2 = original2.cloneNode(true);
-
-            clone.id = "duplicator" + ++i;
-            clone.id1 = "duplicator" + ++j;
-            clone.id2 = "duplicator" + ++k;
-            original.parentNode.appendChild(clone);
-            original1.parentNode.appendChild(clone1);
-            original2.parentNode.appendChild(clone2)
-
-        }
-
-    </script>
-    -->
-      <button type="submit" onclick="myFunction()" class="search">SEARCH</button>
-
+	</div>
+    <button type="submit" onclick="myFunction()" class="search">SEARCH</button>
+	</section>
    
     </form>
-
+</main>
    
 </main>
 <section class="tablee">
@@ -153,7 +107,10 @@
 <% } %>
 </section>
 
-
+</br>
+</br>
+</br>
+</br>
 <footer>
   <%- include('../partials/footer'); %>
 </footer>

@@ -5,13 +5,11 @@
         <h1>Pet’s-Nanny Reservation</h1>
         <br>
 		<form action="addReservation" method="post">
-			<p id="providerRef" type="text" name='providerRef'></p>
 			<p id="fullname"></p>
 			<p id="phonenumber"></p>
 			<p  id="pricePerHour"></p>
 			<p id='address'></p>
 			<p id="dateR"></p>
-			
 
 
 			<p><center>Are you sure that want to reserve the provider?</center></p>
@@ -20,18 +18,11 @@
 			</div>  
 		</form>
 		<div class="invitButton">
-			<button id = "cancel" onclick="cancelbutton()"> Cancel </button>
+			<button id = "cancel" onclick="inviteClose()"> Cancel </button>
 		</div>  
 				
     </div>
 </div>
-<!-- pop up for message  -->
-    <div id="messageModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick='messageClose()'>&times;</span>
-            <p> sprint 4</p>
-        </div>
-    </div>
 
 <!-- pop up for profile  -->
     <div id="profileModal" class="modal">
@@ -105,11 +96,9 @@
 
     
 </style>
+
 <script>
-      
         // for table 
-
-
         var table = document.getElementById('table');
 		
 		for(var i = 1; i < table.rows.length; i++)
@@ -121,7 +110,6 @@
                 let  u= Number(temp);
 			
                 var test = <%- JSON.stringify(providers) %>;
-				
 				var time = <%- JSON.stringify(time) %>;
 				var address = <%- JSON.stringify(userData.address) %>;
                 // for invite button
@@ -149,10 +137,6 @@
     	document.getElementById('inviteModal').style.display ='block';
     };
 
-    function messagebtn() {
-    	document.getElementById('messageModal').style.display ='block';
-    };
-
     function profilebtn() {
     	document.getElementById('profileModal').style.display ='block';
     };
@@ -163,9 +147,7 @@
     function inviteClose() {
     	document.getElementById('inviteModal').style.display = 'none';
     };
-    function messageClose() {
-    	document.getElementById('messageModal').style.display = 'none';
-    };
+
     function profileClose() {
     	document.getElementById('profileModal').style.display = 'none';
     };
@@ -177,11 +159,5 @@
 			document.getElementsByClassName('modal').style.display = 'none';
 		}
     };
-
-    function cancelbutton() {
-  		document.getElementById('inviteModal').style.display = 'none';
-	};
-
-
 
 </script>

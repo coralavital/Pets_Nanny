@@ -18,12 +18,12 @@
 			<input type="date" id="date" name="date">
 
 			<label for="children">From</label>
-			<select id="from" name="from">
+			<select id="from" class='selectpicker' name="from">
 				<% for(var i = 0 ; i < times.length ; i++) { %>
 					<option><%= times[i] %></option>
 				<% }; %>
 			</select>
-			<label for="children">To</label>
+			<label for="children" class='selectpicker' name='to'>To</label>
 			<select id="to" name="to">
 				<% for(var i = 0 ; i < times.length ; i++) { %>
 					<option><%= times[i] %></option>
@@ -121,17 +121,17 @@
 
 
 <style>
-	::marker{
+::marker{
 		display: none !important;
-	}
-	.Legend-colorBox {
+}
+.Legend-colorBox {
     width: 1.5rem;
     height: 1.5rem;
     display: inline-block;
 }
-	.graph {
+.graph {
 	margin-bottom:1em;
-  font:normal 100%/150% arial,helvetica,sans-serif;
+	font:normal 100%/150% arial,helvetica,sans-serif;
 }
 
 .graph caption {

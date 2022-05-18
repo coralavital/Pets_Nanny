@@ -1,6 +1,6 @@
 class providerRef {
-	constructor(email){
-		this.email = email
+	constructor(index){
+		this.index = index
 	}
 }
 

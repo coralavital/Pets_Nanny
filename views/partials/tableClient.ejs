@@ -2,33 +2,31 @@
 	<table class = "table table-gray" id="table">
 		<thead>
 			<th>No.</th>
-				<th>Full name</th>
-				<th>Age</th>
-				<th>Phone number</th>
-				<th>Price per half hour </th>
-				<th>buttons</th>
-			 
-				<!-- need to display only type of user 1 -->
+			<th>Full name</th>
+			<th>Age</th>
+			<th>Phone number</th>
+			<th>Price per half hour </th>
+			<th>buttons</th>
+			<!-- need to display only type of user 1 -->
+			<tbody>
 
-				<tbody>
-			
-				<% for(let j = 0 ; j< providers.length ; j++){ %>
-					<tr>
-					<td> <%= j+1 %> </td>
-					<td> <%= providers[j].fullname%> </td>
-					<td> <%= providers[j].age%> </td>
-					<td> <%= providers[j].phonenumber%> </td>
-					<td> <%= (providers[j].price_per_hour) /2 %> </td>
-					<!-- need to add class to buttons -->
-					<td> <button id = "myBtn" onclick="invitebtn()"> Invite</button> 
-						<button id = "myBtn1" onclick="messagebtn()"> Message</button> 
-						<button id = "myBtn2" onclick="profilebtn()"> Profile</button></td>
-				
-					<%- include('../partials/tableBtn'); %>
-					
-					</tr>
-				<% }  %>
-
+						<% for(let j = 0 ; j< providers.length ; j++){ %>
+							<tr>
+							<td> <%= j+1 %> </td>
+							<td> <%= providers[j].fullname%> </td>
+							<td> <%= providers[j].age%> </td>
+							<td> <%= providers[j].phonenumber%> </td>
+							<td> <%= (providers[j].price_per_hour) /2 %> </td>
+							<!-- need to add class to buttons -->
+							<td> 
+								<button id="myBtn" type="submit" onclick='invitebtn()'> Invite</button> 
+								<button id="myBtn1" type="submit" onclick='invitebtn()'> Message</button> 
+								<button id="myBtn2" type="submit" onclick='profilebtn()'> Profile</button></td>
+						
+								<%- include('../partials/tableBtn'); %>
+							</tr>
+						<% }  %>
+					</form>
 				</tbody>
 	
 

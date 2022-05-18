@@ -25,10 +25,8 @@ module.exports = function (app) {
   // contact page
   app.get('/contact', async function (req, res) {
     editFlag.editFalse();
-    var userData = await firebase.CurrentUserData()
     res.render('pages/contact', {
-      firebase: firebase,
-      userData
+      firebase: firebase
     });
   });
 
@@ -167,7 +165,6 @@ module.exports = function (app) {
 	dateTime.date = date;
 	dateTime.from = from;
 	dateTime.to = to;
-	console.log(dateTime.date)
     //javascript cannot return multiple values, needed to return array with the multiple values
     var values = filter.fixParams(area_city, typeP, typeS)
     let ar = values[0];
@@ -223,19 +220,6 @@ module.exports = function (app) {
     }
   });
 
-
-  //same page for client and provider
-  // message page - provider
-  app.get('/myMessage', async function (req, res) {
-    editFlag.editFalse();
-    const userData = await firebase.CurrentUserData()
-    console.log('at myMessage', userData)
-    res.render('pages/myMessage', {
-	  userData,
-      email: firebase.auth._currentUser.email,
-      errorMsg: errorMsg
-    });
-  });
 	//change for client and for provider
 	// schedule page - provider
 	app.get('/mySchedule', async function (req, res) {
@@ -304,10 +288,6 @@ module.exports = function (app) {
 
   });
 
-  app.post('/myMessage', async function (req, res) {
-    res.redirect("/myMessage")
-
-  });
 
   app.post('/mySchedule', async function (req, res) {
     //schedule.calendar.render();
@@ -410,24 +390,12 @@ module.exports = function (app) {
 
 	//add reservation to the documents
 	app.post('/addReservation', function (req, res) {
-		const { providerRef } = req.body
-		console.log(providerRef)
+		console.log(providerRef.index)
 		firebase.addReservation(dateTime.date, dateTime.from, dateTime.to, providerRef, () => {
 			res.redirect('/portal')
 		})
 
 	});
-
-
-//  //add message to the documents
-//  app.post('/addMessage', function (req, res) {
-
-//    const { emailSender, emailReciver, date, time, message_text, price_per_hour } = req.body;
-
-//    firebase.addMessage(emailSender, emailReciver, date, time, message_text, price_per_hour, () => {
-//      res.redirect('/myMessage');
-//    })
-//  });
 
   //add contact message to a documents
   app.post('/contact', async function (req, res) {
@@ -451,4 +419,5 @@ module.exports = function (app) {
       }
     }
   });
+
 }
