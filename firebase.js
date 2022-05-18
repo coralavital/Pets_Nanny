@@ -237,9 +237,9 @@ async filtering(ar,price,typeP,typeS) {
 	}
 
 	//saving reservations details
-	async addReservation(date, from, to, providerEmail, callback, callbackErr) {
+	async addReservation(date, from, to, providerEmail, callback) {
 		const clientRef = doc(this.db, "users", this.auth._currentUser.email);
-		//const providerRef = doc(this.db, "users", providerEmail);
+		const providerRef = doc(this.db, "users", providerEmail.email);
 		from = from.concat(":00")
 		to = to.concat(":00")
 		const sdate = date.concat("T", from)
@@ -259,36 +259,16 @@ async filtering(ar,price,typeP,typeS) {
 			await updateDoc(clientRef, {
 				reservations
 			});
-			//await updateDoc(providerRef, {
-			//	reservations
-			//});
+			await updateDoc(providerRef, {
+				reservations
+			});
 
 		}
 		callback()
 
 	};
 
-	////saving message details
-	//async addMessage(emailSend, emailReasiver, date, time, messageText, callback, callbackErr) {
-
-	//		try {
-	//		const message = doc(this.db, 'messeages', emailSend)
-	//		const result = await setDoc(message, {
-	//			emailSend: emailSend,
-	//			emailReasiver: emailReasiver,
-	//			date: date,
-	//			time: time,
-	//			messageText: messageText
-	//		});
-	//		callback();
-	//		} catch (error) {
-	//		console.log(emailSend);
-	//		console.log(error);
-	//		}
-	
-	//}
-
-	//saving message details
+	//saving contact message details
 	async addContactMsg(name, emailSend, messageText, callback) {
 		try {
 			const date = Date.now();
@@ -304,7 +284,6 @@ async filtering(ar,price,typeP,typeS) {
 		console.log(emailSend);
 		console.log(error);
 		}
-
 }
 	
 		

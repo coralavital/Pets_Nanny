@@ -17,7 +17,7 @@
 <body class="container">
 
 <header>
-  <%- include('../partials/header_loggedin'); %>
+  <%- include('../partials/header'); %>
 </header>
 
 <main>
@@ -100,11 +100,7 @@
    
 </main>
 <section class="tablee">
-<% if (userData.typeOfUser == 0) { %>
-    <%- include('../partials/tableClient'); %>
-<% } else { %>
-    <%- include('../partials/tableProviders'); %>
-<% } %>
+<%- include('../partials/searchTable'); %>
 </section>
 
 </br>

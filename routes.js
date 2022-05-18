@@ -7,14 +7,16 @@ const editFlag = require('./controllers/editor');
 const times = require('./controllers/time');
 const areaCities = require('./controllers/areaCities');
 const dateTime = require('./controllers/date');
-const providerRef = require('./controllers/providerRef');
 const { async } = require('@firebase/util');
+const { providers } = require('./controllers/filter');
 
 
 module.exports = function (app) {
-
+	var providers;
+	var providerRef;
   // index page
-  app.get('/', function (req, res) {
+  app.get('/', async function (req, res) {
+
     editFlag.editFalse();
     res.render('pages/index', {
       ourStars: home.ourStars,
@@ -25,9 +27,18 @@ module.exports = function (app) {
   // contact page
   app.get('/contact', async function (req, res) {
     editFlag.editFalse();
-    res.render('pages/contact', {
-      firebase: firebase
-    });
+	if(firebase.IfLoggedin() == false) {
+		res.render('pages/contact', {
+			firebase: firebase
+		});
+	}
+	else {
+		var userData = await firebase.CurrentUserData()
+		res.render('pages/contact', {
+			firebase: firebase,
+			userData
+		});
+	}
   });
 
   // portal page
@@ -39,16 +50,17 @@ module.exports = function (app) {
     const areas = areaCities.area
     const cities = areaCities.city
     if (filter.flag) {
-      var providers = await filter.providers
+      providers = await filter.providers
     } else {
-      var providers = filter.result
+      providers = filter.result
       filter.flag = true
     }
     res.render('pages/portal', {
+	  firebase,
 	  providerRef,
 	  time: dateTime,
       providers: providers,
-      userData: userData,
+      userData: userData,	  
       times: time,
       areas: areas,
       cities: cities
@@ -73,8 +85,12 @@ module.exports = function (app) {
 
   // enter-personal-info page - provider
   app.get('/enter_personal_p', async function (req, res) {
+	const areas = areaCities.area
+    const cities = areaCities.city
     const userData = await firebase.CurrentUserData()
     res.render('pages/enter_personal_p', {
+      areas: areas,
+	  cities: cities,
       fullname: userData.fullname,
       email: firebase.auth._currentUser.email,
       phonenumber: userData.phonenumber,
@@ -186,6 +202,7 @@ module.exports = function (app) {
     //console.log('at myPersonalInfo_p', userData)
     if (userData.typeOfUser == 1) {
       res.render('pages/myPersonalInfo_p', {
+		firebase,
 		userData,
         fullname: userData.fullname,
         email: firebase.auth._currentUser.email,
@@ -204,6 +221,7 @@ module.exports = function (app) {
     }
     else {
       res.render('pages/myPersonalInfo_c', {
+		firebase,
 		userData,
         fullname: userData.fullname,
         email: firebase.auth._currentUser.email,
@@ -230,6 +248,7 @@ module.exports = function (app) {
 		const reservations = userData.reservations || [];
 		if (userData.typeOfUser == 1) {
 			res.render('pages/myScheduleP', {
+			firebase,
 			userData,
 			fullname: userData.fullname,
 			email: firebase.auth._currentUser.email,
@@ -242,6 +261,7 @@ module.exports = function (app) {
 		}
 		else {
 			res.render('pages/myScheduleC', {
+			firebase,
 			userData,
 			fullname: userData.fullname,
 			email: firebase.auth._currentUser.email,
@@ -261,6 +281,7 @@ module.exports = function (app) {
     const userData = await firebase.CurrentUserData()
     console.log('at mySetting', userData)
     res.render('pages/mySetting', {
+	  firebase,
 	  userData,
       fullname: userData.fullname,
       email: firebase.auth._currentUser.email,
@@ -390,7 +411,7 @@ module.exports = function (app) {
 
 	//add reservation to the documents
 	app.post('/addReservation', function (req, res) {
-		console.log(providerRef.index)
+		console.log(providerRef.email)
 		firebase.addReservation(dateTime.date, dateTime.from, dateTime.to, providerRef, () => {
 			res.redirect('/portal')
 		})
@@ -419,5 +440,10 @@ module.exports = function (app) {
       }
     }
   });
+
+  app.post('/selectProvider', async function(req, res) {
+	const { invite } = req.body;
+	providerRef = providers[invite];
+  })
 
 }
