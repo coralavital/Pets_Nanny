@@ -174,7 +174,9 @@ module.exports = function (app) {
     }
 
   })
-
+  app.get('/login', function (req, res) {
+    res.render('patials/searchTable');
+  });
 
   app.post('/filtering', function (req, res) {
     var { area_city, price, typeP, typeS, date, from, to } = req.body;
@@ -188,7 +190,7 @@ module.exports = function (app) {
     let type_of_service = values[2];
 
     filter.changeProvider(ar, parseInt(price), type_of_pet, type_of_service, () => {
-      res.redirect("/portal") 
+      res.redirect("/searchTable") 
     })
 
   });
