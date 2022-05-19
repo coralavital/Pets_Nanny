@@ -5,16 +5,14 @@
 	<link rel="stylesheet" href="styling/index.css"></link>
 	<link rel="stylesheet" href="styling/areaCities.css"></link>
 
-
 </head>
-<body class="container">
 
 <header>
 	<%- include('../partials/header'); %>
 
 </header>
 
-<main>
+<main class="temp">
 	  <div class="row">
 		<div class="col-sm-8">
 			<div class="jumbotron">
@@ -41,42 +39,37 @@
 					</script>
 				<% } %>
 			</div>
-			<style>
-				.jumbotron{
-					width: 1250px;
-				}
-				#edit, #cancel, #save{
-					width: 20%;
-					height: 40px;
-					margin: 10px auto;
-					justify-content: center;
-					display: block;
-					color: #fff;
-					background: #573b8a;
-					font-size: 1em;
-					font-weight: bold;
-					margin-top: 20px;
-					outline: none;
-					border: none;
-					border-radius: 10px !important;
-					transition: .2s ease-in;
-					cursor: pointer;
-				}
-				#edit:hover, #cancel:hover, #save:hover{
-					background: #6d44b8;
-				}
-			
-			</style>
-			
 		</div>
 		<%- include('../partials/sidebar'); %>
 	</div>
 	</div>
 </main>
+<style>
+	#edit, #cancel, #save{
+		width: 20%;
+		height: 40px;
+		margin: 10px auto;
+		justify-content: center;
+		display: block;
+		color: #fff;
+		background: #573b8a;
+		font-size: 1em;
+		font-weight: bold;
+		margin-top: 20px;
+		outline: none;
+		border: none;
+		border-radius: 10px !important;
+		transition: .2s ease-in;
+		cursor: pointer;
+	}
+	#edit:hover, #cancel:hover, #save:hover{
+		background: #6d44b8;
+	}
+
+</style>
 
 <footer>
 	<%- include('../partials/footer'); %>
 </footer>
-  
-</body>
+ 
 </html>

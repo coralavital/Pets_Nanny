@@ -243,9 +243,9 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 	}
 
 	//saving reservations details
-	async addReservation(date, from, to, providerEmail, callback) {
+	async addReservation(date, from, to, provider, callback) {
 		const clientRef = doc(this.db, "users", this.auth._currentUser.email);
-		const providerRef = doc(this.db, "users", providerEmail.email);
+		const providerRef = doc(this.db, "users", provider.email);
 		from = from.concat(":00")
 		to = to.concat(":00")
 		const sdate = date.concat("T", from)
@@ -261,7 +261,7 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 			let reservationObj = {start, end, title: "Reservation"};
 			const reservations = userData.reservations !== undefined ? userData.reservations :[];
 			reservations.push(reservationObj);
-      
+
 			await updateDoc(clientRef, {
 				reservations
 			});
@@ -282,7 +282,7 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 			const result = await setDoc(user, {
 			name: name,
 			emailSend: emailSend,
-			time: date.toUTCString(),
+			time: new Date(),
 			messageText: messageText
 		});
 		callback();

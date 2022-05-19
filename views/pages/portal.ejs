@@ -14,13 +14,14 @@
   <link rel="stylesheet" href="styling/index.css"></link>
 
 </head>
-<body class="container">
 
 <header>
   <%- include('../partials/header'); %>
 </header>
 
-<main>
+<main class='temp'>
+</br>
+
   <form  id="search-form" action="filtering" method="post">
     <div id="header">
       <h1>Find your pets nanny</h1>
@@ -105,18 +106,21 @@
 				</select> 
 			</div>
         </div>
+		<div id="dates">
         <!-- date from to -->
-		<div id="depart">
-			<div class="info-box">
+		<div class="info-box" style='margin-left: 35px;'>
 				<label>Date</label>
 				<input type="date" id="date" name="date"  value='<%= date %>' required/>
-
+			</div>
+			<div class="info-box">
 				<label>From</label>
 				<select class="selectpicker" id="from" name="from" value='<%= from %>'>
 				<% for(var i = 0 ; i < times.length ; i++) { %>
 					<option <%= times[i] == from ? 'selected' : '' %>><%= times[i] %></option>
 				<% }; %>
 				</select>
+			</div>
+			<div class="info-box">
 				<label>To</label>
 				<select class="selectpicker" id="to" name="to" value='<%= to %>'>
 				<% for(var i = 0 ; i < times.length ; i++) { %>
@@ -125,23 +129,19 @@
 				</select>
 			</div>
 		</div>
+		</div>
 	</div>
     <button type="submit" class="search">SEARCH</button>
 	</section>
-   
     </form>
-
+	<%- include('../partials/searchTable'); %>
 </main>
 
 
-<section class="tablee">
-<%- include('../partials/searchTable'); %>
-</section>
 
-</br>
-</br>
-</br>
-</br>
+
+
+
 <footer>
   <%- include('../partials/footer'); %>
 </footer>

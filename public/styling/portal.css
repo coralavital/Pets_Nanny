@@ -1,8 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&display=swap);
 
-main{
-	background: rgba(185, 185, 185, 0.5);
+.temp{
+
 	max-width: 100%;
+	min-height: 100% !important;
 	font-family: "Nunito" !important;
 }
 
@@ -10,7 +11,7 @@ main{
 /* search table  */
 #search-form {
     border: 1px solid #573b8a;
-    width: 45%;
+    width: 60%;
     margin-left: auto;
     margin-right: auto;
     position: relative;
@@ -19,7 +20,8 @@ main{
 
 #header {
     height: 80px;
-    background-image: linear-gradient(180deg, #573b8a 10%, #8260c1 100%);	border: 4px solid #DDD;    display: flex;
+    background-image: linear-gradient(180deg, #573b8a 10%, #8260c1 100%);	border: 4px solid #DDD; 
+	display: flex;
     justify-content: flex-start;
     align-items: center;
 	border-radius: 20px;
@@ -30,9 +32,6 @@ main{
     font-size: 1.3em
 }
 
-.searchT {
-    padding: 20px;
-}
 .searchT input, select {
     color: #6B6A6A;
 
@@ -46,13 +45,7 @@ main{
     border-right: 20px solid transparent;
 
 }
-.date {
-	position: fixed;
-    left: 35%;
-	margin-top: 5px;
-	margin-bottom: 10px;
 
-}
 .info-box:last-child {
     border-right: none;
 }
@@ -114,8 +107,9 @@ main{
 
 #dates {
     display: flex;
-    border-bottom: 1px dotted silver;
+   border-bottom: 1px dotted silver;
 }
+
 
 #info {
     display: flex;
@@ -126,13 +120,7 @@ main{
     display: flex;
     justify-content: center;
 }
-#search input[type=submit] {
-    background: a58dd1;
-    color: white;
-    padding: 0;
-    height: 50px;
-    font-size: 1.2em;
-}
+
 
 #field_2.jumbotron.text-center.disabledbutton{
     padding: 0px;
@@ -193,6 +181,7 @@ range-bar*/
 	background-color: rgb(220 220 220);
 }
 .jumbotron p{
+	margin-bottom: 0px !important;
   font-size: small;
   background-color: rgb(220 220 220);
 }
@@ -200,11 +189,16 @@ range-bar*/
   margin-top: -20px;
   
 }
-#myBtn2, #myBtn1, #myBtn {
+#tableButton {
 	background: #573b8a !important;
 	border-color: #573b8a !important;
 	color: #ffff;
 	font-weight: bold;
 	border-radius: 5px;
+}
+input[type=date], input[type=time], input[type=datetime-local], input[type=month] {
+    line-height: 1.1 !important;
+	border-radius: 3px !important;
+	border-color: unset !important;
 }
 /* search table end */

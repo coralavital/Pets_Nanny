@@ -413,11 +413,7 @@ module.exports = function (app) {
 
 	//add reservation to the documents
 	app.post('/addReservation', function (req, res) {
-		console.log(providerRef.email)
-		firebase.addReservation(sFilters
-		.date, sFilters
-		.from, sFilters
-		.to, providerRef, () => {
+		firebase.addReservation(sFilters.date, sFilters.from, sFilters.to, providerRef, () => {
 			res.redirect('/portal')
 		})
 
@@ -435,13 +431,12 @@ module.exports = function (app) {
     else {
       const userData = await firebase.CurrentUserData();
       if (emailSender == userData.email) {
-        firebase.addContactMsg(name, emailSender, message_text, () => {
+        firebase.addContactMsg(name, emailSender, message, () => {
           res.redirect('/contact');
         });
       }
       else {
-        console.log("the email is not match to the current user email")
-        res.redirect('/contact');
+        console.log("The entered email is not match to the current user email");
       }
     }
   });

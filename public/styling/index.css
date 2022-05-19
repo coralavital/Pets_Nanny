@@ -1,14 +1,23 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&display=swap);
 body{
-  display: contents;
+
+  background: rgba(185, 185, 185, 0.5) !important;
   font-family: "Nunito" !important;
   width: 100% !important;
-  float: left !important;
+  margin-left: unset !important;
+  margin-right: unset !important;
+  min-width: 100% !important;
 }
 
-.footer { 
-  font-family: "Nunito" !important;
-  font-size: x-large;
+.jumbotron{
+	width: 100% !important;
+	height: 100% !important;
+	background-color: unset !important;
+}
+
+.container {
+	padding-left: unset !important;
+	padding-right: unset !important;
 }
 
 .mainImg{

@@ -1,3 +1,4 @@
+
 <div class="container w-70">
 	<table class="table table-gray" name='searchTable' id="table">
 		<thead>
@@ -21,11 +22,11 @@
 						<td> 
 							<% if (userData.typeOfUser == 0) { %>
 								
-								<button id="myBtn" type="submit" name='invite' onclick='invitebtn()' value="<%= j %>">Invite</button> 
-								<a href='mailto:<%= providers[j].email %>'><button type="button" id="myBtn1"> Send Email</button> </a>
-								<button id="myBtn2" onclick='profilebtn()'> Profile</button></td>
+								<button id="tableButton" type="submit" name='invite' onclick='invitebtn()' value="<%= j %>">Invite</button> 
+								<a style='display:inline-block;' href='mailto:<%= providers[j].email %>'><button type="button" id="tableButton"> Send Email</button> </a>
+								<button id="tableButton" onclick='profilebtn()'> Profile</button></td>
 							<% } else { %>
-								<button id="myBtn2" onclick='profilebtn()'> Profile</button></td>
+								<button id="tableButton" onclick='profilebtn()'> Profile</button></td>
 							<% } %>
 						</tr>
 					<% }  %>
@@ -50,12 +51,10 @@
 
 			<p><center>Are you sure that want to reserve the provider?</center></p>
 			<div class="invitButton">
-				<button id = "confirm" type="submit"> Confirm </button>
+				<button id="tableButton" style='margin-bottom: 1px;' type="submit"> Confirm </button>
+				<button id="tableButton" onclick="inviteClose()"> Cancel </button>
 			</div>  
 		</form>
-		<div class="invitButton">
-			<button id = "cancel" onclick="inviteClose()"> Cancel </button>
-		</div>  
     </div>
 </div>
 
@@ -77,6 +76,7 @@
 	</div>
 </div>
 <style>
+
 	.modal {
 	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */
@@ -122,8 +122,8 @@
     }
 
     .modal h1{
-        font-size: 40px;
-        font-weight: bold;
+        font-weight: bolder;
+		color: #573b8a;
 		
     }
     #profileModal p{
