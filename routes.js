@@ -14,6 +14,7 @@ const { providers } = require('./controllers/filter');
 module.exports = function (app) {
 	var providers;
 	var providerRef;
+	var filters;
   // index page
   app.get('/', async function (req, res) {
 
@@ -56,6 +57,7 @@ module.exports = function (app) {
       filter.flag = true
     }
     res.render('pages/portal', {
+	  filters,
 	  firebase,
 	  providerRef,
 	  time: dateTime,
@@ -174,23 +176,20 @@ module.exports = function (app) {
     }
 
   })
-  app.get('/login', function (req, res) {
-    res.render('patials/searchTable');
-  });
-
   app.post('/filtering', function (req, res) {
     var { area_city, price, typeP, typeS, date, from, to } = req.body;
 	dateTime.date = date;
 	dateTime.from = from;
 	dateTime.to = to;
+	console.log(dateTime)
     //javascript cannot return multiple values, needed to return array with the multiple values
-    var values = filter.fixParams(area_city, typeP, typeS)
-    let ar = values[0];
-    let type_of_pet = values[1];
-    let type_of_service = values[2];
-
+    filters = filter.fixParams(area_city, typeP, typeS)
+    let ar = filters[0];
+    let type_of_pet = filters[1];
+    let type_of_service = filters[2];
+	console.log(filters[2])
     filter.changeProvider(ar, parseInt(price), type_of_pet, type_of_service, () => {
-      res.redirect("/searchTable") 
+      res.redirect("/portal")
     })
 
   });

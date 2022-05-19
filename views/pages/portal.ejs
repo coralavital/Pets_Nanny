@@ -66,7 +66,7 @@
         	</div>
 			<div class="info-box" id="return-box">
 				<label for="">Type of Service</label>
-				<select class="selectpicker" multiple data-live-search="true" name="typeS">
+				<select class="selectpicker" multiple data-live-search="true"' id='typeS' name="typeS">
 					<option disabled>Type of Service</option>
 					<option  id='take_for_walk'>Take for a walk</option>
 					<option  id='keep_at_home' >Keep at home</option>
@@ -98,8 +98,20 @@
     </form>
 
 </main>
-   
-</main>
+<script>
+	var test = <%- JSON.stringify(filters) %>;
+	console.log(test[2])
+	if(filters!=undefined) {
+		document.getElementById("typeS").value = test[2];		
+		console.log(test[2])	
+	}
+	else {
+		console.log("no filter yet...")
+	}
+</script>
+	
+
+
 <section class="tablee">
 <%- include('../partials/searchTable'); %>
 </section>
