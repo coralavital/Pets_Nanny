@@ -193,7 +193,6 @@ module.exports = function (app) {
 		let type_of_pet = filters[1];
 		let type_of_service = filters[2];
 		filter.changeProvider(ar, parseInt(price), type_of_pet, type_of_service, sFilters.date, sFilters.from, sFilters.to, () => {
-			console.log(sFilters.area_city, sFilters.typeP, sFilters.typeS, sFilters.from)
 			res.redirect(`/portal?date=${sFilters.date}&from=${sFilters.from}&to=${sFilters.to}&typeP=${sFilters.typeP}&typeS=${sFilters.typeS}&price=${sFilters.price}&area_city=${sFilters.area_city}`)
 		})
 

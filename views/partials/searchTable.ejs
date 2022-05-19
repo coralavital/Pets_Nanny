@@ -22,7 +22,7 @@
 							<% if (userData.typeOfUser == 0) { %>
 								
 								<button id="myBtn" type="submit" name='invite' onclick='invitebtn()' value="<%= j %>">Invite</button> 
-								<button id="myBtn1" href='mailto:<%providers[j].email%>?subject=Reached%20From%20Personal%20Website'> Send Email</button> 
+								<a href='mailto:<%= providers[j].email %>'><button type="button" id="myBtn1"> Send Email</button> </a>
 								<button id="myBtn2" onclick='profilebtn()'> Profile</button></td>
 							<% } else { %>
 								<button id="myBtn2" onclick='profilebtn()'> Profile</button></td>
@@ -124,6 +124,7 @@
     .modal h1{
         font-size: 40px;
         font-weight: bold;
+		
     }
     #profileModal p{
         text-align: center;
@@ -132,18 +133,22 @@
 		background: rgba(185, 185, 185, 0.5);
 		font-family: "Nunito" !important;
 	}
-	  .table-gray
+	.table-gray
 	{
 		width: 100%;
 		border-collapse: collapse;
 		margin-top: 10px;
 		margin-bottom: 50px;
-		border-radius: 100px !important;
+		text-align: center;
 	
+	}
+	.table {
+		border-radius: 50px !important;
 	}
 	.table-gray td, .table-grays th {
 		border: 1px solid rgb(32, 30, 30);
 		padding: 8px;
+		
 	}
 	.table-gray th {
 	padding-top: 12px;
@@ -151,6 +156,7 @@
 	text-align: left;
 	background-color: #573b8a;
 	color: white;
+	text-align: center;
 	}
 
 </style>

@@ -10,7 +10,7 @@ main{
 /* search table  */
 #search-form {
     border: 1px solid #573b8a;
-    width: 50%;
+    width: 45%;
     margin-left: auto;
     margin-right: auto;
     position: relative;
@@ -39,11 +39,18 @@ main{
 }
 
 .info-box {
-	margin-left: 10%;
+	margin-left: 15%;
     padding: 10px 0;
     margin-top: 1%;
     flex: 1;
     border-right: 20px solid transparent;
+
+}
+.date {
+	position: fixed;
+    left: 35%;
+	margin-top: 5px;
+	margin-bottom: 10px;
 
 }
 .info-box:last-child {
@@ -52,8 +59,9 @@ main{
 .info-box label {
     display: block;
     color: #6B6A6A;
-    font-size: .9em;
+    font-size: 1em;
 }
+
 .info-box input[type=text], input[type=submit] {
     border: none;
     outline: none;
@@ -192,5 +200,11 @@ range-bar*/
   margin-top: -20px;
   
 }
-
+#myBtn2, #myBtn1, #myBtn {
+	background: #573b8a !important;
+	border-color: #573b8a !important;
+	color: #ffff;
+	font-weight: bold;
+	border-radius: 5px;
+}
 /* search table end */

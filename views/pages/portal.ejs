@@ -31,19 +31,27 @@
         <div id="depart">
         <div class="info-box">
           <label for="">Area/City</label>
-          <select class="selectpicker" id='area_city' multiple id='area_city' value='<%= area_city %>' name="area_city">
+          <select class="selectpicker" id='area_city' multiple id='area_city' name="area_city">
               <option disabled>Area</option>
 				<% for(var i = 0 ; i < 3 ; i++) { %>
-					<option <%= areaCities[i] == area_city ? 'selected' : '' %>><%= areaCities[i] %></option>
+					<% if (area_city != undefined) { %>
+						<option <%= area_city.includes(areaCities[i]) ? 'selected' : '' %>><%= areaCities[i] %></option>
+					<%} else { %>
+						<option><%= areaCities[i] %></option>
+					<% } %>
 				<% }; %>
               <option disabled>Cities</option>
 				<% for(var i = 3 ; i < areaCities.length ; i++) { %>
-					<option <%= areaCities[i] == area_city ? 'selected' : '' %>><%= areaCities[i] %></option>
+					<% if (area_city != undefined) { %>
+						<option <%= area_city.includes(areaCities[i]) ? 'selected' : '' %>><%= areaCities[i] %></option>
+					<%} else { %>
+						<option><%= areaCities[i] %></option>
+					<% } %>
 				<% }; %>
           </select>
         </div>
           
-          <div class="info-box" id="arrive-box">
+          <div class="info-box">
             <label for="">Price</label>
 
             <div class="jumbotron text-center disabledbutton" id='field_2' style='max-width: 60%;'>
@@ -74,39 +82,49 @@
 					<option disabled>Type of pets</option>
 					<% typep = ["Dog", "Cat", "Other pet"] %>
 					<% for(var i = 0 ; i < typep.length ; i++) { %>
-						<option <%= typep[i] == typeP ? 'selected' : '' %>><%= typep[i] %></option>
+						<% if (typeP != undefined) { %>
+								<option <%= typeP.includes(typep[i]) ? 'selected' : '' %>><%= typep[i] %></option>
+							<%} else { %>
+								<option><%= typep[i] %></option>
+							<% } %>
 					<% }; %>
 				</select>
         	</div>
-			<div class="info-box" id="return-box">
+			<div class="info-box">
 				<label for="">Type of Service</label>
-				<select class="selectpicker" multiple value='<%= typeS %>' id='typeS' name="typeS">
+				<select class="selectpicker" multiple id='typeS' name="typeS">
 					<option disabled>Type of Service</option>
 					<% types = ["Take for a walk","Keep at home"] %>
 					<% for(var i = 0 ; i < types.length ; i++) { %>
-						<option <%= types[i] == typeS ? 'selected' : '' %>><%= types[i] %></option>
+						<% if (typeS != undefined) { %>
+							<option <%= typeS.includes(types[i]) ? 'selected' : '' %>><%= types[i] %></option>
+						<%} else { %>
+							<option><%= types[i] %></option>
+						<% } %>
 					<% }; %>
 				</select> 
 			</div>
         </div>
         <!-- date from to -->
+		<div id="depart">
+			<div class="info-box">
+				<label>Date</label>
+				<input type="date" id="date" name="date"  value='<%= date %>' required/>
 
-			<label style='margin-left:8%; margin-top:3%;'>Date</label>
-			<input type="date" id="date" name="date"  value='<%= date %>' required/>
-
-			<label>From</label>
-			<select class="selectpicker" id="from" name="from" value='<%= from %>'>
-			<% for(var i = 0 ; i < times.length ; i++) { %>
-				<option <%= times[i] == from ? 'selected' : '' %>><%= times[i] %></option>
-			<% }; %>
-			</select>
-			<label>To</label>
-			<select class="selectpicker" id="to" name="to" value='<%= to %>'>
-			<% for(var i = 0 ; i < times.length ; i++) { %>
-				<option <%= times[i] == to ? 'selected' : '' %>><%= times[i] %></option>
-			<% }; %>
-			</select>
-
+				<label>From</label>
+				<select class="selectpicker" id="from" name="from" value='<%= from %>'>
+				<% for(var i = 0 ; i < times.length ; i++) { %>
+					<option <%= times[i] == from ? 'selected' : '' %>><%= times[i] %></option>
+				<% }; %>
+				</select>
+				<label>To</label>
+				<select class="selectpicker" id="to" name="to" value='<%= to %>'>
+				<% for(var i = 0 ; i < times.length ; i++) { %>
+					<option <%= times[i] == to ? 'selected' : '' %>><%= times[i] %></option>
+				<% }; %>
+				</select>
+			</div>
+		</div>
 	</div>
     <button type="submit" class="search">SEARCH</button>
 	</section>
