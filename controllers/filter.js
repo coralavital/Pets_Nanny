@@ -38,7 +38,13 @@ class Filter{
         typeS = this.toArray(typeS)
         return [ar, typeP, typeS]
     }
-    async changeProvider(ar, price, type_of_pet, type_of_service, callback){
+    async changeProvider(ar, price, type_of_pet, type_of_service, date, from, to, callback){
+		from = from.concat(":00")
+		to = to.concat(":00")
+		const sdate = date.concat("T", from)
+		const start = +new Date(sdate)
+		const edate = date.concat("T", to)
+		const end = +new Date(edate)
         this.flag=false
         this.result = await firebase.filtering(ar, price, type_of_pet, type_of_service)
 		callback();

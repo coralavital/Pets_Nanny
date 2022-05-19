@@ -188,7 +188,7 @@ module.exports = function (app) {
     let type_of_pet = filters[1];
     let type_of_service = filters[2];
 	console.log(filters[2])
-    filter.changeProvider(ar, parseInt(price), type_of_pet, type_of_service, () => {
+    filter.changeProvider(ar, parseInt(price), type_of_pet, type_of_service, dateTime.date, dateTime.from, dateTime.to, () => {
       res.redirect("/portal")
     })
 
