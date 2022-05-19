@@ -178,7 +178,19 @@ button.search:hover{
 .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
     width: 150px;
 }
+/*
+range-bar*/
 
-
+.slidecontainer{
+	background-color: rgb(220 220 220);
+}
+.jumbotron p{
+  font-size: small;
+  background-color: rgb(220 220 220);
+}
+.slidecontainer p {
+  margin-top: -20px;
+  
+}
 
 /* search table end */

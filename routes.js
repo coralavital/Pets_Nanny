@@ -5,8 +5,8 @@ const { type } = require('express/lib/response');
 const errorMsg = require('./controllers/errorMsg');
 const editFlag = require('./controllers/editor');
 const times = require('./controllers/time');
-const areaCities = require('./controllers/areaCities');
-const dateTime = require('./controllers/date');
+const areaCity = require('./controllers/areaCities');
+const sFilters = require('./controllers/sFilter');
 const { async } = require('@firebase/util');
 const { providers } = require('./controllers/filter');
 
@@ -14,7 +14,6 @@ const { providers } = require('./controllers/filter');
 module.exports = function (app) {
 	var providers;
 	var providerRef;
-	var filters;
   // index page
   app.get('/', async function (req, res) {
 
@@ -48,24 +47,29 @@ module.exports = function (app) {
     editFlag.editFalse();
     var userData = await firebase.CurrentUserData()
     const time = times.time
-    const areas = areaCities.area
-    const cities = areaCities.city
+    const areaCities = areaCity.area_city
     if (filter.flag) {
       providers = await filter.providers
     } else {
       providers = filter.result
       filter.flag = true
     }
+	const {date, from, to, typeP, typeS, price, area_city} = req.query;
     res.render('pages/portal', {
-	  filters,
+	  date,
+	  from,
+	  to,
+	  typeP,
+	  typeS,
+	  price, 
+	  area_city,
 	  firebase,
 	  providerRef,
-	  time: dateTime,
+	  time: sFilters,
       providers: providers,
       userData: userData,	  
       times: time,
-      areas: areas,
-      cities: cities
+      areaCities
     });
   });
 
@@ -87,12 +91,10 @@ module.exports = function (app) {
 
   // enter-personal-info page - provider
   app.get('/enter_personal_p', async function (req, res) {
-	const areas = areaCities.area
-    const cities = areaCities.city
+	const areasCities = areaCity.area_city
     const userData = await firebase.CurrentUserData()
     res.render('pages/enter_personal_p', {
-      areas: areas,
-	  cities: cities,
+	  areasCities,
       fullname: userData.fullname,
       email: firebase.auth._currentUser.email,
       phonenumber: userData.phonenumber,
@@ -177,28 +179,30 @@ module.exports = function (app) {
 
   })
   app.post('/filtering', function (req, res) {
-    var { area_city, price, typeP, typeS, date, from, to } = req.body;
-	dateTime.date = date;
-	dateTime.from = from;
-	dateTime.to = to;
-	console.log(dateTime)
-    //javascript cannot return multiple values, needed to return array with the multiple values
-    filters = filter.fixParams(area_city, typeP, typeS)
-    let ar = filters[0];
-    let type_of_pet = filters[1];
-    let type_of_service = filters[2];
-	console.log(filters[2])
-    filter.changeProvider(ar, parseInt(price), type_of_pet, type_of_service, dateTime.date, dateTime.from, dateTime.to, () => {
-      res.redirect("/portal")
-    })
+		var { area_city, price, typeP, typeS, date, from, to } = req.body;
+		sFilters.date = date;
+		sFilters.from = from;
+		sFilters.to = to;
+		sFilters.area_city = filter.toArray(area_city);
+		sFilters.typeP = filter.toArray(typeP);
+		sFilters.typeS = filter.toArray(typeS);
+		sFilters.price = price;
+		//javascript cannot return multiple values, needed to return array with the multiple values
+		var filters = filter.fixParams(sFilters.area_city, sFilters.typeP, sFilters.typeS)
+		let ar = filters[0];
+		let type_of_pet = filters[1];
+		let type_of_service = filters[2];
+		filter.changeProvider(ar, parseInt(price), type_of_pet, type_of_service, sFilters.date, sFilters.from, sFilters.to, () => {
+			console.log(sFilters.area_city, sFilters.typeP, sFilters.typeS, sFilters.from)
+			res.redirect(`/portal?date=${sFilters.date}&from=${sFilters.from}&to=${sFilters.to}&typeP=${sFilters.typeP}&typeS=${sFilters.typeS}&price=${sFilters.price}&area_city=${sFilters.area_city}`)
+		})
 
   });
 
   /////////////////////////////////////////////////////////////////////////////////////////////////coral
   // edit-personal-info-provider page - provider
   app.get('/myPersonalInfo', async function (req, res) {
-    const areas = areaCities.area
-    const cities = areaCities.city
+    const areasCities = areaCity.area_city
     const userData = await firebase.CurrentUserData()
     //console.log('at myPersonalInfo_p', userData)
     if (userData.typeOfUser == 1) {
@@ -216,8 +220,7 @@ module.exports = function (app) {
         about_me: userData.about_me,
         errorMsg: errorMsg,
         editFlag: editFlag,
-        areas: areas,
-        cities: cities
+        areasCities
       });
     }
     else {
@@ -232,8 +235,7 @@ module.exports = function (app) {
         about_me: userData.about_me,
         errorMsg: errorMsg,
         editFlag: editFlag,
-        areas: areas,
-        cities: cities
+        areasCities
 
       });
     }
@@ -413,7 +415,10 @@ module.exports = function (app) {
 	//add reservation to the documents
 	app.post('/addReservation', function (req, res) {
 		console.log(providerRef.email)
-		firebase.addReservation(dateTime.date, dateTime.from, dateTime.to, providerRef, () => {
+		firebase.addReservation(sFilters
+		.date, sFilters
+		.from, sFilters
+		.to, providerRef, () => {
 			res.redirect('/portal')
 		})
 

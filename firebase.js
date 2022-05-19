@@ -119,9 +119,9 @@ class Firebase {
   }
 
 // for filttring table after search
-async filtering(ar,price,typeP,typeS) {
+async filtering(ar,price,typeP,typeS ,start, end) {
 	var providersResult =[];
-	var i;
+	var i; 
 
 	const coll = query(collection(this.db, 'users'), 
 	 where("type_of_pet", "array-contains-any", typeP),
@@ -132,20 +132,26 @@ async filtering(ar,price,typeP,typeS) {
 	  result.push(doc.data())
 	
 	});
-	
+  
 	for ( i=0 ; i< result.length; i++){
 	  if(result[i].price_per_hour <= price ) {
-		if(containsAny(result[i].area_city ,ar)) {
-		  if(containsAny(result[i].type_of_service ,typeS))
-		  {
-			 providersResult.push(result[i]);
-		  }
-		}
+		  if(containsAny(result[i].area_city ,ar)) {
+		    if(containsAny(result[i].type_of_service ,typeS)){
+         if(result[i].freeTime != undefined ){
+           for(var j=0; j<result[i].freeTime.length; j++){
+              if(start >= result[i].freeTime[j].start && end <= result[i].freeTime[j].end){
+                  providersResult.push(result[i]);
+              }
+          }
+        }
+	  	}
 	  }
 	}
-	result = providersResult 
-	return result;
+	
   }
+  result = providersResult 
+	return result;
+}
 
 
   // Get all documents in a collection

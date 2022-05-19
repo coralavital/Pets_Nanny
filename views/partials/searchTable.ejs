@@ -22,7 +22,7 @@
 							<% if (userData.typeOfUser == 0) { %>
 								
 								<button id="myBtn" type="submit" name='invite' onclick='invitebtn()' value="<%= j %>">Invite</button> 
-								<button id="myBtn1" onclick='invitebtn()'> Message</button> 
+								<button id="myBtn1" href='mailto:<%providers[j].email%>?subject=Reached%20From%20Personal%20Website'> Send Email</button> 
 								<button id="myBtn2" onclick='profilebtn()'> Profile</button></td>
 							<% } else { %>
 								<button id="myBtn2" onclick='profilebtn()'> Profile</button></td>

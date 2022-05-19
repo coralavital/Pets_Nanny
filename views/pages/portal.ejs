@@ -31,14 +31,14 @@
         <div id="depart">
         <div class="info-box">
           <label for="">Area/City</label>
-          <select class="selectpicker" id='area_city' multiple data-live-search="true" name ="area_city" >
+          <select class="selectpicker" id='area_city' multiple id='area_city' value='<%= area_city %>' name="area_city">
               <option disabled>Area</option>
-				<% for(var i = 0 ; i < areas.length ; i++) { %>
-					<option><%= areas[i] %></option>
+				<% for(var i = 0 ; i < 3 ; i++) { %>
+					<option <%= areaCities[i] == area_city ? 'selected' : '' %>><%= areaCities[i] %></option>
 				<% }; %>
               <option disabled>Cities</option>
-				<% for(var i = 0 ; i < cities.length ; i++) { %>
-					<option><%= cities[i] %></option>
+				<% for(var i = 3 ; i < areaCities.length ; i++) { %>
+					<option <%= areaCities[i] == area_city ? 'selected' : '' %>><%= areaCities[i] %></option>
 				<% }; %>
           </select>
         </div>
@@ -47,8 +47,21 @@
             <label for="">Price</label>
 
             <div class="jumbotron text-center disabledbutton" id='field_2' style='max-width: 60%;'>
-              <!-- need to fix slidebar -->
-              <%- include('../partials/rangebar'); %>
+				<div class="slidecontainer">
+					<p>price: <span id="demo"></span>₪</p>
+					 <input type="range" name="price" min="1" max="200" class="slider" value='<%= price %>' id="price">
+					
+				</div>
+				   
+				<script>
+				var slider = document.getElementById("price");
+				var output = document.getElementById("demo");
+				output.innerHTML = slider.value;
+				
+				slider.oninput = function() {
+					output.innerHTML = this.value;
+				}
+				</script>
             </div>
           </div>
         </div>
@@ -57,59 +70,50 @@
         <div id="dates">
         	<div class="info-box">
 				<label for="">Type of pets</label>
-				<select class="selectpicker" multiple data-live-search="true" name="typeP">
+				<select class="selectpicker" multiple id='typeP' name="typeP">
 					<option disabled>Type of pets</option>
-					<option id ='type_dog'>Dog</option>
-					<option id ='type_dog'>Cat</option>
-					<option id ='type_other'>Other pet</option>
+					<% typep = ["Dog", "Cat", "Other pet"] %>
+					<% for(var i = 0 ; i < typep.length ; i++) { %>
+						<option <%= typep[i] == typeP ? 'selected' : '' %>><%= typep[i] %></option>
+					<% }; %>
 				</select>
         	</div>
 			<div class="info-box" id="return-box">
 				<label for="">Type of Service</label>
-				<select class="selectpicker" multiple data-live-search="true"' id='typeS' name="typeS">
+				<select class="selectpicker" multiple value='<%= typeS %>' id='typeS' name="typeS">
 					<option disabled>Type of Service</option>
-					<option  id='take_for_walk'>Take for a walk</option>
-					<option  id='keep_at_home' >Keep at home</option>
+					<% types = ["Take for a walk","Keep at home"] %>
+					<% for(var i = 0 ; i < types.length ; i++) { %>
+						<option <%= types[i] == typeS ? 'selected' : '' %>><%= types[i] %></option>
+					<% }; %>
 				</select> 
 			</div>
         </div>
         <!-- date from to -->
 
-			<label style='margin-left: 8%; margin-top:3%;'>Date</label>
-			<input type="date" id="date" name="date" required/>
+			<label style='margin-left:8%; margin-top:3%;'>Date</label>
+			<input type="date" id="date" name="date"  value='<%= date %>' required/>
 
 			<label>From</label>
-			<select class="selectpicker" id="from" name="from">
+			<select class="selectpicker" id="from" name="from" value='<%= from %>'>
 			<% for(var i = 0 ; i < times.length ; i++) { %>
-				<option><%= times[i] %></option>
+				<option <%= times[i] == from ? 'selected' : '' %>><%= times[i] %></option>
 			<% }; %>
 			</select>
 			<label>To</label>
-			<select class="selectpicker" id="to" name="to">
+			<select class="selectpicker" id="to" name="to" value='<%= to %>'>
 			<% for(var i = 0 ; i < times.length ; i++) { %>
-				<option><%= times[i] %></option>
+				<option <%= times[i] == to ? 'selected' : '' %>><%= times[i] %></option>
 			<% }; %>
 			</select>
 
 	</div>
-    <button type="submit" onclick="myFunction()" class="search">SEARCH</button>
+    <button type="submit" class="search">SEARCH</button>
 	</section>
    
     </form>
 
 </main>
-<script>
-	var test = <%- JSON.stringify(filters) %>;
-	console.log(test[2])
-	if(filters!=undefined) {
-		document.getElementById("typeS").value = test[2];		
-		console.log(test[2])	
-	}
-	else {
-		console.log("no filter yet...")
-	}
-</script>
-	
 
 
 <section class="tablee">

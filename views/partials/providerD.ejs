@@ -50,12 +50,12 @@
 		<div class="mb-3 float-center" id="field"> 
             <select class="selectpicker" value='6' id='field' class="field" multiple data-live-search="true" title='<%= area_city %>' disabled name ="area_city" >
 				<option disabled>Area</option>
-				<% for(var i = 0 ; i < areas.length ; i++) { %>
-					<option><%= areas[i] %></option>
+				<% for(var i = 0 ; i < 3 ; i++) { %>
+					<option><%= areasCities[i] %></option>
 				<% }; %>
 				<option disabled>Cities</option>
-				<% for(var i = 0 ; i < cities.length ; i++) { %>
-					<option><%= cities[i] %></option>
+				<% for(var i = 3 ; i < areasCities.length ; i++) { %>
+					<option><%= areasCities[i] %></option>
 				<% }; %>
 			</select>
 		</div>
