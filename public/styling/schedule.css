@@ -162,7 +162,7 @@ text-align:right;
 .btn-group>.btn.active {
 	z-index: unset !important;
 }
-#add, #statis{
+#add, #statis, #cancel{
 	width: 22%;
 	height: 40px;
 	margin: 10px auto;

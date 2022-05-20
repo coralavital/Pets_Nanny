@@ -1,6 +1,6 @@
 const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword, deleteUser, sendPasswordResetEmail  } = require("firebase/auth");
 const { initializeApp } = require('firebase/app');
-const { getFirestore, collection, doc, setDoc, getDoc, updateDoc, query, where, getDocs, deleteDoc, arrayUnion } = require('firebase/firestore');
+const { getFirestore, collection, doc, setDoc, getDoc, updateDoc, query, where, getDocs, deleteDoc, arrayUnion, arrayRemove } = require('firebase/firestore');
 const { use } = require("chai");
 const { async } = require('@firebase/util');
 
@@ -218,11 +218,18 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 		const end = +new Date(edate)
 		const userData = await this.CurrentUserData()
 
+		//get id for ecery reservation
+		const uniqueId = () => {
+			const dateString = Date.now().toString(36);
+			const randomness = Math.random().toString(36).substr(2);
+			return dateString + randomness;
+		};
+
 		await EnterTime({start, end});
 
 
 		async function EnterTime({start, end}){
-			let freeTimeObj = {start, end, title: "Free Time", color: "green", editable: true};
+			let freeTimeObj = {start, end, title: "Free Time", id: uniqueId(), color: "green", editable: true};
 			const freeTime = userData.freeTime !== undefined ? userData.freeTime :[];
 			freeTime.push(freeTimeObj);
 			await updateDoc(userRef, {
@@ -243,6 +250,7 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 		})
 	}
 
+	
 	//saving reservations details
 	async addReservation(date, from, to, provider, callback) {
 		const clientRef = doc(this.db, "users", this.auth._currentUser.email);
@@ -265,7 +273,7 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 		await EnterTime({start, end});
 
 		async function EnterTime({start, end}){
-			let reservationObj = {start, end, title: "Reservation", id: uniqueId(), color: 'red'};
+			let reservationObj = {start, end, title: "Reservation", id: uniqueId(), color: 'red', providerName: provider.fullname, providerEmail: provider.email, price: provider.price_per_hour, providerPhone: provider.phonenumber};
 			const reservations = userData.reservations !== undefined ? userData.reservations :[];
 			reservations.push(reservationObj);
 
@@ -297,6 +305,21 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 		console.log(emailSend);
 		console.log(error);
 		}
+	};
+
+	//saving contact message details
+	async cancelFreeTime(id, callback) {
+		const providerRef = doc(this.db, "users", this.auth._currentUser.email);
+		for(var i=0; i<providerRef.freeTime; i++){
+			if(providerRef.freeTime[i] == id) {
+				var obj = providerRef.freeTime[i]
+				await updateDoc(providerRef, {
+					freeTime: FieldValue.arrayRemove(obj)
+				});
+			}
+		}
+		callback();
+
 	};
 	
 		

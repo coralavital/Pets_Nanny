@@ -5,8 +5,6 @@
 <link rel='stylesheet' href='styling/portal.css'>
 <link rel='stylesheet' href='styling/schedule.css'>
 
-
-
 <!--Add free time button-->
 <button class="fc-dayGridMonth-button btn btn-primary" onclick="freetimePopup()" id='plus' type='submit'>+</button>
 
@@ -105,35 +103,39 @@
 <form action="cancelReservation" method="post">
 	<div id="reservationPopup" class="modal">
 		<div class="modal-content">
-			<div class="modal-title" style='font-size:xx-large; font-size:xx-large;'>
-				Reservation info
+			<div class="modal-title" style='font-size:xx-large; font-size:xx-large; margin-bottom: 15px;'>
+				Reservation Information
 				<span class="close" onclick='closeReservation()'>&times;</span>			 
 			</div>
-			
+			<span id='reservationID' name='reservationID'></span>
+			<span id='startR'></span>
+			<span id='endR'></span>
 			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='add' type="submit">Cancel</button>
 			<br>	
 		</div>
 	</div>
 </form>
-<!--Free time info popup-->
 <form action="cancelFreeTime" method="post">
-	<div id="freePopup" class="modal">
-		<div class="modal-content">
-			<div class="modal-title" style='font-size:xx-large; font-size:xx-large;'>
-				Free time info
-				<span class="close" onclick='closeFree()'>&times;</span>			 
-			</div>
-			
-			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='add' type="submit">Cancel</button>
-			<br>	
+<!--Free time info popup-->
+<div id="freePopup" class="modal">
+	<div class="modal-content">
+		<div class="modal-title" style='font-size:xx-large; font-size:xx-large; margin-bottom: 15px;'>
+			Free Time Information
+			<span class="close" onclick='closeFree()'>&times;</span>			 
 		</div>
+		<span id='freeTimeID' name='freeTimeID'></span>
+		<span id='startF'></span>
+		<span id='endF'></span>
+		<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='cancel' >Cancel</button>
+		<br>	
 	</div>
+</div>
 </form>
 
 <!--calendar script-->
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.js'></script>
 <script>
-	
+var calendar;
 //Add free time popup
 function freetimePopup() {
 	document.getElementById('freetimePopup').style.display ='block';
@@ -153,39 +155,44 @@ function closepStatistical() {
 };
 
 //Reservation info popup
-function reservationPopup() {
+function reservationPopup(start, end, id) {
+	document.getElementById("reservationID").value = id;
+	document.getElementById("startR").innerHTML = "The start time \u27A1\uFE0F " + start;
+    document.getElementById("endR").innerHTML = "The end time \u27A1\uFE0F " +  end;
 	document.getElementById('reservationPopup').style.display ='block';
+
 };
 // When the user clicks on <span> (x), close the modal
 function closeReservation() {
 	document.getElementById('reservationPopup').style.display = 'none';
 };
 
-//Free time info popup
-function freePopup() {
+//Free time info popups
+function freePopup(start, end, event, id) {
+	document.getElementById("freeTimeID").value = id;
+	document.getElementById("startF").innerHTML = "The start time \u27A1\uFE0F " +  start;
+    document.getElementById("endF").innerHTML = "The end time \u27A1\uFE0F " +  end;
+	//document.getElementById("pricePerHour").innerHTML = "Provider's price per hour: "+ providers[index-1].price_per_hour;
 	document.getElementById('freePopup').style.display ='block';
+
 };
+
 // When the user clicks on <span> (x), close the modal
 function closeFree() {
 	document.getElementById('freePopup').style.display = 'none';
 };
 
-
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-	if (event.target == document.getElementsByClassName('modal')) {
-		document.getElementsByClassName('modal').style.display = 'none';
-	}
-};
-
+function cancelFreetime(){
+		var event = document.getElementById("freeTimeID").value;
+		event.remove();
+}
 
 
 document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
   var freeTime = Array.from(<%- JSON.stringify(freeTime) %>)
   var reservations = Array.from(<%- JSON.stringify(reservations) %>)
-  var calendar = new FullCalendar.Calendar(calendarEl, {
+  calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
     initialDate: new Date(),
     themeSystem: "bootstrap",
@@ -199,10 +206,10 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	eventClick: function(info) {
 		if(info.event.title == "Reservation") {
-			reservationPopup();
+			reservationPopup(info.event.start, info.event.end, info.event.id);
 		}
 		else {
-			freePopup();
+			freePopup(info.event.start, info.event.end, info.event.id);
 		}
 		
     },
