@@ -25,7 +25,7 @@ class Filter{
         // putting area_city into array named -> ar
         if(area_city == null){
           // need to add all the cities ! 
-          area_city = area_city
+          area_city = areaCities.area_city
         }
         if(typeP == null){
           typeP = ["Dog", "Cat", "Other pet"]

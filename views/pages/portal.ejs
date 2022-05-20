@@ -107,28 +107,28 @@
 			</div>
         </div>
 		<div id="dates">
-        <!-- date from to -->
-		<div class="info-box" style='margin-left: 35px;'>
-				<label>Date</label>
-				<input type="date" id="date" name="date"  value='<%= date %>' required/>
+			<!-- date from to -->
+			<div class="info-box" style='margin-left: 35px;'>
+					<label>Date</label>
+					<input type="date" id="date" name="date"  value='<%= date %>' required/>
+				</div>
+				<div class="info-box">
+					<label>From</label>
+					<select class="selectpicker" id="from" name="from" value='<%= from %>'>
+					<% for(var i = 0 ; i < times.length ; i++) { %>
+						<option <%= times[i] == from ? 'selected' : '' %>><%= times[i] %></option>
+					<% }; %>
+					</select>
+				</div>
+				<div class="info-box">
+					<label>To</label>
+					<select class="selectpicker" id="to" name="to" value='<%= to %>'>
+					<% for(var i = 0 ; i < times.length ; i++) { %>
+						<option <%= times[i] == to ? 'selected' : '' %>><%= times[i] %></option>
+					<% }; %>
+					</select>
+				</div>
 			</div>
-			<div class="info-box">
-				<label>From</label>
-				<select class="selectpicker" id="from" name="from" value='<%= from %>'>
-				<% for(var i = 0 ; i < times.length ; i++) { %>
-					<option <%= times[i] == from ? 'selected' : '' %>><%= times[i] %></option>
-				<% }; %>
-				</select>
-			</div>
-			<div class="info-box">
-				<label>To</label>
-				<select class="selectpicker" id="to" name="to" value='<%= to %>'>
-				<% for(var i = 0 ; i < times.length ; i++) { %>
-					<option <%= times[i] == to ? 'selected' : '' %>><%= times[i] %></option>
-				<% }; %>
-				</select>
-			</div>
-		</div>
 		</div>
 	</div>
     <button type="submit" class="search">SEARCH</button>
@@ -139,12 +139,8 @@
 
 
 
-
-
-
 <footer>
   <%- include('../partials/footer'); %>
 </footer>
 
-</body>
 </html>

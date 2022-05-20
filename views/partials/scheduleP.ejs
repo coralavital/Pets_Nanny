@@ -2,41 +2,55 @@
 <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.css'>
 
-<button class="fc-dayGridMonth-button btn btn-primary" onclick="popup()" id='plus' type='submit'>+</button>
+<link rel='stylesheet' href='styling/portal.css'>
+<link rel='stylesheet' href='styling/schedule.css'>
+
+
+
+<!--Add free time button-->
+<button class="fc-dayGridMonth-button btn btn-primary" onclick="freetimePopup()" id='plus' type='submit'>+</button>
+
+<!--calendar-->
+<div id='calendar'></div>
+
+<!--Add free time popup-->
 <form action="addFreeTime" method="post">
-<!-- The Modal -->
-	<div id="popup" class="modal">
-		<!-- Modal content -->
-
+	<div id="freetimePopup" class="modal">
 		<div class="modal-content">
-		<div class="modal-title" style='font-size:xx-large; font-size:xx-large;'>
-		Add free time
-		<span class="close" onclick='closep()'>&times;</span>			 
-		</div>
-			<label for="adults">Date</label>
-			<input type="date" id="date" name="date">
-
-			<label for="children">From</label>
-			<select id="from" class='selectpicker' name="from">
-				<% for(var i = 0 ; i < times.length ; i++) { %>
-					<option><%= times[i] %></option>
-				<% }; %>
-			</select>
-			<label for="children" class='selectpicker' name='to'>To</label>
-			<select id="to" name="to">
-				<% for(var i = 0 ; i < times.length ; i++) { %>
-					<option><%= times[i] %></option>
-				<% }; %>
-			</select>
-
-			<br>
+			<div class="modal-title" style='font-size:xx-large; font-size:xx-large;'>
+			Add free time
+			<span class="close" onclick='closeFreetime()'>&times;</span>			 
+			</div>
+			<div id="dates">
+				<div class="info-box" style='margin-left: 35px;'>
+					<label for="adults">Date</label>
+					<input type="date" id="date" name="date">
+				</div>
+				<div class="info-box">
+					<label for="children">From</label>
+					<select id="from" class='selectpicker' name="from">
+						<% for(var i = 0 ; i < times.length ; i++) { %>
+							<option><%= times[i] %></option>
+						<% }; %>
+					</select>
+				</div>
+				<div class="info-box" style='margin-right: 35px;'>
+					<label for="children" class='selectpicker' name='to'>To</label>
+					<select id="to" name="to">
+						<% for(var i = 0 ; i < times.length ; i++) { %>
+							<option><%= times[i] %></option>
+						<% }; %>
+					</select>
+					<br>
+				</div>
+			</div>
 			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='add' type="submit">Add</button>
-				
+			<br>		
 		</div>
 	</div>
 </form>
-<div id='calendar'>
-</div>
+
+<!--Legend-->
 <ul style='border-color:rgb(195, 39, 39); margin-top: 10px;'>
 		<li class="Legend-item">
 		  <span class="Legend-colorBox" style="background-color: green;">
@@ -46,83 +60,127 @@
 		  </span>
 		</li>
 		<li class="Legend-item"style='margin-left:20px;'>
-			<span class="Legend-colorBox" style="background-color: rgb(195, 39, 39);">
+			<span class="Legend-colorBox" style="background-color: red;">
 			</span>
 			<span class="Legend-label">
 			  Reservations
 			</span>
 		  </li>
-	</ul>	
+</ul>	
 
-<button class="fc-dayGridMonth-button btn btn-primary" onclick="popupD()" id='statis' type='submit'>Staticstical info</button>
+<!--Statistical info button-->
+<button class="fc-dayGridMonth-button btn btn-primary" onclick="statisticalPopup()" id='statis' type='submit'>Staticstical info</button>
 
-<div id="popupD" class="modal">
-	<!-- Modal content -->
-
+<!--Statistical info popup-->
+<div id="statisticalPopup" class="modal">
 	<div class="modal-content">
-	<div class="modal-title" style='font-size:xx-large; font-size:xx-large;'>
-	Statistical info
-	<span class="close" onclick='closepD()'>&times;</span>			 
-	</div>
-		
-	<table class="graph">
-		<thead>
-			<tr>
-				<th scope="col">Item</th>
-				<th scope="col">Percent</th>
-			</tr>
-		</thead><tbody>
-			<tr style="height:85%">
-				<th scope="row">Keep at home</th>
-				<td><span>85%</span></td>
-			</tr>
-			<tr style="height:23%">
-				<th scope="row">Take for a walk</th>
-				<td><span>23%</span></td>
-			</tr>
-		</tbody>
-	</table>
-
-		<br>
-
+		<div class="modal-title" style='font-size:xx-large; font-size:xx-large;'>
+			Statistical info
+			<span class="close" onclick='closepStatistical()'>&times;</span>			 
+		</div>
 			
+		<table class="graph">
+			<thead>
+				<tr>
+					<th scope="col">Item</th>
+					<th scope="col">Percent</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr style="height:85%">
+					<th scope="row">Keep at home</th>
+					<td><span>85%</span></td>
+				</tr>
+				<tr style="height:23%">
+					<th scope="row">Take for a walk</th>
+					<td><span>23%</span></td>
+				</tr>
+			</tbody>
+		</table>
+		<br>
 	</div>
 </div>
 
+<!--Reservation info popup-->
+<form action="cancelReservation" method="post">
+	<div id="reservationPopup" class="modal">
+		<div class="modal-content">
+			<div class="modal-title" style='font-size:xx-large; font-size:xx-large;'>
+				Reservation info
+				<span class="close" onclick='closeReservation()'>&times;</span>			 
+			</div>
+			
+			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='add' type="submit">Cancel</button>
+			<br>	
+		</div>
+	</div>
+</form>
+<!--Free time info popup-->
+<form action="cancelFreeTime" method="post">
+	<div id="freePopup" class="modal">
+		<div class="modal-content">
+			<div class="modal-title" style='font-size:xx-large; font-size:xx-large;'>
+				Free time info
+				<span class="close" onclick='closeFree()'>&times;</span>			 
+			</div>
+			
+			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='add' type="submit">Cancel</button>
+			<br>	
+		</div>
+	</div>
+</form>
 
-
-
-<script>
-	function popup() {
-   		document.getElementById('popup').style.display ='block';
-   };
-   function popupD() {
-   		document.getElementById('popupD').style.display ='block';
-   };
-   // When the user clicks on <span> (x), close the modal
-   function closep() {
-   		document.getElementById('popup').style.display = 'none';
-   };
-
-      // When the user clicks on <span> (x), close the modal
-	function closepD() {
-   		document.getElementById('popupD').style.display = 'none';
-   };
-
-
-   
-   // When the user clicks anywhere outside of the modal, close it
-   window.onclick = function(event) {
-	if (event.target == document.getElementsByClassName('modal')) {
-		document.getElementsByClassName('modal').style.display = 'none';
-	}
-   };
-</script>
-
-
+<!--calendar script-->
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.js'></script>
 <script>
 	
+//Add free time popup
+function freetimePopup() {
+	document.getElementById('freetimePopup').style.display ='block';
+};
+// When the user clicks on <span> (x), close the modal
+function closeFreetime() {
+		document.getElementById('freetimePopup').style.display = 'none';
+};
+
+//Statistical info popup
+function statisticalPopup() {
+	document.getElementById('statisticalPopup').style.display ='block';
+};
+// When the user clicks on <span> (x), close the modal
+function closepStatistical() {
+		document.getElementById('statisticalPopup').style.display = 'none';
+};
+
+//Reservation info popup
+function reservationPopup() {
+	document.getElementById('reservationPopup').style.display ='block';
+};
+// When the user clicks on <span> (x), close the modal
+function closeReservation() {
+	document.getElementById('reservationPopup').style.display = 'none';
+};
+
+//Free time info popup
+function freePopup() {
+	document.getElementById('freePopup').style.display ='block';
+};
+// When the user clicks on <span> (x), close the modal
+function closeFree() {
+	document.getElementById('freePopup').style.display = 'none';
+};
+
+
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+	if (event.target == document.getElementsByClassName('modal')) {
+		document.getElementsByClassName('modal').style.display = 'none';
+	}
+};
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
   var freeTime = Array.from(<%- JSON.stringify(freeTime) %>)
@@ -136,9 +194,20 @@ document.addEventListener('DOMContentLoaded', function() {
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
-    events: freeTime.concat(reservations)
 	
+    events: freeTime.concat(reservations),
+	
+	eventClick: function(info) {
+		if(info.event.title == "Reservation") {
+			reservationPopup();
+		}
+		else {
+			freePopup();
+		}
+		
+    },
 });
   calendar.render();
 });
+
 </script>

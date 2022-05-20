@@ -1,48 +1,51 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
 <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.css'>
+<link rel='stylesheet' href='styling/schedule.css'>
 
-
-
+<!--calendar-->
 <div id='calendar'></div>
 
+<!--Event info popup-->
+<form action="cancelReservation" method="post">
+	<div id="reservationPopup" class="modal">
+		<div class="modal-content">
+			<div class="modal-title" style='font-size:xx-large; font-size:xx-large;'>
+				Reservation info
+				<span class="close" onclick='closeReservation()'>&times;</span>			 
+			</div>
+			<p id="fullname"></p>
+			<p id="phonenumber"></p>
+			<p id="pricePerHour"></p>
+			
+			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='add' type="submit">Cancel</button>
+			<br>	
+		</div>
+	</div>
+</form>
 
 
 
-<style>
-
-.btn {
-	background: #573b8a !important;
-	border-color: #573b8a !important;
-}
 
 
-.btn:hover{
-	background-color: #573b8a;
-	border-color: #573b8a !important;
-}
 
-.jumbotron{
-	width: 1250px;
-}
-#calendar {
-  height: 420px !important;
-  width: 100% !important;
-
-  margin-top: auto;
-}
-.fc-daygrid-event-dot {
-		margin: 0 4px;
-		box-sizing: content-box;
-		width: 0;
-		height: 0;
-		border: 4px solid #a41a1a;
-		border: calc(var(--fc-daygrid-event-dot-width,8px)/ 2) solid var(--fc-event-border-color,#a41a1a);
-	}
-</style>
-
+<!--calendar script-->
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.js'></script>
 <script>
+//Reservation info popup
+function reservationPopup() {
+	document.getElementById('reservationPopup').style.display ='block';
+};
+// When the user clicks on <span> (x), close the modal
+function closeReservation() {
+	document.getElementById('reservationPopup').style.display = 'none';
+};
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+	if (event.target == document.getElementsByClassName('modal')) {
+		document.getElementsByClassName('modal').style.display = 'none';
+	}
+};
 
 document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
@@ -57,10 +60,14 @@ document.addEventListener('DOMContentLoaded', function() {
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
-    events: reservations
+    events: reservations,
+	eventClick: function(info) {
+        reservationPopup();
+    },
 	
 });
 
   calendar.render();
 });
+
 </script>

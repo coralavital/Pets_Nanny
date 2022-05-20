@@ -51,9 +51,10 @@ module.exports = function (app) {
     if (filter.flag) {
       providers = await filter.providers
     } else {
-      providers = filter.result
+      providers = await filter.result
       filter.flag = true
     }
+	console.log(providers)
 	const {date, from, to, typeP, typeS, price, area_city} = req.query;
     res.render('pages/portal', {
 	  date,
@@ -183,17 +184,13 @@ module.exports = function (app) {
 		sFilters.date = date;
 		sFilters.from = from;
 		sFilters.to = to;
-		sFilters.area_city = filter.toArray(area_city);
-		sFilters.typeP = filter.toArray(typeP);
-		sFilters.typeS = filter.toArray(typeS);
-		sFilters.price = price;
-		//javascript cannot return multiple values, needed to return array with the multiple values
-		var filters = filter.fixParams(sFilters.area_city, sFilters.typeP, sFilters.typeS)
+		var filters = filter.fixParams(area_city, typeP, typeS)
+		console.log(filters)
 		let ar = filters[0];
 		let type_of_pet = filters[1];
 		let type_of_service = filters[2];
 		filter.changeProvider(ar, parseInt(price), type_of_pet, type_of_service, sFilters.date, sFilters.from, sFilters.to, () => {
-			res.redirect(`/portal?date=${sFilters.date}&from=${sFilters.from}&to=${sFilters.to}&typeP=${sFilters.typeP}&typeS=${sFilters.typeS}&price=${sFilters.price}&area_city=${sFilters.area_city}`)
+			res.redirect(`/portal?date=${sFilters.date}&from=${sFilters.from}&to=${sFilters.to}&typeP=${type_of_pet}&typeS=${type_of_service}&price=${price}&area_city=${ar}`)
 		})
 
   });
@@ -444,6 +441,7 @@ module.exports = function (app) {
   app.post('/selectProvider', async function(req, res) {
 	const { invite } = req.body;
 	providerRef = providers[invite];
+	console.log(providerRef)
   })
 
 }

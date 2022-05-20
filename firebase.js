@@ -4,6 +4,7 @@ const { getFirestore, collection, doc, setDoc, getDoc, updateDoc, query, where, 
 const { use } = require("chai");
 const { async } = require('@firebase/util');
 
+
 function containsAny(source,target)
 {
     var result = source.filter(function(item){ return target.indexOf(item) > -1});   
@@ -127,7 +128,7 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 	 where("type_of_pet", "array-contains-any", typeP),
 	 );
 	const querySnapshot =  await getDocs(coll);
-	let result=[];
+	var result=[];
 	querySnapshot.forEach((doc) => {
 	  result.push(doc.data())
 	
@@ -137,10 +138,10 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 	  if(result[i].price_per_hour <= price ) {
 		  if(containsAny(result[i].area_city ,ar)) {
 		    if(containsAny(result[i].type_of_service ,typeS)){
-         if(result[i].freeTime != undefined ){
-           for(var j=0; j<result[i].freeTime.length; j++){
-              if(start >= result[i].freeTime[j].start && end <= result[i].freeTime[j].end){
-                  providersResult.push(result[i]);
+         		if(result[i].freeTime != undefined ){
+           			for(var j=0; j<result[i].freeTime.length; j++){
+              			if(start >= result[i].freeTime[j].start && end <= result[i].freeTime[j].end){
+                  			providersResult.push(result[i]);
               }
           }
         }
@@ -149,8 +150,8 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 	}
 	
   }
-  result = providersResult 
-	return result;
+  
+	return providersResult;
 }
 
 
@@ -221,7 +222,7 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 
 
 		async function EnterTime({start, end}){
-			let freeTimeObj = {start, end, title: "Free Time"};
+			let freeTimeObj = {start, end, title: "Free Time", color: "green", editable: true};
 			const freeTime = userData.freeTime !== undefined ? userData.freeTime :[];
 			freeTime.push(freeTimeObj);
 			await updateDoc(userRef, {
@@ -254,11 +255,17 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 		const end = +new Date(edate)
 		const userData = await this.CurrentUserData()
 
+		//get id for ecery reservation
+		const uniqueId = () => {
+			const dateString = Date.now().toString(36);
+			const randomness = Math.random().toString(36).substr(2);
+			return dateString + randomness;
+		};
+
 		await EnterTime({start, end});
 
-
 		async function EnterTime({start, end}){
-			let reservationObj = {start, end, title: "Reservation"};
+			let reservationObj = {start, end, title: "Reservation", id: uniqueId(), color: 'red'};
 			const reservations = userData.reservations !== undefined ? userData.reservations :[];
 			reservations.push(reservationObj);
 
@@ -290,7 +297,7 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 		console.log(emailSend);
 		console.log(error);
 		}
-}
+	};
 	
 		
 	

@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&display=swap);
+
 body{
 
   background: rgba(185, 185, 185, 0.5) !important;
@@ -9,6 +10,7 @@ body{
   min-width: 100% !important;
 }
 
+
 .jumbotron{
 	width: 100% !important;
 	height: 100% !important;
@@ -18,6 +20,7 @@ body{
 .container {
 	padding-left: unset !important;
 	padding-right: unset !important;
+	
 }
 
 .mainImg{
