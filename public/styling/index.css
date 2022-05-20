@@ -10,17 +10,10 @@ body{
   min-width: 100% !important;
 }
 
-
 .jumbotron{
 	width: 100% !important;
 	height: 100% !important;
 	background-color: unset !important;
-}
-
-.container {
-	padding-left: unset !important;
-	padding-right: unset !important;
-	
 }
 
 .mainImg{
@@ -95,4 +88,10 @@ main .card .product-info .categories{
 
 .jumbotron h1, .jumbotron .h1 {
     font-size: xx-large !important;
+}
+.temp{
+
+	max-width: 100%;
+	min-height: 100% !important;
+	font-family: "Nunito" !important;
 }

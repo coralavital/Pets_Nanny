@@ -442,7 +442,6 @@ module.exports = function (app) {
   app.post('/selectProvider', async function(req, res) {
 	const { invite } = req.body;
 	providerRef = providers[invite];
-	console.log(providerRef)
   })
 
 }

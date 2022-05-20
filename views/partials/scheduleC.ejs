@@ -38,14 +38,14 @@
 <script>
 //Reservation info popup
 function reservationPopup(start, end, fullname, email, phone, price, address) {
-	//document.getElementById("providerFullName").innerHTML = "The name of the provider \u27A1\uFE0F " + fullname;
-    //document.getElementById("providerEmail").innerHTML = "The email of the provider \u27A1\uFE0F " +  email;
-	//document.getElementById("providerPhone").innerHTML = "The phone of the provider \u27A1\uFE0F " +  phone;
-	//document.getElementById("providerPrice").innerHTML = "The price for the service \u27A1\uFE0F " +  price;
-	//document.getElementById("providerPrice").innerHTML = "The price for the service \u27A1\uFE0F " +  price;
+	document.getElementById("providerFullName").innerHTML = "The name of the provider \u27A1\uFE0F " + fullname;
+    document.getElementById("providerEmail").innerHTML = "The email of the provider \u27A1\uFE0F " +  email;
+	document.getElementById("providerPhone").innerHTML = "The phone of the provider \u27A1\uFE0F " +  phone;
+	document.getElementById("providerPrice").innerHTML = "The price for the service \u27A1\uFE0F " +  price;
+	document.getElementById("providerPrice").innerHTML = "The price for the service \u27A1\uFE0F " +  price;
 	//document.getElementById("address").innerHTML = "The address \u27A1\uFE0F " + address;
-	document.getElementById("startR").innerHTML = "The start time \u27A1\uFE0F " + start;
-    document.getElementById("endR").innerHTML = "The end time \u27A1\uFE0F " +  end;
+    document.getElementById("startR").innerHTML = "The end time \u27A1\uFE0F " +  start;
+	document.getElementById("endR").innerHTML = "The end time \u27A1\uFE0F " +  end;
 	document.getElementById('reservationPopup').style.display ='block';
 };
 // When the user clicks on <span> (x), close the modal
@@ -69,8 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     events: reservations,
 	eventClick: function(info) {
-        reservationPopup(info.event.start, info.event.end);
-		//, info.event.providerName, info.event.providerEmail, info.event.providerPhone, info.event.price
+        reservationPopup(info.event.start, info.event.end, info.event.extendedProps.providerName, info.event.extendedProps.providerEmail, info.event.extendedProps.providerPhone, info.event.extendedProps.price);
     },
 
 	
