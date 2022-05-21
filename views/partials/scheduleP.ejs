@@ -107,9 +107,13 @@
 				Reservation Information
 				<span class="close" onclick='closeReservation()'>&times;</span>			 
 			</div>
-			<span id='reservationID' name='reservationID'></span>
 			<span id='startR'></span>
 			<span id='endR'></span>
+			<span id='address'></span>
+			<span id='providerFullName'></span>
+			<span id='providerEmail'></span>
+			<span id='providerPhone'></span>
+			<span id='providerPrice'></span>
 			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='add' type="submit">Cancel</button>
 			<br>	
 		</div>
@@ -155,13 +159,17 @@ function closepStatistical() {
 };
 
 //Reservation info popup
-function reservationPopup(start, end, id) {
-	document.getElementById("reservationID").value = id;
-	document.getElementById("startR").innerHTML = "The start time \u27A1\uFE0F " + start;
-    document.getElementById("endR").innerHTML = "The end time \u27A1\uFE0F " +  end;
+function reservationPopup(start, end, fullname, email, phone, price, address) {
+	document.getElementById("providerFullName").innerHTML = "The name of the provider \u27A1\uFE0F " + fullname;
+    document.getElementById("providerEmail").innerHTML = "The email of the provider \u27A1\uFE0F " +  email;
+	document.getElementById("providerPhone").innerHTML = "The phone of the provider \u27A1\uFE0F " +  phone;
+	document.getElementById("providerPrice").innerHTML = "The price per hour for the service \u27A1\uFE0F " +  price;
+	document.getElementById("address").innerHTML = "The address \u27A1\uFE0F " + address;
+    document.getElementById("startR").innerHTML = "The start time \u27A1\uFE0F " +  start;
+	document.getElementById("endR").innerHTML = "The end time \u27A1\uFE0F " +  end;
 	document.getElementById('reservationPopup').style.display ='block';
-
 };
+
 // When the user clicks on <span> (x), close the modal
 function closeReservation() {
 	document.getElementById('reservationPopup').style.display = 'none';
@@ -206,7 +214,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	eventClick: function(info) {
 		if(info.event.title == "Reservation") {
-			reservationPopup(info.event.start, info.event.end, info.event.id);
+			reservationPopup(info.event.start, info.event.end, info.event.extendedProps.providerName, info.event.extendedProps.providerEmail, info.event.extendedProps.providerPhone, info.event.extendedProps.price, info.event.extendedProps.address);
 		}
 		else {
 			freePopup(info.event.start, info.event.end, info.event.id);

@@ -8,7 +8,6 @@
 			<th>Phone number</th>
 			<th>Price per half hour </th>
 			<th>buttons</th>
-			<!-- need to display only type of user 1 -->
 			<tbody>
 				<form action='selectProvider' method='post'>	
 					<% for(var j = 0 ; j < providers.length ; j++){ %>
@@ -18,7 +17,6 @@
 						<td> <%= providers[j].age%> </td>
 						<td> <%= providers[j].phonenumber%> </td>
 						<td> <%= (providers[j].price_per_hour)/2 %> </td>
-						<!-- need to add class to buttons -->
 						<td> 
 							<% if (userData.typeOfUser == 0) { %>
 								<button id="tableButton" class='inviteP' type="submit" name='invite' onclick='invitebtn()' value="<%= j %>">Invite</button> 

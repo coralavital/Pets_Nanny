@@ -243,7 +243,7 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 	async sendEmail(email, callback) {
 		await sendPasswordResetEmail(this.auth, email).then(() => {
 			callback();
-			console.log("sent reset password to you email!")
+			console.log("Sent reset password to you email!")
 
 		}).catch((e) => {
 			console.log(e)
@@ -273,7 +273,8 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 		await EnterTime({start, end});
 
 		async function EnterTime({start, end}){
-			let reservationObj = {start, end, title: "Reservation", id: uniqueId(), color: 'red', providerName: provider.fullname, providerEmail: provider.email, price: provider.price_per_hour, providerPhone: provider.phonenumber};
+			let reservationObj = {start, end, title: "Reservation", id: uniqueId(), color: 'red', providerName: provider.fullname, providerEmail: provider.email, 
+									price: provider.price_per_hour, providerPhone: provider.phonenumber, address: userData.address};
 			const reservations = userData.reservations !== undefined ? userData.reservations :[];
 			reservations.push(reservationObj);
 
