@@ -9,11 +9,13 @@ const areaCity = require('./controllers/areaCities');
 const sFilters = require('./controllers/sFilter');
 const { async } = require('@firebase/util');
 const { providers } = require('./controllers/filter');
+const { auth } = require('./firebase');
 
 
 module.exports = function (app) {
 	var providers;
 	var providerRef;
+
   // index page
   app.get('/', async function (req, res) {
 
@@ -428,7 +430,7 @@ module.exports = function (app) {
     }
     else {
       const userData = await firebase.CurrentUserData();
-      if (emailSender == userData.email) {
+      if (emailSender == auth._currentUser.email) {
         firebase.addContactMsg(name, emailSender, message, () => {
           res.redirect('/contact');
         });

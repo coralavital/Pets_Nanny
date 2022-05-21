@@ -302,8 +302,8 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 		});
 		callback();
 		} catch (error) {
-		console.log(emailSend);
-		console.log(error);
+			console.log(emailSend);
+			console.log(error);
 		}
 	};
 
