@@ -303,7 +303,7 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 				contactMsg
 		});
 		callback();
-		} catch (error) {
+		} else {
 			console.log(emailSend);
 			console.log(error);
 		}
