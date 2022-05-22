@@ -1,4 +1,5 @@
-const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword, deleteUser, sendPasswordResetEmail  } = require("firebase/auth");
+const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword, 
+	deleteUser, sendPasswordResetEmail, reauthenticateWithCredential, EmailAuthProvider } = require("firebase/auth");
 const { initializeApp } = require('firebase/app');
 const { getFirestore, collection, doc, setDoc, getDoc, updateDoc, query, where, getDocs, deleteDoc, arrayUnion, arrayRemove } = require('firebase/firestore');
 const { use } = require("chai");
@@ -28,17 +29,34 @@ class Firebase {
     this.app = initializeApp(this.config);
 
     // // make auth and firestore references
-    this.auth = getAuth();
+    this.auth = getAuth(this.app);
     this.db = getFirestore(this.app);
 
   }
 
+  //authenticate function
   authenticate(email, password, callback) {
     signInWithEmailAndPassword(this.auth, email, password).then((cred) => {
       callback();
-    });
+    }).catch(error => {
+		switch (error.code) {
+			case 'auth/email-already-in-use':
+			  console.log(`Email address ${this.state.email} already in use.`);
+			  break;
+			case 'auth/invalid-email':
+			  console.log(`Email address ${this.state.email} is invalid.`);
+			  break;
+			case 'auth/operation-not-allowed':
+			  console.log(`Error during sign up.`);
+			  break;
+			default:
+			  console.log(error.message);
+			  break;
+		  }
+	})
   }
-  //
+
+  //signup function
   async signup(email, password, fullname, phone, type, callback, callbackErr) {
     createUserWithEmailAndPassword(this.auth, email, password).then(async (cred) => {
       const coll = collection(this.db, 'users');
@@ -52,14 +70,18 @@ class Firebase {
         });
         callback();
       } catch (error) {
-        console.log(email);
-        console.log(error);
+        		switch (error.code) {
+					default:
+					console.log(error.message);
+					break;
+		  }
       }
 
     });
 
   }
 
+  //logout function
   async logout(callback) {
   await signOut(this.auth).then((cred) => {
     console.log("Sign-out successful.")
@@ -96,7 +118,8 @@ class Firebase {
     await updateDoc(docRef, {
       age: age,
       address: address,
-      about_me: about_me
+      about_me: about_me,
+	  email: this.auth._currentUser.email,
     });
     callback();
    }
@@ -180,19 +203,28 @@ async filtering(ar,price,typeP,typeS ,start, end) {
       return provider;
     }
     
-	//update password
+	//change password of user
 	async changePassword(cpassword, npassword){
-		if(cpassword == this.auth._currentUser.password) {
-			updatePassword(this.auth._currentUser, npassword).then(() => {
-				console.log("updates password");
-			}).catch((error ) => {
-				console.log("Eror")
+		const email = this.auth._currentUser.email;
+		const usr = this.auth._currentUser;
+
+		await reauthenticateWithCredential(usr, EmailAuthProvider.credential(email, cpassword))
+		.then(() => {
+			updatePassword(usr, npassword).then(() => {
+				console.log("update password to",npassword);
+			}).catch((error) => {
+				console.log("Error at updatePassword\n", error)
 			})
-			
-		}
-		else {
-			console.log("incorrect password")
-		}
+		}).catch((error) => {
+			switch (error.code) {
+				case 'auth/wrong-password':
+				  console.log(`${cpassword} is not the current password of this user !`);
+				  break;
+				default:
+					console.log("Error at reauthenticateWithCredential\n", error)
+				break;
+			  }
+		})
 
 	}
 
@@ -274,7 +306,8 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 
 		async function EnterTime({start, end}){
 			let reservationObj = {start, end, title: "Reservation", id: uniqueId(), color: 'red', providerName: provider.fullname, providerEmail: provider.email, 
-									price: provider.price_per_hour, providerPhone: provider.phonenumber, address: userData.address , typeS: provider.type_of_service, typeP: provider.type_of_pet};
+									price: provider.price_per_hour, providerPhone: provider.phonenumber, address: userData.address , typeS: provider.type_of_service,
+									typeP: provider.type_of_pet, clientEmail: userData.email};
 			const reservations = userData.reservations !== undefined ? userData.reservations :[];
 			reservations.push(reservationObj);
 
@@ -293,11 +326,11 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 	//saving contact message details
 	async addContactMsg(name, emailSend, messageText, callback) {
 		// how the data will be saved in the obj arr
-		let msgObj = {title: "contactUs", date: new Date(), user: emailSend, name: name, messageText: messageText};
-		const email_msg_ref = doc(this.db, "contact", emailSend);
+		let msgObj = {date: new Date(), name: name, messageText: messageText};
+		const userRef = doc(this.db, "contact", emailSend);
 		try{ 
 			// getting doc data 
-			const docSnap = await getDoc(email_msg_ref);
+			const docSnap = await getDoc(userRef);
 			const contactMsg = docSnap.data();
 			var msg_arr =  contactMsg !== undefined ? contactMsg.contactUs  : [];
 		} catch(e) {
@@ -305,7 +338,7 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 		}
 		msg_arr.push(msgObj);
 
-		await setDoc(email_msg_ref, {
+		await setDoc(userRef, {
 			contactUs: msg_arr
 		});
 

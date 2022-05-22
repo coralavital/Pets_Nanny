@@ -15,7 +15,7 @@
 </div>
 <div class="row">
     <div class="col">
-        <div class="mb-3"><label class="form-label" for="age"><strong>Age</strong><br></label><input class="form-control" type="text" id="field" placeholder="<%= age %>" name="age" disabled=""></div>
+        <div class="mb-3"><label class="form-label" for="age"><strong>Age</strong><br></label><input class="form-control" type="text" id="field" maxlength='2' placeholder="<%= age %>" name="age" disabled=""></div>
     </div>
     <div class="col">
         <div class="mb-3"><label class="form-label" for="phone_number"><strong>Phone number</strong><br></label><input placeholder="<%= phonenumber %>" class="form-control" type="text" name="phonenumber" disabled=""></div>
@@ -38,7 +38,7 @@
 	<div class="container mt-3" >
 	<label class="form-label aboutme" for="about_me"><strong>About me</strong><br></label>
 	<div class="mb-3">
-	<textarea class="about_me" placeholder="<%= about_me %>" name="about_me" id="field" disabled></textarea>
+	<textarea class="about_me" placeholder="<%= about_me %>" maxlength="250" name="about_me" id="field" disabled></textarea>
 	</div>
 	</div>
 </div>
