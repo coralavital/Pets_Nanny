@@ -229,7 +229,7 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 
 
 		async function EnterTime({start, end}){
-			let freeTimeObj = {start, end, title: "Free Time", id: uniqueId(), color: "green", editable: true};
+			let freeTimeObj = {start, end, title: "Free Time", id: uniqueId(), color: "green"};
 			const freeTime = userData.freeTime !== undefined ? userData.freeTime :[];
 			freeTime.push(freeTimeObj);
 			await updateDoc(userRef, {
@@ -274,7 +274,7 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 
 		async function EnterTime({start, end}){
 			let reservationObj = {start, end, title: "Reservation", id: uniqueId(), color: 'red', providerName: provider.fullname, providerEmail: provider.email, 
-									price: provider.price_per_hour, providerPhone: provider.phonenumber, address: userData.address};
+									price: provider.price_per_hour, providerPhone: provider.phonenumber, address: userData.address , typeS: provider.type_of_service, typeP: provider.type_of_pet};
 			const reservations = userData.reservations !== undefined ? userData.reservations :[];
 			reservations.push(reservationObj);
 

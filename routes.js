@@ -15,7 +15,6 @@ const { auth } = require('./firebase');
 module.exports = function (app) {
 	var providers;
 	var providerRef;
-
   // index page
   app.get('/', async function (req, res) {
 
@@ -191,6 +190,7 @@ module.exports = function (app) {
 		let ar = filters[0];
 		let type_of_pet = filters[1];
 		let type_of_service = filters[2];
+		inviteFlag = true;
 		filter.changeProvider(ar, parseInt(price), type_of_pet, type_of_service, sFilters.date, sFilters.from, sFilters.to, () => {
 			res.redirect(`/portal?date=${sFilters.date}&from=${sFilters.from}&to=${sFilters.to}&typeP=${type_of_pet}&typeS=${type_of_service}&price=${price}&area_city=${ar}`)
 		})

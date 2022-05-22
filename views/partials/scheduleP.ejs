@@ -114,6 +114,8 @@
 			<span id='providerEmail'></span>
 			<span id='providerPhone'></span>
 			<span id='providerPrice'></span>
+			<span id='typeOfService'></span>
+			<span id='typeOfPets'></span>
 			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='add' type="submit">Cancel</button>
 			<br>	
 		</div>
@@ -159,11 +161,13 @@ function closepStatistical() {
 };
 
 //Reservation info popup
-function reservationPopup(start, end, fullname, email, phone, price, address) {
+function reservationPopup(start, end, fullname, email, phone, price, address, typeP, typeS) {
 	document.getElementById("providerFullName").innerHTML = "The name of the provider \u27A1\uFE0F " + fullname;
     document.getElementById("providerEmail").innerHTML = "The email of the provider \u27A1\uFE0F " +  email;
 	document.getElementById("providerPhone").innerHTML = "The phone of the provider \u27A1\uFE0F " +  phone;
 	document.getElementById("providerPrice").innerHTML = "The price per hour for the service \u27A1\uFE0F " +  price;
+	document.getElementById("typeOfService").innerHTML = "The type of service \u27A1\uFE0F " +  typeS;
+	document.getElementById("typeOfPets").innerHTML = "The type of pets \u27A1\uFE0F " +  typeP;
 	document.getElementById("address").innerHTML = "The address \u27A1\uFE0F " + address;
     document.getElementById("startR").innerHTML = "The start time \u27A1\uFE0F " +  start;
 	document.getElementById("endR").innerHTML = "The end time \u27A1\uFE0F " +  end;
@@ -214,7 +218,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	eventClick: function(info) {
 		if(info.event.title == "Reservation") {
-			reservationPopup(info.event.start, info.event.end, info.event.extendedProps.providerName, info.event.extendedProps.providerEmail, info.event.extendedProps.providerPhone, info.event.extendedProps.price, info.event.extendedProps.address);
+			reservationPopup(info.event.start, info.event.end, info.event.extendedProps.providerName, 
+		info.event.extendedProps.providerEmail, info.event.extendedProps.providerPhone, info.event.extendedProps.price, 
+		info.event.extendedProps.address, info.event.extendedProps.typeP, info.event.extendedProps.typeS);
 		}
 		else {
 			freePopup(info.event.start, info.event.end, info.event.id);
