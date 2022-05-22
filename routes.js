@@ -23,7 +23,8 @@ module.exports = function (app) {
     editFlag.editFalse();
     res.render('pages/index', {
       ourStars: home.ourStars,
-      firebase: firebase
+      firebase: firebase,
+	  userData: null
     });
   });
 
@@ -33,7 +34,8 @@ module.exports = function (app) {
 	if(firebase.IfLoggedin() == false) {
 		res.render('pages/contact', {
 			firebase: firebase,
-			email: ""
+			email: "",
+			userData: null
 		});
 	}
 	else {
@@ -41,7 +43,8 @@ module.exports = function (app) {
 		res.render('pages/contact', {
 			firebase: firebase,
 			userData,
-			email: firebase.auth._currentUser.email
+			email: firebase.auth._currentUser.email,
+			userData
 		});
 	}
   });
@@ -59,7 +62,6 @@ module.exports = function (app) {
       providers = await filter.result
       filter.flag = true
     }
-	console.log(providers)
 	const {date, from, to, typeP, typeS, price, area_city} = req.query;
     res.render('pages/portal', {
 	  date,
@@ -141,7 +143,6 @@ module.exports = function (app) {
   //1.1 provider page
   app.post('/personalInfo_provider', function (req, res) {
     var { age, area_city, price, typeP, typeS, about_me } = req.body;
-    console.log(req.body)
 
     // if the user didnt fill the minimum reqiure fields
     if (typeS == null || typeP == null || area_city == null) {
@@ -165,7 +166,6 @@ module.exports = function (app) {
   //1.2 client page
   app.post('/personalInfo_client', function (req, res) {
     const { age, address, about_me } = req.body;
-    console.log(req.body)
 
     // if the user didnt fill the minimum reqiure fields
     if (address == '') {
@@ -186,7 +186,6 @@ module.exports = function (app) {
 		sFilters.from = from;
 		sFilters.to = to;
 		var filters = filter.fixParams(area_city, typeP, typeS)
-		console.log(filters)
 		let ar = filters[0];
 		let type_of_pet = filters[1];
 		let type_of_service = filters[2];
@@ -202,7 +201,6 @@ module.exports = function (app) {
   app.get('/myPersonalInfo', async function (req, res) {
     const areasCities = areaCity.area_city
     const userData = await firebase.CurrentUserData()
-    //console.log('at myPersonalInfo_p', userData)
     if (userData.typeOfUser == 1) {
       res.render('pages/myPersonalInfo_p', {
 		firebase,
@@ -280,7 +278,6 @@ module.exports = function (app) {
   app.get('/mySetting', async function (req, res) {
     editFlag.editFalse();
     const userData = await firebase.CurrentUserData()
-    console.log('at mySetting', userData)
     res.render('pages/mySetting', {
 	  firebase,
 	  userData,
@@ -312,7 +309,6 @@ module.exports = function (app) {
 
 
   app.post('/mySchedule', async function (req, res) {
-    //schedule.calendar.render();
     res.redirect("/mySchedule")
   });
 
@@ -329,8 +325,11 @@ module.exports = function (app) {
 
   });
   app.post('/deleteAccount', async function (req, res) {
-    firebase.deleteAccount()
-    res.redirect("/")
+    firebase.deleteAccount (() => {
+		res.redirect("/")
+		
+	  });
+    
 
   });
   //update provider document

@@ -229,13 +229,14 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 	}
 
 	//delete account
-	async deleteAccount() {
+	async deleteAccount(callback) {
 		deleteDoc(doc(this.db, "users", this.auth._currentUser.email));
 		deleteUser(this.auth._currentUser).then(async() => {
 			console.log("deleted user");
 		}).catch((error ) => {
 			console.log("Eror")
 		})
+		callback();
 
 	}
 	

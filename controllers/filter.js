@@ -47,7 +47,7 @@ class Filter{
         const edate = date.concat("T", to)
         const end =+ new Date(edate)
 
-        this.result = await firebase.filtering(ar, price, type_of_pet, type_of_service, start, end )
+        this.result = await firebase.filtering(ar, price, type_of_pet, type_of_service, start, end)
 		callback();
     }
     
