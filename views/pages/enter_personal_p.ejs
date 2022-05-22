@@ -37,7 +37,6 @@
 		</nav> -->
 		<h3 class="text-dark mb-0" style='font-weight: bolder; font-size: 30px;'>Enter your personal info</h3>
 		</br>
-
 		<div class="container">
 			<div class="col text-center">
 				<div class="card shadow mb-3">
@@ -49,7 +48,7 @@
 							<div class="mb-3" >
 								<strong>Area/Cities</strong>
 								<div class="mb-3 float-center" id="field"> 
-									<select class="selectpicker" value='6' id='field' class="field" multiple data-live-search="true" disabled name ="area_city" >
+									<select class="selectpicker" value='6' id='field' class="field" multiple data-live-search="true" name ="area_city" >
 										<option disabled>Area</option>
 										<% for(var i = 0 ; i < 3 ; i++) { %>
 											<option><%= areasCities[i] %></option>
@@ -73,7 +72,7 @@
 						<div id="row">
 							<div class="mb-3">
 								<div class="col-md-6"><strong>Type of pets</strong><br>
-									<select class="selectpicker" multiple data-live-search="true" id="field" disabled name="typeP">
+									<select class="selectpicker" multiple data-live-search="true" id="field" name="typeP">
 										<option disabled>Type of pets</option>
 										<option id ='type_dog'>Dog</option>
 										<option id ='type_dog'>Cat</option>
@@ -85,7 +84,7 @@
 							
 								<div class="mb-3">
 									<label class="col-md-6"><strong>Type of service</strong><br>
-									<select class="selectpicker" multiple data-live-search="true" id="field" disabled name="typeS">
+									<select class="selectpicker" multiple data-live-search="true" id="field" name="typeS">
 										<option disabled>Type of Service</option>
 										<option  id='take_for_walk'>Take for a walk</option>
 										<option  id='keep_at_home' >Keep at home</option>

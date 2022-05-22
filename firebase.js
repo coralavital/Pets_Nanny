@@ -292,14 +292,15 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 
 	//saving contact message details
 	async addContactMsg(name, emailSend, messageText, callback) {
-		try {
+		if(this.IfLoggedin() == false) {
 			const date = Date.now();
-			const user = doc(this.db, 'contact', emailSend)
-			const result = await setDoc(user, {
-			name: name,
-			emailSend: emailSend,
-			time: new Date(),
-			messageText: messageText
+			const userData = doc(this.db, 'contact', emailSend)
+			let contactObj = {name: name, emailSend: emailSend, messageText: messageText, time: date};
+			const contactMsg = userData.contactMsg !== undefined ? userData.contactMsg :[];
+			contactMsg.push(contactObj);
+
+			await updateDoc(userData, {
+				contactMsg
 		});
 		callback();
 		} catch (error) {

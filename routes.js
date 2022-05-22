@@ -15,6 +15,7 @@ const { auth } = require('./firebase');
 module.exports = function (app) {
 	var providers;
 	var providerRef;
+
   // index page
   app.get('/', async function (req, res) {
 
@@ -30,14 +31,16 @@ module.exports = function (app) {
     editFlag.editFalse();
 	if(firebase.IfLoggedin() == false) {
 		res.render('pages/contact', {
-			firebase: firebase
+			firebase: firebase,
+			email: ""
 		});
 	}
 	else {
 		var userData = await firebase.CurrentUserData()
 		res.render('pages/contact', {
 			firebase: firebase,
-			userData
+			userData,
+			email: firebase.auth._currentUser.email
 		});
 	}
   });
@@ -115,21 +118,17 @@ module.exports = function (app) {
   });
 
   app.post('/signup', function (req, res) {
-
     const { email, password, fullname, phone, type } = req.body;
-
     firebase.signup(email, password, fullname, phone, type, () => {
       if (type == 1) {
         res.redirect('/enter_personal_p');
       } else {
         res.redirect('/enter_personal_c');
       }
-      // res.redirect('/portal');
     })
   });
 
   app.post('/logout', function (req, res) {
-    //const { email } = req.body;
     firebase.logout(() => {
       res.redirect('/');
     })
@@ -421,24 +420,12 @@ module.exports = function (app) {
 
   //add contact message to a documents
   app.post('/contact', async function (req, res) {
-    const { name, emailSender, message } = req.body;
-
-    if (firebase.auth._currentUser == null) {
-      firebase.addContactMsg(name, emailSender, message, () => {
-        res.redirect('/contact');
-      });
-    }
-    else {
-      const userData = await firebase.CurrentUserData();
-      if (emailSender == auth._currentUser.email) {
-        firebase.addContactMsg(name, emailSender, message, () => {
-          res.redirect('/contact');
-        });
-      }
-      else {
-        console.log("The entered email is not match to the current user email");
-      }
-    }
+    const { name, emailSender, message } = req.body
+    
+	firebase.addContactMsg(name, emailSender, message, () => {
+	  res.redirect('/contact');
+      
+    });
   });
 
   app.post('/selectProvider', async function(req, res) {
