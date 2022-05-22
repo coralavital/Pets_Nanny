@@ -10,6 +10,7 @@ const sFilters = require('./controllers/sFilter');
 const { async } = require('@firebase/util');
 const { providers } = require('./controllers/filter');
 const { auth } = require('./firebase');
+const time = require('./controllers/time');
 
 
 module.exports = function (app) {
@@ -412,6 +413,7 @@ module.exports = function (app) {
 	//add reservation to the documents
 	app.post('/addReservation', function (req, res) {
 		firebase.addReservation(sFilters.date, sFilters.from, sFilters.to, providerRef, () => {
+			sFilters.date = null;
 			res.redirect('/portal')
 		})
 

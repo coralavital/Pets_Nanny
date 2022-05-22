@@ -292,21 +292,24 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 
 	//saving contact message details
 	async addContactMsg(name, emailSend, messageText, callback) {
-		if(this.IfLoggedin() == false) {
-			const date = Date.now();
-			const userData = doc(this.db, 'contact', emailSend)
-			let contactObj = {name: name, emailSend: emailSend, messageText: messageText, time: date};
-			const contactMsg = userData.contactMsg !== undefined ? userData.contactMsg :[];
-			contactMsg.push(contactObj);
-
-			await updateDoc(userData, {
-				contactMsg
-		});
-		callback();
-		} else {
-			console.log(emailSend);
-			console.log(error);
+		// how the data will be saved in the obj arr
+		let msgObj = {title: "contactUs", date: new Date(), user: emailSend, name: name, messageText: messageText};
+		const email_msg_ref = doc(this.db, "contact", emailSend);
+		try{ 
+			// getting doc data 
+			const docSnap = await getDoc(email_msg_ref);
+			const contactMsg = docSnap.data();
+			var msg_arr =  contactMsg !== undefined ? contactMsg.contactUs  : [];
+		} catch(e) {
+			msg_arr = []
 		}
+		msg_arr.push(msgObj);
+
+		await setDoc(email_msg_ref, {
+			contactUs: msg_arr
+		});
+
+		callback();
 	};
 
 	//saving contact message details
