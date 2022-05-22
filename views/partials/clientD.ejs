@@ -26,7 +26,7 @@
 <div class="row">
 	<div class="container mt-3" >
 
-	<label class="form-label address" for="address"><strong>Adress</strong><br></label>
+	<label class="form-label address" for="my_address"><strong>Adress</strong><br></label>
 	<div class="mb-3">
 	<textarea class="my_address" placeholder="<%= address %>" id="field" name="address" disabled></textarea>
 	</div>
@@ -36,7 +36,6 @@
 
 <div class="row">
 	<div class="container mt-3" >
-
 	<label class="form-label aboutme" for="about_me"><strong>About me</strong><br></label>
 	<div class="mb-3">
 	<textarea class="about_me" placeholder="<%= about_me %>" name="about_me" id="field" disabled></textarea>
@@ -58,49 +57,30 @@
 <% } %>
 <style>
 	.my_address {
-		width: 750px;
+		width: 500px !important;
 		margin-left: auto;
     	margin-right: auto;
 	}
 	.about_me{
-		width: 750px;
+		width: 500px !important;
     	margin-left: auto;
     	margin-right: auto;
 	}
 
 
 	.mt-3{
-		padding-left: 15% !important;
+		padding-left: 30% !important;
 	}
 
 	.aboutme{
 		padding-left: 35% !important;
 	}
-	.address {
-		
-		.slidecontainer{
-		background-color: rgb(238 238 238);
-		padding-left: 40% !important;
-	}
+
 	.jumbotron p{
 		font-size: small;
 		background-color: rgb(238 238 238);
 	}
-	input#myRange.slider{
-		width: 200px !important;
-	
-	}
-	.bootstrap-select > .dropdown-toggle {
-		width: 100%;
-		
-		z-index: 1;
-	}
-	.bootstrap-select.btn-group:not(.input-group-btn), .bootstrap-select.btn-group[class*="col-"] {
-		float: none;
-		display: inline-block;
-		margin-left: 0;
-		margin-right: 0;
-	}
+
 	
 	.mt-5{
 		padding-left: 37% !important;
@@ -108,18 +88,17 @@
 	.col-md-6 {
 		padding-left: 15% !important;
 	}
-	.about_me{
-		width: 750px;
-    	margin-left: auto;
-    	margin-right: auto;
-	}
 	
 	.mt-3{
-		padding-left: 15% !important;
+		padding-left: 20% !important;
 	}
 	.aboutme{
 		padding-left: 35% !important;
 	}
+	.address {
+		padding-left: 35% !important;
+	}
+
 	.pcoded {
 		display: none !important;
 	}
@@ -128,6 +107,7 @@
 	.mb-3{
 		margin-left: auto !important;
 		margin-right: auto !important;
-	}padding-left: 35% !important;
 	}
+
+	
 </style>

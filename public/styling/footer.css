@@ -3,9 +3,12 @@ footer .bottom-nav{
 	font-family: "Nunito";
 	background-color: #3E3E3E;
 	bottom: 0;
-	min-width: 100% !important;
-	max-height: 80px;
-	position: absolute;
+	left: 0;
+	right: 0;
+	width: 100% !important;
+	max-height: 70px;
+	position: fixed;
+	z-index: 1;
 }
 footer input{
 	background-color:#3E3E3E ;
@@ -22,7 +25,6 @@ footer input{
 		
 }
 footer .bottom-nav .container{
-	max-width: 995px;
 	display: flex;
 	justify-content: space-between !important;
 }
@@ -79,24 +81,10 @@ footer button {
 	margin-left: 30%;
 
 }
-  /* help Content */
-  .modal-contentt {
-    background-color: #ffff;
-    margin:  auto;
-    padding-right: 30px;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 40%;
-    text-align: center;
-    font-size: 15px;
-	margin-left: 30%;
-	overflow-y: scroll;
-	max-height: 90%;
 
-}
 
 footer .modal-contentt .close {
-	float: right;
+	float: left;
 }
 
 footer h1{
@@ -116,9 +104,9 @@ footer h3{
 }
 /* The Close Button */
 footer .close {
-	text-align: right;
+	text-align: left;
 	color: black;
-	float: right;
+	float: left;
 	font-size: 28px;
 	font-weight: bold;
 }
