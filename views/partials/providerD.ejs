@@ -29,7 +29,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="slidecontainer">
+		<div class="slidecontainer mb-3">
 			<strong>Price per hour</strong>
 			<p><span id="demo"></span>₪</p>
 			<input type="range" min="1" max="200" value="<%= price %>" class="slider" id="myRange" disabled name="price">
@@ -45,7 +45,7 @@
 </div>
 </div>
 <div class='row'>
-	<div class="container mt-5" >
+	<div class="mb-3" >
 		<strong>Area/Cities</strong>
 		<div class="mb-3 float-center" id="field"> 
             <select class="selectpicker" value='6' id='field' class="field" multiple data-live-search="true" title='<%= area_city %>' disabled name ="area_city" >
@@ -62,33 +62,34 @@
 </div>
 </div>
 
-<div id="dates">
-	<div class="info-box">
-		<div class="col-md-6"><label class="form-label" for="first_name"><strong>Type of pets</strong><br></label>
+<div id="row">
+	<div class="mb-3">
+		<div class="col-md-6"><strong>Type of pets</strong><br>
 			<select class="selectpicker" multiple data-live-search="true" title='<%= type_of_pet %>' id="field" disabled name="typeP">
 				<option disabled>Type of pets</option>
 				<option id ='type_dog'>Dog</option>
 				<option id ='type_dog'>Cat</option>
 				<option id ='type_other'>Other pet</option>
-		</select>
+			</select>
+		</div>
 	</div>
 	
-	<div class="info-box" id="return-box">
-		<div class="col-md-6"><label class="form-label" for="first_name"><strong>Type of service</strong><br></label>
+	
+		<div class="mb-3">
+			<label class="col-md-6"><strong>Type of service</strong><br>
 			<select class="selectpicker" multiple data-live-search="true" title='<%= type_of_service %>' id="field" disabled name="typeS">
 				<option disabled>Type of Service</option>
 				<option  id='take_for_walk'>Take for a walk</option>
 				<option  id='keep_at_home' >Keep at home</option>
 			</select> 
 		</div>
-	</div>
-</div>
+	
+
 </div>
 </br>
 <div class="row">
-	<div class="container mt-3" >
-
-		<label class="form-label aboutme" for="about_me"><strong>About me</strong><br></label>
+	<div class="mb-3" >
+		<label class="form-label" for="about_me"><strong>About me</strong><br></label>
 		<div class="mb-3">
 			<textarea class="about_me" idi='field' placeholder="<%= about_me %>" name="about_me" id="field" disabled=""></textarea>
 	</div>
@@ -108,7 +109,7 @@
 <style>
 	.slidecontainer{
 		background-color: unset;
-		padding-left: 40% !important;
+		margin-top: 2%;
 	}
 	.jumbotron p{
 		font-size: small;
@@ -132,10 +133,10 @@
 	}
 	
 	.mt-5{
-		padding-left: 37% !important;
+		/*padding-left: 37% !important;*/
 	}
 	.col-md-6 {
-		
+		padding-left: 10% !important;
 	}
 	.about_me{
 		width: 750px;
@@ -147,7 +148,7 @@
 		padding-left: 15% !important;
 	}
 	.aboutme{
-		padding-left: 35% !important;
+		text-align: center;
 	}
 	.pcoded {
 		display: none !important;
@@ -157,6 +158,9 @@
 	.mb-3{
 		margin-left: auto !important;
 		margin-right: auto !important;
+		text-align: center;
 	}
-	
+	.dropdown-toggle::after {
+		display: none;
+	}
 </style>
