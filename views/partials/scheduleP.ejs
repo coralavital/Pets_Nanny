@@ -107,7 +107,7 @@
 				Reservation Information
 				<span class="close" onclick='closeReservation()'>&times;</span>			 
 			</div>
-			
+			<input name='rID' id='rID' value='' style='display: none;'/>
 			<span id='startR'></span>
 			<span id='endR'></span>
 			<span id='address'></span>
@@ -130,10 +130,10 @@
 				Free Time Information
 				<span class="close" onclick='closeFree()'>&times;</span>			 
 			</div>
-			<span name='fID' id='fID' type='text'></span>
+			<input name='fID' id='fID' value='' style='display: none;'/>
 			<span id='startF'></span>
 			<span id='endF'></span>
-			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='cancel' >Cancel</button>
+			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" type='submit' id='cancel' >Cancel</button>
 			<br>	
 		</div>
 	</div>
@@ -162,7 +162,8 @@ function closepStatistical() {
 };
 
 //Reservation info popup
-function reservationPopup(start, end, fullname, email, phone, price, address, typeP, typeS) {
+function reservationPopup(start, end, fullname, email, phone, price, address, typeP, typeS, id) {
+	document.getElementById("rID").value = id;
 	document.getElementById("providerFullName").innerHTML = "The name of the provider \u27A1\uFE0F " + fullname;
     document.getElementById("clientEmail").innerHTML = "The email of the client \u27A1\uFE0F " +  email;
 	document.getElementById("providerPhone").innerHTML = "The phone of the provider \u27A1\uFE0F " +  phone;
@@ -221,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		if(info.event.title == "Reservation") {
 			reservationPopup(info.event.start, info.event.end, info.event.extendedProps.providerName, 
 		info.event.extendedProps.clientEmail, info.event.extendedProps.providerPhone, info.event.extendedProps.price, 
-		info.event.extendedProps.address, info.event.extendedProps.typeP, info.event.extendedProps.typeS);
+		info.event.extendedProps.address, info.event.extendedProps.typeP, info.event.extendedProps.typeS, info.event.id);
 		}
 		else {
 			freePopup(info.event.start, info.event.end, info.event.id);

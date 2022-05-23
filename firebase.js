@@ -1,7 +1,7 @@
 const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword, 
 	deleteUser, sendPasswordResetEmail, reauthenticateWithCredential, EmailAuthProvider } = require("firebase/auth");
 const { initializeApp } = require('firebase/app');
-const { getFirestore, collection, doc, setDoc, getDoc, updateDoc, query, where, getDocs, deleteDoc, arrayUnion, arrayRemove } = require('firebase/firestore');
+const { getFirestore, collection, doc, setDoc, getDoc, updateDoc, query, where, getDocs, deleteDoc, deleteField , arrayUnion } = require('firebase/firestore');
 const { use } = require("chai");
 const { async } = require('@firebase/util');
 
@@ -353,17 +353,16 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 
 	//saving contact message details
 	async cancelFreeTime(id, callback) {
-		console.log(id)
 		const providerRef = doc(this.db, "users", this.auth._currentUser.email);
 		const docSnap = await getDoc(providerRef);
 		const document = docSnap.data()
 		for(var i=0; i<document.freeTime.length; i++){
 			console.log(document.freeTime[i])
 			if(document.freeTime[i].id == id) {
-				var obj = providerRef.freeTime[i]
+				var obj = document.freeTime[i]	
 				await updateDoc(providerRef, {
 					
-					freeTime: FieldValue.arrayRemove(obj)
+					freeTime: document.freeTime.deleteField(i)
 				});
 				console.log("The free time deleted")
 			}

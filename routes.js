@@ -429,7 +429,7 @@ module.exports = function (app) {
     });
   });
 
-//add contact message to a documents
+//cancel a free time function only for provider
 app.post('/cancelFreeTime', async function (req, res) {
 	const { fID } = req.body
 	console.log(fID)
@@ -437,7 +437,17 @@ app.post('/cancelFreeTime', async function (req, res) {
 		res.redirect('/mySchedule');
 		
 	});
+});
+
+//cancel a reservation
+app.post('/cancelReservation', async function (req, res) {
+	const { rID } = req.body
+	console.log(rID)
+	firebase.cancelReservation(fID, () => {
+		res.redirect('/mySchedule');
+		
 	});
+});
 
 
   app.post('/selectProvider', async function(req, res) {
