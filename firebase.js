@@ -270,23 +270,27 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 
 		async function EnterTime({start, end}){
 			// get the specific free time obj
-			for(var i=0; i<document.freeTime.length; i++){
-				if(document.freeTime[i].start == start && document.freeTime[i].end == end ||
-					document.freeTime[i].start <= start && document.freeTime[i].end == end ||
-					document.freeTime[i].start == start && document.freeTime[i].end >= end ||
-					document.freeTime[i].start <= start && document.freeTime[i].end >= end) {	
-						console.log("cannot save free time on free time object")
-						return;
-					}
+			if(document.freeTime != undefined){
+				for(var i=0; i<document.freeTime.length; i++){
+					if(document.freeTime[i].start == start && document.freeTime[i].end == end ||
+						document.freeTime[i].start <= start && document.freeTime[i].end == end ||
+						document.freeTime[i].start == start && document.freeTime[i].end >= end ||
+						document.freeTime[i].start <= start && document.freeTime[i].end >= end) {	
+							console.log("cannot save free time on free time object")
+							return;
+						}
+				}
 			}
-			for(var i=0; i<document.reservations.length; i++){
-				if(document.reservations[i].start == start && document.reservations[i].end == end ||
-					document.reservations[i].start <= start && document.reservations[i].end == end ||
-					document.reservations[i].start == start && document.reservations[i].end >= end ||
-					document.reservations[i].start <= start && document.reservations[i].end >= end) {	
-						console.log("cannot save free time on reservation time object")
-						return;
-					}
+			if(document.reservations != undefined){
+				for(var i=0; i<document.reservations.length; i++){
+					if(document.reservations[i].start == start && document.reservations[i].end == end ||
+						document.reservations[i].start <= start && document.reservations[i].end == end ||
+						document.reservations[i].start == start && document.reservations[i].end >= end ||
+						document.reservations[i].start <= start && document.reservations[i].end >= end) {	
+							console.log("cannot save free time on reservation time object")
+							return;
+						}
+				}
 			}
 			let freeTimeObj = {start, end, title: "Free Time", id: uniqueId(), color: "green"};
 			const freeTime = userData.freeTime !== undefined ? userData.freeTime :[];
@@ -311,7 +315,7 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 
 	
 	//saving reservations details
-	async addReservation(date, from, to, provider, callback) {
+	async addReservation(date, from, to, provider, type_of_service, callback) {
 		const clientRef = doc(this.db, "users", this.auth._currentUser.email);
 		const providerRef = doc(this.db, "users", provider.email);
 		from = from.concat(":00")
@@ -321,7 +325,6 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 		const edate = date.concat("T", to)
 		const end = +new Date(edate)
 		const userData = await this.CurrentUserData()
-		console.log(start, end);
 		//get id for ecery reservation
 		const uniqueId = () => {
 			const dateString = Date.now().toString(36);
@@ -340,7 +343,6 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 				document.freeTime[i].start == start && document.freeTime[i].end >= end ||
 				document.freeTime[i].start <= start && document.freeTime[i].end >= end) {	
 				freeTimeItem = document.freeTime[i];
-				console.log(freeTimeItem)
 			}
 			else {
 				newFreeTime.push(document.freeTime[i])
@@ -370,11 +372,11 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 		await EnterTime({start, end});
 
 		async function EnterTime({start, end}){
+			console.log(type_of_service)
 			let reservationObj = {start, end, title: "Reservation", id: uniqueId(), color: 'red', providerName: provider.fullname, providerEmail: provider.email, 
-									price: provider.price_per_hour, providerPhone: provider.phonenumber, address: userData.address , clientEmail: userData.email};
+									price: provider.price_per_hour, providerPhone: provider.phonenumber, address: userData.address , clientEmail: userData.email, typeS: type_of_service};
 			const reservations = userData.reservations !== undefined ? userData.reservations :[];
 			reservations.push(reservationObj);
-
 			await updateDoc(clientRef, {
 				reservations
 			});
@@ -417,7 +419,6 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 		const docSnap = await getDoc(providerRef);
 		const document = docSnap.data()
 		for(var i=0; i<document.freeTime.length; i++){
-			console.log(document.freeTime[i])
 			if(document.freeTime[i].id != id) {	
 				newFree.push(document.freeTime[i])
 			}
@@ -435,7 +436,6 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 	async cancelReservation(id, emailProvider, emailClient, callback) {
 		var newReservationsp = [];
 		var newReservationsc = [];
-		console.log(emailProvider)
 		const providerRef = doc(this.db, "users", emailProvider);
 		const clientRef = doc(this.db, "users", emailClient);
 		const pdocSnap = await getDoc(providerRef);
@@ -443,11 +443,8 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 		const cdocSnap = await getDoc(clientRef);
 		const clientDOC = cdocSnap.data()
 		for(var i=0; i<providerDOC.reservations.length; i++){
-			console.log(providerDOC.reservations[i])
 			if(providerDOC.reservations[i].id != id) {	
 				newReservationsp.push(providerDOC.reservations[i])
-				
-				console.log(newReservationsp)
 			}
 		}
 		//var newFreeTime = document.freeTime.filter(document.freeTime => obj)
@@ -455,11 +452,8 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 			reservations: newReservationsp
 		});
 		for(var i=0; i<clientDOC.reservations.length; i++){
-			console.log(clientDOC.reservations[i])
 			if(clientDOC.reservations[i].id != id) {	
 				newReservationsc.push(clientDOC.reservations[i])
-				
-				console.log(newReservationsc)
 			}
 		}
 		//var newFreeTime = document.freeTime.filter(document.freeTime => obj)

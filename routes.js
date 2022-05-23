@@ -16,7 +16,7 @@ const time = require('./controllers/time');
 module.exports = function (app) {
 	var providers;
 	var providerRef;
-
+	var types;
   // index page
   app.get('/', async function (req, res) {
 
@@ -189,6 +189,7 @@ module.exports = function (app) {
 		let ar = filters[0];
 		let type_of_pet = filters[1];
 		let type_of_service = filters[2];
+		types = filters[2];
 		inviteFlag = true;
 		filter.changeProvider(ar, parseInt(price), type_of_pet, type_of_service, sFilters.date, sFilters.from, sFilters.to, () => {
 			res.redirect(`/portal?date=${sFilters.date}&from=${sFilters.from}&to=${sFilters.to}&typeP=${type_of_pet}&typeS=${type_of_service}&price=${price}&area_city=${ar}`)
@@ -411,7 +412,7 @@ module.exports = function (app) {
 
 	//add reservation to the documents
 	app.post('/addReservation', function (req, res) {
-		firebase.addReservation(sFilters.date, sFilters.from, sFilters.to, providerRef, () => {
+		firebase.addReservation(sFilters.date, sFilters.from, sFilters.to, providerRef, types, () => {
 			sFilters.date = null;
 			res.redirect('/portal')
 		})
@@ -422,7 +423,6 @@ module.exports = function (app) {
   //add contact message to a documents
   app.post('/contact', async function (req, res) {
     const { name, emailSender, message } = req.body
-    
 	firebase.addContactMsg(name, emailSender, message, () => {
 	  res.redirect('/contact');
       
@@ -432,7 +432,6 @@ module.exports = function (app) {
 //cancel a free time function only for provider
 app.post('/cancelFreeTime', async function (req, res) {
 	const { fID } = req.body
-	console.log(fID)
 	firebase.cancelFreeTime(fID, () => {
 		res.redirect('/mySchedule');
 		
@@ -442,14 +441,13 @@ app.post('/cancelFreeTime', async function (req, res) {
 //cancel a reservation
 app.post('/cancelReservation', async function (req, res) {
 	const { rID, emailProvider, emailClient } = req.body
-	console.log(rID)
 	firebase.cancelReservation(rID, emailProvider, emailClient, () => {
 		res.redirect('/mySchedule');
 		
 	});
 });
 
-
+//get the provider after clicking on some provider in the search table.
   app.post('/selectProvider', async function(req, res) {
 	const { invite } = req.body;
 	providerRef = providers[invite];

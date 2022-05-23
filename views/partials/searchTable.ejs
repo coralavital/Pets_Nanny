@@ -7,7 +7,7 @@
 			<th>Age</th>
 			<th>Phone number</th>
 			<th>Price per half hour </th>
-			<th>buttons</th>
+			<th></th>
 			<tbody>
 				<form action='selectProvider' method='post'>	
 					<% for(var j = 0 ; j < providers.length ; j++){ %>
@@ -44,7 +44,7 @@
 		<form action="addReservation" method="post">
 			<p id="fullname"></p>
 			<p id="phonenumber"></p>
-			<p id="pricePerHour"></p>
+			<p id="pricePerHour"></p>	
 			<p>Address <%= userData.address %></p>
 			<p>Date: <%= time.date %> From: <%= time.from %> To:<%= time.to %></p>
 

@@ -22,8 +22,12 @@
 			<div id="dates">
 				<div class="info-box" style='margin-left: 35px;'>
 					<label for="adults">Date</label>
-					<input type="date" id="date" name="date">
-					<script>document.getElementById("date").valueAsDate = new Date();</script>
+					<% let date = (new Date()).toISOString().split('T')[0] %>	
+					<input type="date" id="date" name="date" min='<%= date %>'>
+					<script>
+						var today = new Date();
+						document.getElementById("date").valueAsDate = today;
+					</script>
 
 					
 				</div>
@@ -102,6 +106,7 @@
 	</div>
 </div>
 
+
 <!--Reservation info popup-->
 <form action="cancelReservation" method="post">
 	<div id="reservationPopup" class="modal">
@@ -145,7 +150,7 @@
 <!--calendar script-->
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.js'></script>
 <script>
-var calendar;
+
 //Add free time popup
 function freetimePopup() {
 	document.getElementById('freetimePopup').style.display ='block';
@@ -204,12 +209,42 @@ function cancelFreetime(){
 		event.remove();
 }
 
+function statisticInfo(){
+	var userData = Array.from(<%- JSON.stringify(userData) %>)
+	var today = new Date();
+	var staticsticK;
+	var staticsticT;
+	var sK;
+	var sT;
+	if(userData.reservations != undefined){
+		for(var i=0; i<userData.reservations.length; i++) {
+			if(userData.reservations[i].start <= today){
+				if(userData.reservations[i].typeS.include("Keep at home")){
+					staticsticK.push(userData.reservations[i])
+				}
+				else if(userData.reservations[i].typeS.include("Take for a walk")){
+					staticsticT.push(userData.reservations[i])
+				}
+			}
+		}
+		for(var i=0; i<staticsticK.length; i++){
+			sK += staticsticK.price
+		}
+		sk = sk/(staticsticK.length-1)
+		for(var i=0; i<staticsticT.length; i++){
+			sK += staticsticT.price
+		}
+		sk = sk/(staticsticT.length-1)
+	}
+
+}
+
 
 document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
   var freeTime = Array.from(<%- JSON.stringify(freeTime) %>)
   var reservations = Array.from(<%- JSON.stringify(reservations) %>)
-  calendar = new FullCalendar.Calendar(calendarEl, {
+  var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
     initialDate: new Date(),
     themeSystem: "bootstrap",
