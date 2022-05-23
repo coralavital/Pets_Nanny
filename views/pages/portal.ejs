@@ -108,11 +108,11 @@
         </div>
 		<div id="dates">
 			<!-- date from to -->
-			<div class="info-box" style='margin-left: 35px;'>
+			<div class="info-box" style='margin-left: 12%;'>
 					<label>Date</label>
 					<input type="date" id="date" name="date"  value='<%= date %>' required/>
 				</div>
-				<div class="info-box">
+				<div class="info-box" style='margin-left: 5px !important;'>
 					<label>From</label>
 					<select class="selectpicker" id="from" name="from" value='<%= from %>'>
 					<% for(var i = 0 ; i < times.length ; i++) { %>
@@ -120,7 +120,7 @@
 					<% }; %>
 					</select>
 				</div>
-				<div class="info-box">
+				<div class="info-box" style='margin-left: 5px !important;'>
 					<label>To</label>
 					<select class="selectpicker" id="to" name="to" value='<%= to %>'>
 					<% for(var i = 0 ; i < times.length ; i++) { %>
