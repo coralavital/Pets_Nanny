@@ -441,9 +441,9 @@ app.post('/cancelFreeTime', async function (req, res) {
 
 //cancel a reservation
 app.post('/cancelReservation', async function (req, res) {
-	const { rID } = req.body
+	const { rID, emailProvider, emailClient } = req.body
 	console.log(rID)
-	firebase.cancelReservation(fID, () => {
+	firebase.cancelReservation(rID, emailProvider, emailClient, () => {
 		res.redirect('/mySchedule');
 		
 	});

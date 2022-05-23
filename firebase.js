@@ -312,8 +312,7 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 
 		async function EnterTime({start, end}){
 			let reservationObj = {start, end, title: "Reservation", id: uniqueId(), color: 'red', providerName: provider.fullname, providerEmail: provider.email, 
-									price: provider.price_per_hour, providerPhone: provider.phonenumber, address: userData.address , typeS: provider.type_of_service,
-									typeP: provider.type_of_pet, clientEmail: userData.email};
+									price: provider.price_per_hour, providerPhone: provider.phonenumber, address: userData.address , clientEmail: userData.email};
 			const reservations = userData.reservations !== undefined ? userData.reservations :[];
 			reservations.push(reservationObj);
 
@@ -353,20 +352,63 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 
 	//saving contact message details
 	async cancelFreeTime(id, callback) {
+		var newFree = [];
 		const providerRef = doc(this.db, "users", this.auth._currentUser.email);
 		const docSnap = await getDoc(providerRef);
 		const document = docSnap.data()
 		for(var i=0; i<document.freeTime.length; i++){
 			console.log(document.freeTime[i])
-			if(document.freeTime[i].id == id) {
-				var obj = document.freeTime[i]	
-				await updateDoc(providerRef, {
-					
-					freeTime: document.freeTime.deleteField(i)
-				});
-				console.log("The free time deleted")
+			if(document.freeTime[i].id != id) {	
+				newFree.push(document.freeTime[i])
+				
+				console.log(newFree)
 			}
 		}
+		//var newFreeTime = document.freeTime.filter(document.freeTime => obj)
+		await updateDoc(providerRef, {
+			freeTime: newFree
+		});
+		console.log("The free time deleted")
+		callback();
+
+	};
+
+	//saving contact message details
+	async cancelReservation(id, emailProvider, emailClient, callback) {
+		var newReservationsp = [];
+		var newReservationsc = [];
+		console.log(emailProvider)
+		const providerRef = doc(this.db, "users", emailProvider);
+		const clientRef = doc(this.db, "users", emailClient);
+		const pdocSnap = await getDoc(providerRef);
+		const providerDOC = pdocSnap.data()
+		const cdocSnap = await getDoc(clientRef);
+		const clientDOC = cdocSnap.data()
+		for(var i=0; i<providerDOC.reservations.length; i++){
+			console.log(providerDOC.reservations[i])
+			if(providerDOC.reservations[i].id != id) {	
+				newReservationsp.push(providerDOC.reservations[i])
+				
+				console.log(newReservationsp)
+			}
+		}
+		//var newFreeTime = document.freeTime.filter(document.freeTime => obj)
+		await updateDoc(providerRef, {
+			reservations: newReservationsp
+		});
+		for(var i=0; i<clientDOC.reservations.length; i++){
+			console.log(clientDOC.reservations[i])
+			if(clientDOC.reservations[i].id != id) {	
+				newReservationsc.push(clientDOC.reservations[i])
+				
+				console.log(newReservationsc)
+			}
+		}
+		//var newFreeTime = document.freeTime.filter(document.freeTime => obj)
+		await updateDoc(clientRef, {
+			reservations: newReservationsc
+		});
+		console.log("The reservation deleted from the client schedule and from the provider schedule")
 		callback();
 
 	};
