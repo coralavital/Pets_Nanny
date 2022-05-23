@@ -59,9 +59,7 @@ class Firebase {
   //signup function
   async signup(email, password, fullname, phone, type, callback, callbackErr) {
     createUserWithEmailAndPassword(this.auth, email, password).then(async (cred) => {
-      const coll = collection(this.db, 'users');
-
-      try {
+    	const coll = collection(this.db, 'users');
         const user = doc(this.db, 'users', email)
         const result = await setDoc(user, {
           fullname: fullname,
@@ -69,15 +67,22 @@ class Firebase {
           typeOfUser: type
         });
         callback();
-      } catch (error) {
-        		switch (error.code) {
-					default:
-					console.log(error.message);
-					break;
+    }).catch(error => {
+		switch (error.code) {
+			case 'auth/email-already-in-use':
+			  console.log(`Email address ${email} already in use.`);
+			  break;
+			case 'auth/invalid-email':
+			  console.log(`Email address ${email} is invalid.`);
+			  break;
+			case 'auth/operation-not-allowed':
+			  console.log(`Error during sign up.`);
+			  break;
+			default:
+			  console.log(error.message);
+			  break;
 		  }
-      }
-
-    });
+	})
 
   }
 
@@ -348,13 +353,19 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 
 	//saving contact message details
 	async cancelFreeTime(id, callback) {
+		console.log(id)
 		const providerRef = doc(this.db, "users", this.auth._currentUser.email);
-		for(var i=0; i<providerRef.freeTime; i++){
-			if(providerRef.freeTime[i] == id) {
+		const docSnap = await getDoc(providerRef);
+		const document = docSnap.data()
+		for(var i=0; i<document.freeTime.length; i++){
+			console.log(document.freeTime[i])
+			if(document.freeTime[i].id == id) {
 				var obj = providerRef.freeTime[i]
 				await updateDoc(providerRef, {
+					
 					freeTime: FieldValue.arrayRemove(obj)
 				});
+				console.log("The free time deleted")
 			}
 		}
 		callback();

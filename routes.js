@@ -429,6 +429,17 @@ module.exports = function (app) {
     });
   });
 
+//add contact message to a documents
+app.post('/cancelFreeTime', async function (req, res) {
+	const { fID } = req.body
+	console.log(fID)
+	firebase.cancelFreeTime(fID, () => {
+		res.redirect('/mySchedule');
+		
+	});
+	});
+
+
   app.post('/selectProvider', async function(req, res) {
 	const { invite } = req.body;
 	providerRef = providers[invite];

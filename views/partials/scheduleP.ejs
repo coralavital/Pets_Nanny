@@ -107,6 +107,7 @@
 				Reservation Information
 				<span class="close" onclick='closeReservation()'>&times;</span>			 
 			</div>
+			
 			<span id='startR'></span>
 			<span id='endR'></span>
 			<span id='address'></span>
@@ -122,20 +123,20 @@
 	</div>
 </form>
 <form action="cancelFreeTime" method="post">
-<!--Free time info popup-->
-<div id="freePopup" class="modal">
-	<div class="modal-content">
-		<div class="modal-title" style='font-size:xx-large; font-size:xx-large; margin-bottom: 15px;'>
-			Free Time Information
-			<span class="close" onclick='closeFree()'>&times;</span>			 
+	<!--Free time info popup-->
+	<div id="freePopup" class="modal">
+		<div class="modal-content">
+			<div class="modal-title" style='font-size:xx-large; font-size:xx-large; margin-bottom: 15px;'>
+				Free Time Information
+				<span class="close" onclick='closeFree()'>&times;</span>			 
+			</div>
+			<span name='fID' id='fID' type='text'></span>
+			<span id='startF'></span>
+			<span id='endF'></span>
+			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='cancel' >Cancel</button>
+			<br>	
 		</div>
-		<span id='freeTimeID' name='freeTimeID'></span>
-		<span id='startF'></span>
-		<span id='endF'></span>
-		<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='cancel' >Cancel</button>
-		<br>	
 	</div>
-</div>
 </form>
 
 <!--calendar script-->
@@ -180,8 +181,8 @@ function closeReservation() {
 };
 
 //Free time info popups
-function freePopup(start, end, event, id) {
-	document.getElementById("freeTimeID").value = id;
+function freePopup(start, end, id) {
+	document.getElementById("fID").value = id;
 	document.getElementById("startF").innerHTML = "The start time \u27A1\uFE0F " +  start;
     document.getElementById("endF").innerHTML = "The end time \u27A1\uFE0F " +  end;
 	//document.getElementById("pricePerHour").innerHTML = "Provider's price per hour: "+ providers[index-1].price_per_hour;
