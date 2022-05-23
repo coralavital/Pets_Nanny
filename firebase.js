@@ -248,6 +248,8 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 	//update provider document
 	async addFreeTime(date, from, to, callback) {
 		const userRef = doc(this.db, "users", this.auth._currentUser.email);
+		const docSnap = await getDoc(userRef);
+		const document = docSnap.data()
 		from = from.concat(":00")
 		to = to.concat(":00")
 		const sdate = date.concat("T", from)
@@ -267,6 +269,25 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 
 
 		async function EnterTime({start, end}){
+			// get the specific free time obj
+			for(var i=0; i<document.freeTime.length; i++){
+				if(document.freeTime[i].start == start && document.freeTime[i].end == end ||
+					document.freeTime[i].start <= start && document.freeTime[i].end == end ||
+					document.freeTime[i].start == start && document.freeTime[i].end >= end ||
+					document.freeTime[i].start <= start && document.freeTime[i].end >= end) {	
+						console.log("cannot save free time on free time object")
+						return;
+					}
+			}
+			for(var i=0; i<document.reservations.length; i++){
+				if(document.reservations[i].start == start && document.reservations[i].end == end ||
+					document.reservations[i].start <= start && document.reservations[i].end == end ||
+					document.reservations[i].start == start && document.reservations[i].end >= end ||
+					document.reservations[i].start <= start && document.reservations[i].end >= end) {	
+						console.log("cannot save free time on reservation time object")
+						return;
+					}
+			}
 			let freeTimeObj = {start, end, title: "Free Time", id: uniqueId(), color: "green"};
 			const freeTime = userData.freeTime !== undefined ? userData.freeTime :[];
 			freeTime.push(freeTimeObj);
@@ -300,13 +321,51 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 		const edate = date.concat("T", to)
 		const end = +new Date(edate)
 		const userData = await this.CurrentUserData()
-
+		console.log(start, end);
 		//get id for ecery reservation
 		const uniqueId = () => {
 			const dateString = Date.now().toString(36);
 			const randomness = Math.random().toString(36).substr(2);
 			return dateString + randomness;
 		};
+		var freeTimeItem;
+		var newFreeTime = []
+		var freeTimeObj;
+		const docSnap = await getDoc(providerRef);
+		const document = docSnap.data()
+		for(var i=0; i<document.freeTime.length; i++){
+			// get the specific free time obj
+			if(document.freeTime[i].start == start && document.freeTime[i].end == end ||
+				document.freeTime[i].start <= start && document.freeTime[i].end == end ||
+				document.freeTime[i].start == start && document.freeTime[i].end >= end ||
+				document.freeTime[i].start <= start && document.freeTime[i].end >= end) {	
+				freeTimeItem = document.freeTime[i];
+				console.log(freeTimeItem)
+			}
+			else {
+				newFreeTime.push(document.freeTime[i])
+			}
+		}
+		// updating free time arr obj
+		switch(true){
+			case start == freeTimeItem.start && end == freeTimeItem.end:
+				break;
+			case start >= freeTimeItem.start && end == freeTimeItem.end:
+				freeTimeObj = {start: freeTimeItem.start, end: start, title: "Free Time", id: uniqueId(), color: "green"};
+				newFreeTime.push(freeTimeObj)
+				break;
+			case start == freeTimeItem.start && end <= freeTimeItem.end:
+				freeTimeObj = {start: end, end: freeTimeItem.end, title: "Free Time", id: uniqueId(), color: "green"};
+				newFreeTime.push(freeTimeObj)
+				break;
+			case start >= freeTimeItem.start && end <= freeTimeItem.end:
+				freeTimeObj = {start: freeTimeItem.start, end: start, title: "Free Time", id: uniqueId(), color: "green"};
+				newFreeTime.push(freeTimeObj)
+				freeTimeObj = {start: end, end: freeTimeItem.end, title: "Free Time", id: uniqueId(), color: "green"};
+				newFreeTime.push(freeTimeObj)
+				break;
+
+		}
 
 		await EnterTime({start, end});
 
@@ -320,7 +379,8 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 				reservations
 			});
 			await updateDoc(providerRef, {
-				reservations
+				reservations,
+				freeTime: newFreeTime
 			});
 
 		}
@@ -360,8 +420,6 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 			console.log(document.freeTime[i])
 			if(document.freeTime[i].id != id) {	
 				newFree.push(document.freeTime[i])
-				
-				console.log(newFree)
 			}
 		}
 		//var newFreeTime = document.freeTime.filter(document.freeTime => obj)

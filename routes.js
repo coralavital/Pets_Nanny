@@ -57,7 +57,7 @@ module.exports = function (app) {
     const time = times.time
     const areaCities = areaCity.area_city
     if (filter.flag) {
-      providers = await filter.providers
+      providers = await firebase.GetProviders();
     } else {
       providers = await filter.result
       filter.flag = true
