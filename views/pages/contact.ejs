@@ -25,27 +25,34 @@
 
         <form action="contact" method="post">
           <div class="form-group pt-2 pl-1">
-            <label for="exampleInputName">Your name</label>
-            <input type="text" class="form-control" maxlength="20" name="name" required>
+            <label>Your name</label>
+            <input type="text" class="form-control" id='name' maxlength='20' value=" <%= name %>" name="name" required/>
           </div>
-          <div class="form-group pl-1">
-            <label for="exampleInputEmail1">Your email address</label>
-			<input type="email" class="form-control" name="emailSender" value=" <%= email %>" required>
+		  
+          <div class="form-group pt-2 pl-1">
+            <labe>Your email address</label>
+			<input type="email" class="form-control" id='email' name="emailSender" value=" <%= email %>" required/>
           </div>
 
           <div class="form-group pl-1">
-              <label for="exampleFormControlTextarea1">Your message</label>
+              <label>Your message</label>
               <textarea class="form-control" name="message" maxlength="250" rows="5" required></textarea>
 
             </div>
             <div class="row">
               <div class="col-md-3 offset-md-9"><button type="submit" class="btn btn-primary">Send</button></div>
 		</form>
+		<% if(userData != null) { %>
+			<script>
+				document.getElementById("name").disabled = true;
+				document.getElementById("email").disabled = true;
+			</script>
+		<% } %>
 		<div class="col-md-3 offset-md-9"><input type="button" class="btn btn-primary" onclick="history.back()" value="Back"></input></div>
         </div>   
     </div><!--col-->
   </div><!--row-->
-    
+
   </div>
 </main>
 

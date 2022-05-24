@@ -95,11 +95,12 @@ class Firebase {
   }
 
   //get currenct user firebase data
-  async CurrentUserData(){
+  async CurrentUserData() {
     const docRef = doc(this.db, 'users', this.auth._currentUser.email);
     const docSnap = await getDoc(docRef);
     return docSnap.data();
   }
+
 
   // updating provider details from personal info after sign up
   async UpdateDocProvider(age, area_city, price_per_hour, type_of_pet, type_of_service, about_me, callback){
@@ -409,7 +410,7 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 		callback();
 	};
 
-	//saving contact message details
+	//saving cancel gree time
 	async cancelFreeTime(id, callback) {
 		var newFree = [];
 		const providerRef = doc(this.db, "users", this.auth._currentUser.email);
@@ -420,7 +421,6 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 				newFree.push(document.freeTime[i])
 			}
 		}
-		//var newFreeTime = document.freeTime.filter(document.freeTime => obj)
 		await updateDoc(providerRef, {
 			freeTime: newFree
 		});
@@ -429,7 +429,7 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 
 	};
 
-	//saving contact message details
+	//cancel reservation details
 	async cancelReservation(id, emailProvider, emailClient, callback) {
 		var newReservationsp = [];
 		var newReservationsc = [];

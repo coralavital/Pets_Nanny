@@ -17,8 +17,6 @@ module.exports = function (app) {
 	var providers;
 	var providerRef;
 	var types;
-	var sK = 0;
-	var sT = 0;
   // index page
   app.get('/', async function (req, res) {
 
@@ -32,11 +30,13 @@ module.exports = function (app) {
 
   // contact page
   app.get('/contact', async function (req, res) {
+	  console.log(userData)
     editFlag.editFalse();
 	if(firebase.IfLoggedin() == false) {
 		res.render('pages/contact', {
 			firebase: firebase,
 			email: "",
+			name: "",
 			userData: null
 		});
 	}
@@ -46,7 +46,7 @@ module.exports = function (app) {
 			firebase: firebase,
 			userData,
 			email: firebase.auth._currentUser.email,
-			userData
+			name: userData.fullname,
 		});
 	}
   });
