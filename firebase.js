@@ -152,13 +152,11 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 	var providersResult =[];
 	var i; 
 
-	const coll = query(collection(this.db, 'users'), 
-	 where("type_of_pet", "array-contains-any", typeP),
-	 );
+	const coll = query(collection(this.db, 'users'), where("type_of_pet", "array-contains-any", typeP),);
 	const querySnapshot =  await getDocs(coll);
 	var result=[];
 	querySnapshot.forEach((doc) => {
-	  result.push(doc.data())
+		result.push(doc.data())
 	
 	});
   
