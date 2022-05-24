@@ -341,8 +341,6 @@ module.exports = function (app) {
   app.post('/updateP', async function (req, res) {
     var { age, price, area_city, typeP, typeS, about_me } = req.body;
     const userData = await firebase.CurrentUserData()
-
-
     age = (age == '') ? userData.age : age;
     price = (price == null) ? userData.price : price;
     if (area_city == null) {
