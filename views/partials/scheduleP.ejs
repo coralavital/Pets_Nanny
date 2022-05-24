@@ -2,6 +2,13 @@
 <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.css'>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+
+
+
+
 <link rel='stylesheet' href='styling/portal.css'>
 <link rel='stylesheet' href='styling/schedule.css'>
 
@@ -23,7 +30,7 @@
 				<div class="info-box" style='margin-left: 35px;'>
 					<label for="adults">Date</label>
 					<% let date = (new Date()).toISOString().split('T')[0] %>	
-					<input type="date" id="date" name="date" min='<%= date %>'>
+					<input type="date" id="date" name="date" min='<%= date%>'>
 					<script>
 						var today = new Date();
 						document.getElementById("date").valueAsDate = today;
@@ -74,44 +81,31 @@
 </ul>	
 
 <!--Statistical info button-->
-<button class="fc-dayGridMonth-button btn btn-primary" onclick="statisticalPopup()" id='statis' type='submit'>Staticstical info</button>
-
+<button class="fc-dayGridMonth-button btn btn-primary" onclick="createchart()"id='statis' type='submit'>Staticstical info</button>
 <!--Statistical info popup-->
 <div id="statisticalPopup" class="modal">
 	<div class="modal-content">
-		<div class="modal-title" style='font-size:xx-large; font-size:xx-large;'>
-			Statistical info
-			<span class="close" onclick='closepStatistical()'>&times;</span>			 
+		<span class="close" onclick='closepStatistical()'>&times;</span> 
+		<div style="width:100%;">
+			<canvas id="canvas"></canvas>
+			<label for="children" style='color: #573b8a; font-weight: bold;'>Year</label>
+			<select id="year" style='width: 25%; height: 1%; border-radius:20px; text-align: center; right: 50%;' onchange='createchart()' class='selectpicker'>
+				<% var year = new Date() %>
+				<% var years = [year.getFullYear(), year.getFullYear()-1, year.getFullYear()-2] %>
+				<% for(var i = 0 ; i < years.length ; i++) { %>
+					<option><%= years[i] %></option>
+				<% }; %>
+			</select>
 		</div>
-			
-		<table class="graph">
-			<thead>
-				<tr>
-					<th scope="col">Item</th>
-					<th scope="col">Percent</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr style="height:85%">
-					<th scope="row">Keep at home</th>
-					<td><span>85%</span></td>
-				</tr>
-				<tr style="height:23%">
-					<th scope="row">Take for a walk</th>
-					<td><span>23%</span></td>
-				</tr>
-			</tbody>
-		</table>
-		<br>
+
 	</div>
 </div>
-
 
 <!--Reservation info popup-->
 <form action="cancelReservation" method="post">
 	<div id="reservationPopup" class="modal">
 		<div class="modal-content">
-			<div class="modal-title" style='font-size:xx-large; font-size:xx-large; margin-bottom: 15px;'>
+			<div class="modal-title" style='font-size:xx-large; font-size:xx-large; margin-bottom: 15px; color: #573b8a;'>
 				Reservation Information
 				<span class="close" onclick='closeReservation()'>&times;</span>			 
 			</div>
@@ -134,7 +128,7 @@
 	<!--Free time info popup-->
 	<div id="freePopup" class="modal">
 		<div class="modal-content">
-			<div class="modal-title" style='font-size:xx-large; font-size:xx-large; margin-bottom: 15px;'>
+			<div class="modal-title" style='font-size:xx-large; font-size:xx-large; margin-bottom: 15px; color: #573b8a;'>
 				Free Time Information
 				<span class="close" onclick='closeFree()'>&times;</span>			 
 			</div>
@@ -160,10 +154,116 @@ function closeFreetime() {
 		document.getElementById('freetimePopup').style.display = 'none';
 };
 
-//Statistical info popup
-function statisticalPopup() {
+
+function getStatistics(type) {
+	var e = document.getElementById("year");
+	//the selected year from the dropdoen list
+	var text = e.options[e.selectedIndex].text;
+	//the reservations list of the relevant provider
+	var reservations = <%- JSON.stringify(reservations) %>;
+	//today date
+	var today = new Date();
+	var month = []
+	if(reservations != null) {
+		for(var m=1; m<13; m++) {
+			var staticstics = [];
+			var sum = 0;
+			for(var i=0; i<reservations.length; i++) {
+				//get date with the year of the selected year from the dropdown list
+				var selectedYear = new Date(text)
+				//get the year from the current reservation
+				var year = new Date(reservations[i].start)
+				//chack if the reservation passed and if the selected year is like the year of the reservation
+				if(reservations[i].start <= today && year.getFullYear() == selectedYear.getFullYear() && year.getMonth()+1 == m) {
+					for(var j=0; j<reservations[i].typeS.length; j++) {
+						if(reservations[i].typeS[j] == type) {
+							staticstics.push(reservations[i])
+						}
+					}
+				}
+			}
+			for(var i=0; i<staticstics.length; i++) {
+				sum += (staticstics[i].price)*(Math.abs(staticstics[i].end-staticstics[i].start)/36e5)
+			}
+			month[m-1] = sum
+		}
+	}
+	return month;
+}
+
+function createchart() {
+	var timeFormat = 'YYYY-MM-DD';
+	const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+	const data = {
+		labels: labels,
+		datasets: [
+			{
+				label: "Take for a walk",
+				backgroundColor: "blue",
+				data: getStatistics("Take for a walk")
+			},
+			{
+				label: "Keep at home",
+				backgroundColor: "orange",
+				data: getStatistics("Keep at home")
+			},
+		]
+	};
+	var config = {
+		type: 'bar',
+		data: data,
+		options: {
+			legend: {
+				labels: {
+                    fontColor: "#573b8a",
+                    fontSize: 15,
+					fontFamily: "Nunito"
+                }
+        	},
+			title: {
+				display: true,
+				text: "Statistical information",
+				fontColor: "#573b8a",
+				fontSize: 35,
+				fontStyle: "bolder",
+				fontFamily: "Nunito"
+				
+			},
+			scales: {
+				xAxes: [{
+					ticks: {
+						fontColor: "#573b8a",
+						autoSkip: false,
+						fontSize: 14,
+						fontFamily: "Nunito"
+					}
+				}],
+				yAxes: [{
+					ticks: {
+						fontColor: "#573b8a",
+						min: 0,
+						stepSize: 50,
+						fontSize: 14,
+						fontFamily: "Nunito"
+					}
+				}],
+				y: {
+					beginAtZero: true,
+					
+				}
+			}
+		},
+	};
+
+	var ctx = document.getElementById("canvas").getContext("2d");
+	if(window.chart != undefined)
+  		window.chart.destroy();
+	window.chart = new Chart(ctx, config);
+
+
 	document.getElementById('statisticalPopup').style.display ='block';
-};
+}
+
 // When the user clicks on <span> (x), close the modal
 function closepStatistical() {
 		document.getElementById('statisticalPopup').style.display = 'none';
@@ -194,7 +294,6 @@ function freePopup(start, end, id) {
 	document.getElementById("fID").value = id;
 	document.getElementById("startF").innerHTML = "The start time \u27A1\uFE0F " +  start;
     document.getElementById("endF").innerHTML = "The end time \u27A1\uFE0F " +  end;
-	//document.getElementById("pricePerHour").innerHTML = "Provider's price per hour: "+ providers[index-1].price_per_hour;
 	document.getElementById('freePopup').style.display ='block';
 
 };
@@ -207,36 +306,6 @@ function closeFree() {
 function cancelFreetime(){
 		var event = document.getElementById("freeTimeID").value;
 		event.remove();
-}
-
-function statisticInfo(){
-	var userData = Array.from(<%- JSON.stringify(userData) %>)
-	var today = new Date();
-	var staticsticK;
-	var staticsticT;
-	var sK;
-	var sT;
-	if(userData.reservations != undefined){
-		for(var i=0; i<userData.reservations.length; i++) {
-			if(userData.reservations[i].start <= today){
-				if(userData.reservations[i].typeS.include("Keep at home")){
-					staticsticK.push(userData.reservations[i])
-				}
-				else if(userData.reservations[i].typeS.include("Take for a walk")){
-					staticsticT.push(userData.reservations[i])
-				}
-			}
-		}
-		for(var i=0; i<staticsticK.length; i++){
-			sK += staticsticK[i].price
-		}
-		sk = sk/(staticsticK.length-1)
-		for(var i=0; i<staticsticT.length; i++){
-			sK += staticsticT[i].price
-		}
-		sk = sk/(staticsticT.length-1)
-	}
-
 }
 
 

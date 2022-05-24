@@ -58,7 +58,7 @@
             <div class="jumbotron text-center disabledbutton" id='field_2' style='max-width: 60%;'>
 				<div class="slidecontainer">
 					<p>price: <span id="demo"></span>₪</p>
-					 <input type="range" name="price" min="1" max="200" class="slider" value='<%= price %>' id="price">
+					 <input type="range" name="price" min="1" max="200" value='200' class="slider" value='<%= price %>' id="price">
 					
 				</div>
 				   
@@ -110,8 +110,8 @@
 			<!-- date from to -->
 			<div class="info-box" style='margin-left: 12%;'>
 					<label>Date</label>
-					<% let date = (new Date()).toISOString().split('T')[0] %>					
-					<input type="date" id="date" min="<%= date %>" name="date"  value='<%= date %>' required/>
+					<% let datee = (new Date()).toISOString().split('T')[0] %>					
+					<input type="date" id="date" min="datee" name="date"  value='<%= date %>' required/>
 					<%if (date == null) {%>
 						<script>document.getElementById("date").valueAsDate = new Date();</script>
 					<% } %>

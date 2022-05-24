@@ -14,12 +14,12 @@ font:normal 100%/150% arial,helvetica,sans-serif;
 }
 
 .graph caption {
-font:bold 150%/120% arial,helvetica,sans-serif;
-padding-bottom:0.33em;
+	font:bold 150%/120% arial,helvetica,sans-serif;
+	padding-bottom:0.33em;
 }
 
 .graph tbody th {
-text-align:right;
+	text-align:right;
 }
 
 @supports (display:grid) {
@@ -71,12 +71,12 @@ text-align:right;
 	}
 
 	.graph tbody:before {
-		content:"100%";
+		content:"0₪";
 		top:-0.6em;
 	}
 
 	.graph tbody:after {
-		content:"0%";
+		
 		bottom:-0.6em;
 	}
 
@@ -117,7 +117,6 @@ text-align:right;
 	.graph td {
 		width:100%;
 		height:100%;
-		background:#573b8a;
 		border-radius:0.5em 0.5em 0 0;
 		transition:background 0.5s;
 
@@ -141,7 +140,7 @@ text-align:right;
 		font-weight:bold;
 		opacity:0;
 		transition:opacity 0.5s;
-  color:white;
+  		color:white;
 	}
 
 	.toggleGraph:checked + table td span,

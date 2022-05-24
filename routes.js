@@ -17,6 +17,8 @@ module.exports = function (app) {
 	var providers;
 	var providerRef;
 	var types;
+	var sK = 0;
+	var sT = 0;
   // index page
   app.get('/', async function (req, res) {
 
@@ -248,6 +250,8 @@ module.exports = function (app) {
 		const reservations = userData.reservations || [];
 		if (userData.typeOfUser == 1) {
 			res.render('pages/myScheduleP', {
+			sK,
+			sT,
 			firebase,
 			userData,
 			fullname: userData.fullname,
@@ -453,4 +457,6 @@ app.post('/cancelReservation', async function (req, res) {
 	providerRef = providers[invite];
   })
 
+
+  
 }
