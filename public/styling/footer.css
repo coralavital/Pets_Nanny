@@ -74,7 +74,8 @@ footer button {
     margin:  auto;
     padding-right: 30px;
     padding: 20px;
-    border: 1px solid #888;
+	border-radius: 15px;
+	border-color: none;
     width: 40%;
     text-align: center;
     font-size: 15px;

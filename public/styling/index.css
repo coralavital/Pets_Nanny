@@ -34,14 +34,15 @@ main ul{
   	font-family: "Nunito";
 	position: relative;
 	display: flex;
- 	margin-bottom: 5% !important;
+ 	margin-bottom: 10% !important;
+	margin-left: 3%;
 
 }
 /* was main li */
 main .lil{ 
   font-family: "Nunito";
-	border-radius: 15px;
-	border: 6px solid #DDD;
+	border-radius: 20px;
+	box-shadow: 1px 1px 1px 1px #8d8d8d !important;
 	width: 30%;
 	text-align: center;
 	margin: 0 8px;
