@@ -147,7 +147,7 @@
 }
 
 button.search{
-	width: 30%;
+	width: 20%;
 	height: 40px;
 	margin: 10px auto;
 	justify-content: center;
@@ -159,7 +159,7 @@ button.search{
 	margin-top: 20px;
 	outline: none;
 	border: none;
-	border-radius: 5px;
+	border-radius: 10px;
 	transition: .2s ease-in;
 	cursor: pointer;
 }
