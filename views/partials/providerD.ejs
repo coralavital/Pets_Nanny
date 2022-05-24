@@ -11,7 +11,7 @@
 	var action = "updateP"
  }%>
 
-<form action=<%= action %> method="post">
+<form  method="post" action=<%= action %>>
 	<div class="row">
 		<div class="col">
 			<div class="mb-3"><label class="form-label" for="username"><strong>Full name</strong></label><input placeholder= "<%= fullname %>" class="form-control" type="text" id="username" name="fullname" disabled=""></div>
@@ -73,8 +73,6 @@
 			</select>
 		</div>
 	</div>
-	
-	
 		<div class="mb-3">
 			<label class="col-md-6"><strong>Type of service</strong><br>
 			<select class="selectpicker" multiple data-live-search="true" title='<%= type_of_service %>' id="field" disabled name="typeS">
@@ -83,8 +81,6 @@
 				<option  id='keep_at_home' >Keep at home</option>
 			</select> 
 		</div>
-	
-
 </div>
 </br>
 <div class="row">

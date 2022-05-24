@@ -102,7 +102,7 @@ class Firebase {
   }
 
   // updating provider details from personal info after sign up
-  async UpdateDocProvider(age, area_city, price_per_hour, type_of_service, type_of_pet, about_me, callback){
+  async UpdateDocProvider(age, area_city, price_per_hour, type_of_pet, type_of_service, about_me, callback){
     const docRef = doc(this.db, 'users', this.auth._currentUser.email);
     console.log(`updating...  ${this.auth._currentUser.email}`)
     await updateDoc(docRef, {
