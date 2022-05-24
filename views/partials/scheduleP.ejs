@@ -166,7 +166,7 @@ function getStatistics(type) {
 	var month = []
 	if(reservations != null) {
 		for(var m=1; m<13; m++) {
-			var staticstics = [];
+			var statistics = [];
 			var sum = 0;
 			for(var i=0; i<reservations.length; i++) {
 				//get date with the year of the selected year from the dropdown list
@@ -177,13 +177,13 @@ function getStatistics(type) {
 				if(reservations[i].start <= today && year.getFullYear() == selectedYear.getFullYear() && year.getMonth()+1 == m) {
 					for(var j=0; j<reservations[i].typeS.length; j++) {
 						if(reservations[i].typeS[j] == type) {
-							staticstics.push(reservations[i])
+							statistics.push(reservations[i])
 						}
 					}
 				}
 			}
-			for(var i=0; i<staticstics.length; i++) {
-				sum += (staticstics[i].price)*(Math.abs(staticstics[i].end-staticstics[i].start)/36e5)
+			for(var i=0; i<statistics.length; i++) {
+				sum += (statistics[i].price)*(Math.abs(statistics[i].end-statistics[i].start)/36e5)
 			}
 			month[m-1] = sum
 		}
