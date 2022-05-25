@@ -31,9 +31,9 @@ class Firebase {
     // // make auth and firestore references
     this.auth = getAuth(this.app);
     this.db = getFirestore(this.app);
-
   }
-
+  
+  	
   //authenticate function
   authenticate(email, password, callback) {
     signInWithEmailAndPassword(this.auth, email, password).then((cred) => {
@@ -242,6 +242,7 @@ async filtering(ar, price, typeP, typeS, start, end) {
 	
 	//update provider document
 	async addFreeTime(date, from, to, callback) {
+
 		const userRef = doc(this.db, "users", this.auth._currentUser.email);
 		const docSnap = await getDoc(userRef);
 		const document = docSnap.data()
@@ -250,7 +251,8 @@ async filtering(ar, price, typeP, typeS, start, end) {
 		const sdate = date.concat("T", from)
 		const start = +new Date(sdate)
 		const edate = date.concat("T", to)
-		const end = +new Date(edate)
+		var end = +new Date(edate)
+
 		const userData = await this.CurrentUserData()
 
 		//get id for ecery reservation
@@ -259,6 +261,10 @@ async filtering(ar, price, typeP, typeS, start, end) {
 			const randomness = Math.random().toString(36).substr(2);
 			return dateString + randomness;
 		};
+		if((end - start) <= 0) {
+			var d = new Date(end);
+			end = d.setDate(d.getDate() + 1);
+		}
 
 		await EnterTime({start, end});
 		async function EnterTime({start, end}){
@@ -272,20 +278,20 @@ async filtering(ar, price, typeP, typeS, start, end) {
 							console.log("cannot save free time on free time object")
 							return;
 						}
+					}
 				}
-			}
-			if(document.reservations != undefined){
-				for(var i=0; i<document.reservations.length; i++){
-					if(document.reservations[i].start == start && document.reservations[i].end == end ||
-						document.reservations[i].start <= start && document.reservations[i].end == end ||
-						document.reservations[i].start == start && document.reservations[i].end >= end ||
-						document.reservations[i].start <= start && document.reservations[i].end >= end) {	
-							console.log("cannot save free time on reservation time object")
-							return;
-						}
+				if(document.reservations != undefined){
+					for(var i=0; i<document.reservations.length; i++){
+						if(document.reservations[i].start == start && document.reservations[i].end == end ||
+							document.reservations[i].start <= start && document.reservations[i].end == end ||
+							document.reservations[i].start == start && document.reservations[i].end >= end ||
+							document.reservations[i].start <= start && document.reservations[i].end >= end) {	
+								console.log("cannot save free time on reservation time object")
+								return;
+							}
+					}
 				}
-			}
-			console.log(end);
+
 			let freeTimeObj = {start, end, title: "Free Time", id: uniqueId(), color: "green"};
 			const freeTime = userData.freeTime !== undefined ? userData.freeTime :[];
 			freeTime.push(freeTimeObj);

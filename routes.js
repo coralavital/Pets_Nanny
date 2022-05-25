@@ -60,7 +60,7 @@ module.exports = function (app) {
     if (filter.flag) {
       providers = await firebase.GetProviders();
     } else {
-      providers = await filter.result
+      providers = await filter.result;
       filter.flag = true
     }
 	const {date, from, to, typeP, typeS, price, area_city} = req.query;
@@ -116,7 +116,7 @@ module.exports = function (app) {
    */
   app.post('/authenticate', function (req, res) {
     const { email, password } = req.body;
-    firebase.authenticate(email, password, () => {
+    firebase.authenticate(email, password, errorFlag, (errorFlag) => {
       res.redirect('/portal');
     })
   });

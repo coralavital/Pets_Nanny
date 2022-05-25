@@ -17,7 +17,6 @@
 
 <!--calendar-->
 <div id='calendar'></div>
-
 <!--Add free time popup-->
 <form action="addFreeTime" method="post">
 	<div id="freetimePopup" class="modal">
@@ -119,7 +118,7 @@
 			<span id='clientEmail'></span>
 			<span id='providerPhone'></span>
 			<span id='providerPrice'></span>
-			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='add' type="submit">Cancel</button>
+			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" style='width: 35%;' id='add' type="submit">Cancel reservation</button>
 			<br>	
 		</div>
 	</div>
@@ -135,7 +134,7 @@
 			<input name='fID' id='fID' value='' style='display: none;'/>
 			<span id='startF'></span>
 			<span id='endF'></span>
-			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" type='submit' id='cancel' >Cancel</button>
+			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" style='width: 35%;' type='submit' id='cancel' >Cancel free time</button>
 			<br>	
 		</div>
 	</div>
@@ -291,6 +290,7 @@ function closeReservation() {
 
 //Free time info popups
 function freePopup(start, end, id) {
+	
 	document.getElementById("fID").value = id;
 	document.getElementById("startF").innerHTML = "The start time \u27A1\uFE0F " +  start;
     document.getElementById("endF").innerHTML = "The end time \u27A1\uFE0F " +  end;
