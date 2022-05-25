@@ -184,7 +184,6 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 
   // Get all documents in a collection
     async GetAllDataOnce(){
-
       const querySnapshot = await getDocs(collection(this.db, "users"));
       var users = [];
         querySnapshot.forEach((doc) => {
@@ -389,21 +388,26 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 	};
 
 	//saving contact message details
-	async addContactMsg(name, emailSend, messageText, callback) {
+	async addContactMsg(name, emailSender, messageText, callback) {
 		// how the data will be saved in the obj arr
-		let msgObj = {date: new Date(), name: name, messageText: messageText};
-		const userRef = doc(this.db, "contact", emailSend);
+		let msgObj = {title: "contactUs", date: new Date(), user: emailSender, name: name, messageText: messageText};
+
+		const email_msg_ref = doc(this.db, "contact", emailSender);
+
 		try{ 
 			// getting doc data 
-			const docSnap = await getDoc(userRef);
+			const docSnap = await getDoc(email_msg_ref);
 			const contactMsg = docSnap.data();
-			var msg_arr =  contactMsg !== undefined ? contactMsg.contactUs  : [];
+			var msg_arr =  contactMsg !== undefined ? contactMsg.contactUs : []
 		} catch(e) {
+			console.log("Error! at addContactMsg function reseting array \n", e)
 			msg_arr = []
 		}
+
 		msg_arr.push(msgObj);
 
-		await setDoc(userRef, {
+
+		await setDoc(email_msg_ref, {
 			contactUs: msg_arr
 		});
 

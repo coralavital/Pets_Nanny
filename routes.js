@@ -17,6 +17,7 @@ module.exports = function (app) {
 	var providers;
 	var providerRef;
 	var types;
+	var inviteFlag = false;
   // index page
   app.get('/', async function (req, res) {
 
@@ -30,7 +31,6 @@ module.exports = function (app) {
 
   // contact page
   app.get('/contact', async function (req, res) {
-	  console.log(userData)
     editFlag.editFalse();
 	if(firebase.IfLoggedin() == false) {
 		res.render('pages/contact', {
@@ -53,7 +53,6 @@ module.exports = function (app) {
 
   // portal page
   app.get('/portal', async function (req, res) {
-	  
     editFlag.editFalse();
     var userData = await firebase.CurrentUserData()
     const time = times.time
@@ -194,7 +193,7 @@ module.exports = function (app) {
 		types = filters[2];
 		inviteFlag = true;
 		filter.changeProvider(ar, parseInt(price), type_of_pet, type_of_service, sFilters.date, sFilters.from, sFilters.to, () => {
-			res.redirect(`/portal?date=${sFilters.date}&from=${sFilters.from}&to=${sFilters.to}&typeP=${type_of_pet}&typeS=${type_of_service}&price=${price}&area_city=${ar}`)
+			res.redirect(`/portal?date=${sFilters.date}&from=${sFilters.from}&to=${sFilters.to}&typeP=${type_of_pet}&typeS=${type_of_service}&price=${price}&area_city=${area_city	}`)
 		})
 
   });
@@ -424,8 +423,8 @@ module.exports = function (app) {
 
   //add contact message to a documents
   app.post('/contact', async function (req, res) {
-    const { name, emailSender, message } = req.body
-	firebase.addContactMsg(name, emailSender, message, () => {
+    const { name, email, message } = req.body
+	firebase.addContactMsg(name, email, message, () => {
 	  res.redirect('/contact');
       
     });
