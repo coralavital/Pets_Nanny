@@ -261,7 +261,6 @@ async filtering(ar, price, typeP, typeS, start, end) {
 		};
 
 		await EnterTime({start, end});
-
 		async function EnterTime({start, end}){
 			// get the specific free time obj
 			if(document.freeTime != undefined){
@@ -286,6 +285,7 @@ async filtering(ar, price, typeP, typeS, start, end) {
 						}
 				}
 			}
+			console.log(end);
 			let freeTimeObj = {start, end, title: "Free Time", id: uniqueId(), color: "green"};
 			const freeTime = userData.freeTime !== undefined ? userData.freeTime :[];
 			freeTime.push(freeTimeObj);

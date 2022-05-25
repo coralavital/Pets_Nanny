@@ -395,6 +395,7 @@ module.exports = function (app) {
   //add free time 
   app.post('/addFreeTime', async function (req, res) {
     const { date, from, to } = req.body
+
     firebase.addFreeTime(date, from, to, () => {
       res.redirect('/mySchedule');
     })
