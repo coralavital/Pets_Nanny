@@ -103,7 +103,7 @@ class Firebase {
 
 
   // updating provider details from personal info after sign up
-  async UpdateDocProvider(age, area_city, price_per_hour, type_of_pet, type_of_service, about_me, callback){
+  async UpdateDocProvider(age, area_city, price_per_hour, type_of_service, type_of_pet, about_me, callback){
     const docRef = doc(this.db, 'users', this.auth._currentUser.email);
     console.log(`updating...  ${this.auth._currentUser.email}`)
     await updateDoc(docRef, {
@@ -149,35 +149,32 @@ class Firebase {
   }
 
 // for filttring table after search
-async filtering(ar,price,typeP,typeS ,start, end) {
+async filtering(ar, price, typeP, typeS, start, end) {
 	var providersResult =[];
 	var i; 
-
-	const coll = query(collection(this.db, 'users'), where("type_of_pet", "array-contains-any", typeP),);
-	const querySnapshot =  await getDocs(coll);
+	const coll = query(collection(this.db, 'users'), 
+	 where("type_of_pet", "array-contains-any", typeP),
+	 );
+	const querySnapshot = await getDocs(coll);
 	var result=[];
 	querySnapshot.forEach((doc) => {
 		result.push(doc.data())
-	
 	});
-  
-	for ( i=0 ; i< result.length; i++){
-	  if(result[i].price_per_hour <= price ) {
-		  if(containsAny(result[i].area_city ,ar)) {
-		    if(containsAny(result[i].type_of_service ,typeS)){
-         		if(result[i].freeTime != undefined ){
-           			for(var j=0; j<result[i].freeTime.length; j++){
-              			if(start >= result[i].freeTime[j].start && end <= result[i].freeTime[j].end){
-                  			providersResult.push(result[i]);
-              }
-          }
-        }
-	  	}
-	  }
+	for (i=0 ; i< result.length; i++) { 
+		if(result[i].price_per_hour <= price ) {
+			if(containsAny(result[i].area_city ,ar)) {
+				if(containsAny(result[i].type_of_service ,typeS)){
+					if(result[i].freeTime != undefined ){
+						for(var j=0; j<result[i].freeTime.length; j++){
+							if(start >= result[i].freeTime[j].start && end <= result[i].freeTime[j].end){
+								providersResult.push(result[i]);
+							}
+						}
+					}
+				}
+			}
+		}
 	}
-	
-  }
-  
 	return providersResult;
 }
 
@@ -264,7 +261,6 @@ async filtering(ar,price,typeP,typeS ,start, end) {
 		};
 
 		await EnterTime({start, end});
-
 
 		async function EnterTime({start, end}){
 			// get the specific free time obj

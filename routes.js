@@ -17,7 +17,7 @@ module.exports = function (app) {
 	var providers;
 	var providerRef;
 	var types;
-	var inviteFlag = false;
+
   // index page
   app.get('/', async function (req, res) {
 
@@ -65,7 +65,6 @@ module.exports = function (app) {
     }
 	const {date, from, to, typeP, typeS, price, area_city} = req.query;
     res.render('pages/portal', {
-	  inviteFlag,
 	  date,
 	  from,
 	  to,
@@ -182,22 +181,23 @@ module.exports = function (app) {
     }
 
   })
-  app.post('/filtering', function (req, res) {
-		var { area_city, price, typeP, typeS, date, from, to } = req.body;
-		sFilters.date = date;
-		sFilters.from = from;
-		sFilters.to = to;
-		var filters = filter.fixParams(area_city, typeP, typeS)
-		let ar = filters[0];
-		let type_of_pet = filters[1];
-		let type_of_service = filters[2];
-		types = filters[2];
-		inviteFlag = true;
-		filter.changeProvider(ar, parseInt(price), type_of_pet, type_of_service, sFilters.date, sFilters.from, sFilters.to, () => {
-			res.redirect(`/portal?date=${sFilters.date}&from=${sFilters.from}&to=${sFilters.to}&typeP=${typeP}&typeS=${typeS}&price=${price}&area_city=${area_city}&inviteFla${true}`)
-		})
 
-  });
+  app.post('/filtering', function (req, res) {
+	var { area_city, price, typeP, typeS, date, from, to } = req.body;
+	sFilters.date = date;
+	sFilters.from = from;
+	sFilters.to = to;
+	var filters = filter.fixParams(area_city, typeP, typeS)
+	let ar = filters[0];
+	let type_of_pet = filters[1];
+	let type_of_service = filters[2];
+	types = filters[2];
+
+	filter.changeProvider(ar, parseInt(price), type_of_pet, type_of_service, sFilters.date, sFilters.from, sFilters.to, () => {
+		res.redirect(`/portal?date=${sFilters.date}&from=${sFilters.from}&to=${sFilters.to}&typeP=${typeP}&typeS=${typeS}&price=${price}&area_city=${area_city}`)
+	})
+
+});
 
   /////////////////////////////////////////////////////////////////////////////////////////////////coral
   // edit-personal-info-provider page - provider
