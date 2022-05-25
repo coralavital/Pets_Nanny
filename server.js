@@ -2,7 +2,10 @@ const express = require('express');
 const app = express();
 var bodyParser = require('body-parser');
 var multer = require('multer');
+var session = require('express-session');
+const flash=require('express-flash-messages') 
 var upload = multer();
+
 const port = 4000;
 
 // for parsing application/json

@@ -11,16 +11,15 @@ const { async } = require('@firebase/util');
 const { providers } = require('./controllers/filter');
 const { auth } = require('./firebase');
 const time = require('./controllers/time');
+const errorFlag = require('./controllers/errorFlag');
 
 
 module.exports = function (app) {
 	var providers;
 	var providerRef;
 	var types;
-
   // index page
   app.get('/', async function (req, res) {
-
     editFlag.editFalse();
     res.render('pages/index', {
       ourStars: home.ourStars,
@@ -84,7 +83,9 @@ module.exports = function (app) {
 
   // login-signup page
   app.get('/login', function (req, res) {
-    res.render('pages/login');
+    res.render('pages/login', {
+		errorFlag: errorFlag
+	});
   });
 
   // enter-personal-info page - client
@@ -116,8 +117,8 @@ module.exports = function (app) {
    */
   app.post('/authenticate', function (req, res) {
     const { email, password } = req.body;
-    firebase.authenticate(email, password, errorFlag, (errorFlag) => {
-      res.redirect('/portal');
+    firebase.authenticate(email, password,  () => {
+		res.redirect('/portal');
     })
   });
 
@@ -455,5 +456,4 @@ app.post('/cancelReservation', async function (req, res) {
   })
 
 
-  
 }

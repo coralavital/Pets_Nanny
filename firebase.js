@@ -4,6 +4,7 @@ const { initializeApp } = require('firebase/app');
 const { getFirestore, collection, doc, setDoc, getDoc, updateDoc, query, where, getDocs, deleteDoc, deleteField , arrayUnion } = require('firebase/firestore');
 const { use } = require("chai");
 const { async } = require('@firebase/util');
+const errorFlag = require('./controllers/errorFlag');
 
 
 function containsAny(source,target)
@@ -25,18 +26,18 @@ class Firebase {
       measurementId: "G-HLCCC1243J"
     };
 
-
     this.app = initializeApp(this.config);
 
     // // make auth and firestore references
     this.auth = getAuth(this.app);
     this.db = getFirestore(this.app);
+
   }
-  
-  	
+
   //authenticate function
   authenticate(email, password, callback) {
-    signInWithEmailAndPassword(this.auth, email, password).then((cred) => {
+	  ///////////////////////////////////////////////////////////////////need to check how to chance the flag in the right moment
+	  signInWithEmailAndPassword(this.auth, email, password).then((cred) => {
       callback();
     }).catch(error => {
 		switch (error.code) {
@@ -49,11 +50,16 @@ class Firebase {
 			case 'auth/operation-not-allowed':
 			  console.log(`Error during sign up.`);
 			  break;
+			case 'auth/user-not-found':
+				errorFlag.flag = true;
+				console.log(`Email address is not exist`);
+			  break;
 			default:
 			  console.log(error.message);
 			  break;
 		  }
-	})
+		})
+	
   }
 
   //signup function
@@ -160,6 +166,11 @@ async filtering(ar, price, typeP, typeS, start, end) {
 	querySnapshot.forEach((doc) => {
 		result.push(doc.data())
 	});
+	////////////////////////////////////////////////////////////// new to check
+	if((end - start) <= 0) {
+		var d = new Date(end);
+		end = d.setDate(d.getDate() + 1);
+	}
 	for (i=0 ; i< result.length; i++) { 
 		if(result[i].price_per_hour <= price ) {
 			if(containsAny(result[i].area_city ,ar)) {
