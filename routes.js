@@ -82,9 +82,10 @@ module.exports = function (app) {
   });
 
   // login-signup page
-  app.get('/login', function (req, res) {
+  app.get('/login', async function (req, res) {
+	  let usersEmail = await firebase.GetUsersEmails();
     res.render('pages/login', {
-		listUsers: firebase.listAllUsers
+		usersEmail: usersEmail
 	});
   });
 
@@ -115,10 +116,13 @@ module.exports = function (app) {
   /**
    * Forms submit endpoitns
    */
-  app.post('/authenticate', function (req, res) {
+  app.post('/authenticate', async function (req, res) {
+	let usersEmail = await firebase.GetUsersEmails();
     const { email, password } = req.body;
     firebase.authenticate(email, password,  () => {
-		res.redirect('/portal');
+		res.redirect('/portal', {
+			usersEmail: usersEmail
+		});
     })
   });
 

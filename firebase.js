@@ -32,31 +32,38 @@ class Firebase {
     this.db = getFirestore(this.app);
   }
 
-  // Start listing users from the beginning, 1000 at a time.
+	async GetUsersEmails(){
+		let users = await this.GetAllDataOnce();
+		let emails = []
+		for(var i=0; i<users.length; i++){
+			if (users[i].email !== undefined)
+				emails.push(users[i].email)
+		}
+		return emails;
+	}
 
   //authenticate function
   authenticate(email, password, callback) {
-	  ///////////////////////////////////////////////////////////////////need to check how to chance the flag in the right moment
 	  signInWithEmailAndPassword(this.auth, email, password).then((cred) => {
       callback();
     }).catch(error => {
-			switch (error.code) {
-				case 'auth/email-already-in-use':
+		switch (error.code) {
+			case 'auth/email-already-in-use':
 				console.log(`Email address ${this.state.email} already in use.`);
 				break;
-				case 'auth/invalid-email':
+			case 'auth/invalid-email':
 				console.log(`Email address ${this.state.email} is invalid.`);
 				break;
-				case 'auth/operation-not-allowed':
+			case 'auth/operation-not-allowed':
 				console.log(`Error during sign up.`);
 				break;
-				case 'auth/user-not-found':
-					console.log(`Email address is not exist`);
+			case 'auth/user-not-found':
+				console.log(`Email address is not exist`);
 				break;
-				default:
+			default:
 				console.log(error.message);
 				break;
-			}
+		}
 			
 		})
 	
@@ -166,7 +173,6 @@ async filtering(ar, price, typeP, typeS, start, end) {
 	querySnapshot.forEach((doc) => {
 		result.push(doc.data())
 	});
-	////////////////////////////////////////////////////////////// new to check
 	if((end - start) <= 0) {
 		var d = new Date(end);
 		end = d.setDate(d.getDate() + 1);

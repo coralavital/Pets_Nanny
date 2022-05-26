@@ -167,6 +167,7 @@ function getStatistics(type) {
 		for(var m=1; m<13; m++) {
 			var statistics = [];
 			var sum = 0;
+			var flag = false;
 			for(var i=0; i<reservations.length; i++) {
 				//get date with the year of the selected year from the dropdown list
 				var selectedYear = new Date(text)
@@ -176,6 +177,9 @@ function getStatistics(type) {
 				if(reservations[i].start <= today && year.getFullYear() == selectedYear.getFullYear() && year.getMonth()+1 == m) {
 					for(var j=0; j<reservations[i].typeS.length; j++) {
 						if(reservations[i].typeS[j] == type) {
+							if(reservations[i].typeS.length == 2) {
+								flag = true;
+							}
 							statistics.push(reservations[i])
 						}
 					}
@@ -183,10 +187,15 @@ function getStatistics(type) {
 			}
 			for(var i=0; i<statistics.length; i++) {
 				sum += (statistics[i].price)*(Math.abs(statistics[i].end-statistics[i].start)/36e5)
+				if(flag == true) {
+					//if the sum is for two service - for take to walk and keep at home cut the sum by half
+					sum = sum/2;
+				}
 			}
 			month[m-1] = sum
 		}
 	}
+	flag = false;
 	return month;
 }
 
