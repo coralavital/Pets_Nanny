@@ -1,11 +1,10 @@
 const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword, 
-	deleteUser, sendPasswordResetEmail, reauthenticateWithCredential, EmailAuthProvider } = require("firebase/auth");
+	deleteUser, sendPasswordResetEmail, reauthenticateWithCredential, EmailAuthProvider, listUsers } = require("firebase/auth");
 const { initializeApp } = require('firebase/app');
 const { getFirestore, collection, doc, setDoc, getDoc, updateDoc, query, where, getDocs, deleteDoc, deleteField , arrayUnion } = require('firebase/firestore');
 const { use } = require("chai");
 const { async } = require('@firebase/util');
-const errorFlag = require('./controllers/errorFlag');
-
+const admin = require('firebase-admin');
 
 function containsAny(source,target)
 {
@@ -31,8 +30,9 @@ class Firebase {
     // // make auth and firestore references
     this.auth = getAuth(this.app);
     this.db = getFirestore(this.app);
-
   }
+
+  // Start listing users from the beginning, 1000 at a time.
 
   //authenticate function
   authenticate(email, password, callback) {
@@ -40,24 +40,24 @@ class Firebase {
 	  signInWithEmailAndPassword(this.auth, email, password).then((cred) => {
       callback();
     }).catch(error => {
-		switch (error.code) {
-			case 'auth/email-already-in-use':
-			  console.log(`Email address ${this.state.email} already in use.`);
-			  break;
-			case 'auth/invalid-email':
-			  console.log(`Email address ${this.state.email} is invalid.`);
-			  break;
-			case 'auth/operation-not-allowed':
-			  console.log(`Error during sign up.`);
-			  break;
-			case 'auth/user-not-found':
-				errorFlag.flag = true;
-				console.log(`Email address is not exist`);
-			  break;
-			default:
-			  console.log(error.message);
-			  break;
-		  }
+			switch (error.code) {
+				case 'auth/email-already-in-use':
+				console.log(`Email address ${this.state.email} already in use.`);
+				break;
+				case 'auth/invalid-email':
+				console.log(`Email address ${this.state.email} is invalid.`);
+				break;
+				case 'auth/operation-not-allowed':
+				console.log(`Error during sign up.`);
+				break;
+				case 'auth/user-not-found':
+					console.log(`Email address is not exist`);
+				break;
+				default:
+				console.log(error.message);
+				break;
+			}
+			
 		})
 	
   }

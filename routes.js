@@ -84,7 +84,7 @@ module.exports = function (app) {
   // login-signup page
   app.get('/login', function (req, res) {
     res.render('pages/login', {
-		errorFlag: errorFlag
+		listUsers: firebase.listAllUsers
 	});
   });
 

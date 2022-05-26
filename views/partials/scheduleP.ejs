@@ -278,8 +278,8 @@ function reservationPopup(start, end, fullname, emailClient, emailProvider, phon
 	document.getElementById("providerPhone").innerHTML = "The phone of the provider \u27A1\uFE0F " +  phone;
 	document.getElementById("providerPrice").innerHTML = "The price per hour for the service \u27A1\uFE0F " +  price;
 	document.getElementById("address").innerHTML = "The address \u27A1\uFE0F " + address;
-    document.getElementById("startR").innerHTML = "The start time \u27A1\uFE0F " +  start;
-	document.getElementById("endR").innerHTML = "The end time \u27A1\uFE0F " +  end;
+    document.getElementById("startR").innerHTML = "The start time \u27A1\uFE0F " +  start.toLocaleString();
+	document.getElementById("endR").innerHTML = "The end time \u27A1\uFE0F " +  end.toLocaleString();
 	document.getElementById('reservationPopup').style.display ='block';
 };
 
@@ -292,8 +292,8 @@ function closeReservation() {
 function freePopup(start, end, id) {
 	
 	document.getElementById("fID").value = id;
-	document.getElementById("startF").innerHTML = "The start time \u27A1\uFE0F " +  start;
-    document.getElementById("endF").innerHTML = "The end time \u27A1\uFE0F " +  end;
+	document.getElementById("startF").innerHTML = "The start time \u27A1\uFE0F " +  start.toLocaleString();
+    document.getElementById("endF").innerHTML = "The end time \u27A1\uFE0F " +  end.toLocaleString();
 	document.getElementById('freePopup').style.display ='block';
 
 };
