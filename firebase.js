@@ -36,7 +36,7 @@ class Firebase {
 		let userList = []
 		for(var i=0; i<users.length; i++){
 			if (users[i].email !== undefined)
-			userList.push(users[i])
+			userList.push(users[i].email)
 		}
 		return userList;
 	}

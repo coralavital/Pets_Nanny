@@ -85,7 +85,7 @@ module.exports = function (app) {
   app.get('/login', async function (req, res) {
 	let userList = await firebase.GetUsersEmails();
     res.render('pages/login', {
-		userList: userList,
+		userList
 	});
   });
 
