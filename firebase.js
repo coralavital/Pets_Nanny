@@ -389,7 +389,8 @@ async filtering(ar, price, typeP, typeS, start, end) {
 
 		async function EnterTime({start, end}){
 			let reservationObj = {start, end, title: "Reservation", id: uniqueId(), color: 'red', providerName: provider.fullname, providerEmail: provider.email, 
-									price: provider.price_per_hour, providerPhone: provider.phonenumber, address: userData.address , clientEmail: userData.email, typeS: type_of_service};
+									price: provider.price_per_hour, providerPhone: provider.phonenumber, address: userData.address , clientEmail: userData.email, typeS: type_of_service,
+									clientName: userData.fullname};
 			const reservations = userData.reservations !== undefined ? userData.reservations :[];
 			reservations.push(reservationObj);
 			await updateDoc(clientRef, {

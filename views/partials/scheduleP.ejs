@@ -114,7 +114,7 @@
 			<span id='startR'></span>
 			<span id='endR'></span>
 			<span id='address'></span>
-			<span id='providerFullName'></span>
+			<span id='clientFullName'></span>
 			<span id='clientEmail'></span>
 			<span id='providerPhone'></span>
 			<span id='providerPrice'></span>
@@ -278,11 +278,11 @@ function closepStatistical() {
 };
 
 //Reservation info popup
-function reservationPopup(start, end, fullname, emailClient, emailProvider, phone, price, address, id) {
+function reservationPopup(start, end, clientName, emailClient, emailProvider, phone, price, address, id) {
 	document.getElementById("rID").value = id;
 	document.getElementById("emailProvider").value = emailProvider;
 	document.getElementById("emailClient").value = emailClient;
-	document.getElementById("providerFullName").innerHTML = "The name of the provider \u27A1\uFE0F " + fullname;
+	document.getElementById("clientFullname").innerHTML = "The name of the provider \u27A1\uFE0F " + clientName;
     document.getElementById("clientEmail").innerHTML = "The email of the client \u27A1\uFE0F " +  emailClient;
 	document.getElementById("providerPhone").innerHTML = "The phone of the provider \u27A1\uFE0F " +  phone;
 	document.getElementById("providerPrice").innerHTML = "The price per hour for the service \u27A1\uFE0F " +  price;
@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	eventClick: function(info) {
 		if(info.event.title == "Reservation") {
-			reservationPopup(info.event.start, info.event.end, info.event.extendedProps.providerName, 
+			reservationPopup(info.event.start, info.event.end, info.event.extendedProps.clientName, 
 		info.event.extendedProps.clientEmail, info.event.extendedProps.providerEmail, info.event.extendedProps.providerPhone, info.event.extendedProps.price, 
 		info.event.extendedProps.address, info.event.id);
 		}
