@@ -7,7 +7,7 @@
     "dev": "node server.js",
     "start": "node server.js",
     "test": "mocha tests/*.spec.js --color",
-    "lint": "eslint --ext js,jsk src --color"
+    "lint": "eslint --ext js,jsk --color"
   },
   "repository": {
     "type": "git",
