@@ -17,6 +17,7 @@ module.exports = function (app) {
 	var providers;
 	var providerRef;
 	var types;
+	var pass;
   // index page
   app.get('/', async function (req, res) {
     editFlag.editFalse();
@@ -82,9 +83,9 @@ module.exports = function (app) {
 
   // login-signup page
   app.get('/login', async function (req, res) {
-	  let usersEmail = await firebase.GetUsersEmails();
+	let userList = await firebase.GetUsersEmails();
     res.render('pages/login', {
-		usersEmail: usersEmail
+		userList: userList,
 	});
   });
 
@@ -396,7 +397,6 @@ module.exports = function (app) {
   //add free time 
   app.post('/addFreeTime', async function (req, res) {
     const { date, from, to } = req.body
-
     firebase.addFreeTime(date, from, to, () => {
       res.redirect('/mySchedule');
     })

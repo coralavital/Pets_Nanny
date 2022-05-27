@@ -13,52 +13,48 @@
 <link rel='stylesheet' href='styling/schedule.css'>
 
 <script>
-	function validationFreetime() {
-	var freeTime = Array.from(<%- JSON.stringify(freeTime) %>)
-  	var reservations = Array.from(<%- JSON.stringify(reservations) %>)
-	let date = document.getElementById("date").valueAsDate;
-	let from = document.getElementById("from").options[ddl.selectedIndex].value;
-	let to = document.getElementById("to").options[ddl.selectedIndex].value;
-	from = from.concat(":00")
-	to = to.concat(":00")
-	const sdate = date.concat("T", from)
-	const start = +new Date(sdate)
-	const edate = date.concat("T", to)
-	var end = +new Date(edate)
-	if((end - start) <= 0) {
-		var d = new Date(end);
-		end = d.setDate(d.getDate() + 1);
+	function validFreetime(date,from,to) {
+		var freetimeError = document.getElementById("freetimeError");
+		//var reservationError =  document.getElementById("reservationError");
+		freetimeError.innerHTML = "";
+		//reservationError.innerHTML = "";
+		var freeTime = Array.from(<%- JSON.stringify(freeTime) %>)
+  		var reservations = Array.from(<%- JSON.stringify(reservations) %>)
+		from = from.concat(":00")
+		to = to.concat(":00")
+		const sdate = date.concat("T", from)
+		const start = +new Date(sdate)
+		const edate = date.concat("T", to)
+		var end = +new Date(edate)
+		if((end - start) <= 0) {
+			var d = new Date(end);
+			end = d.setDate(d.getDate() + 1);
+		}
+		for(var i=0; i<freeTime.length; i++){
+		if(freeTime[i].start == start && freeTime[i].end == end ||
+			freeTime[i].start <= start && freeTime[i].end == end ||
+			freeTime[i].start == start && freeTime[i].end >= end ||
+			freeTime[i].start <= start && freeTime[i].end >= end) {	
+				freetimeError.innerHTML = "Cannot save free time on free time object.";
+			}
+		}
+		for(var i=0; i<reservations.length; i++){
+			if(reservations[i].start == start && reservations[i].end == end ||
+				reservations[i].start <= start && reservations[i].end == end ||
+				reservations[i].start == start && reservations[i].end >= end ||
+				reservations[i].start <= start && reservations[i].end >= end) {	
+					freetimeError.innerHTML = "Cannot save free time on reservation object.";
+				}
+		}
 	}
-	var freetimeError = document.getElementById("freetimeError");
-	var reservationError =  document.getElementById("reservationError");
-	freetimeError.innerHTML = "";
-	reservationError.innerHTML = "";
-	for(var i; i<reservations.length; i++) {
-		if(freeTime != undefined){
-				for(var i=0; i<freeTime.length; i++){
-					if(freeTime[i].start == start && freeTime[i].end == end ||
-						freeTime[i].start <= start && freeTime[i].end == end ||
-						freeTime[i].start == start && freeTime[i].end >= end ||
-						freeTime[i].start <= start && freeTime[i].end >= end) {	
-							freetimeError.innerHTML = "Cannot save free time on reservation time object.";
-							return;
-						}
-					}
-				}
-				if(reservations != undefined){
-					for(var i=0; i<reservations.length; i++){
-						if(reservations[i].start == start && reservations[i].end == end ||
-							reservations[i].start <= start && reservations[i].end == end ||
-							reservations[i].start == start && reservations[i].end >= end ||
-							reservations[i].start <= start && reservations[i].end >= end) {	
-								reservation.innerHTML = "Cannot save free time on reservation time object.";
-								return;
-							}
-					}
-				}
+	function validationFreetime() {
+		let to = document.getElementById("to").value;
+		let from = document.getElementById("from").value
+		let date = document.getElementById("date").value
+		validFreetime(date,from,to)
 	}
 
-}
+
 </script>
 
 <!--Add free time button-->
@@ -78,7 +74,7 @@
 				<div class="info-box" style='margin-left: 35px;'>
 					<label for="adults">Date</label>
 					<% let date = (new Date()).toISOString().split('T')[0] %>	
-					<input type="date" min="<%= date %>" id="date" name="date" >
+					<input type="date" onchange="validationFreetime()" min="<%= date %>" id="date" name="date" >
 					<script>
 						var today = new Date();
 						document.getElementById("date").valueAsDate = today;
@@ -86,7 +82,7 @@
 				</div>
 				<div class="info-box">
 					<label for="children">From</label>
-					<select id="from" class='selectpicker' name="from">
+					<select id="from" onchange="validationFreetime()" class='selectpicker' name="from">
 						<% for(var i = 0 ; i < times.length ; i++) { %>
 							<option><%= times[i] %></option>
 						<% }; %>
@@ -94,7 +90,7 @@
 				</div>
 				<div class="info-box" style='margin-right: 35px;'>
 					<label for="children" class='selectpicker' name='to'>To</label>
-					<select id="to" name="to">
+					<select  onchange="validationFreetime()" id="to" name="to">
 						<% for(var i = 0 ; i < times.length ; i++) { %>
 							<option><%= times[i] %></option>
 						<% }; %>
@@ -103,8 +99,7 @@
 				</div>
 			</div>
 			<h5 style='font-size: 15px; color:brown !important;' id="freetimeError"></h5>
-			<h5 style='font-size: 15px; color:brown !important;' id="reservationError"></h5>
-			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" onsubmit='validationFreetime()' id='add' type="submit">Add</button>
+			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" onclick='validationFreetime()' id='add' type="submit">Add</button>
 			<br>		
 		</div>
 	</div>

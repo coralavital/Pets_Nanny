@@ -1,22 +1,32 @@
 <script type="text/javascript">
 	function validationEmail(emailVal) {
-		let userList = <%- JSON.stringify(usersEmail) %>;
+		let userList = <%- JSON.stringify(userList) %>;
 		var loginError = document.getElementById("loginError");
 		var expr = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 		loginError.innerHTML = "";
-		//emailVal.value == "a"
-		if (!(userList.includes(emailVal.value)) || !(expr.test(emailVal.value))) {
-			loginError.innerHTML = "Incorrect email or password.";
+		if(!(expr.test(emailVal.value))) {
+			if (!(userList.includes(emailVal.value))) {
+				loginError.innerHTML = "Incorrect email or password.";
+			}
+			else {
+				loginError.innerHTML = "";
+			}
 		}
 	}
+
 	function validationSignup(emailVal){
-		let userList = <%- JSON.stringify(usersEmail) %>;
+		let userList = <%- JSON.stringify(userList) %>;
 		var signupError = document.getElementById("signupError");
 		signupError.innerHTML = "";
-		//emailVal.value == "a"
 		if (userList.includes(emailVal.value)) {
 			signupError.innerHTML = "The email exists in the system.";
 		}
+		else {
+			signupError.innerHTML = "";
+		}
+	}
+	function validationPassword(pass) {
+
 	}
 </script>
 <!DOCTYPE html>

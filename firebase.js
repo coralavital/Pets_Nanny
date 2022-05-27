@@ -1,5 +1,5 @@
 const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword, 
-	deleteUser, sendPasswordResetEmail, reauthenticateWithCredential, EmailAuthProvider } = require("firebase/auth");
+	deleteUser, sendPasswordResetEmail, reauthenticateWithCredential, EmailAuthProvider} = require("firebase/auth");
 const { initializeApp } = require('firebase/app');
 const { getFirestore, collection, doc, setDoc, getDoc, updateDoc, query, where, getDocs, deleteDoc, deleteField , arrayUnion } = require('firebase/firestore');
 const { use } = require("chai");
@@ -30,15 +30,15 @@ class Firebase {
     this.auth = getAuth(this.app);
     this.db = getFirestore(this.app);
   }
-
+    
 	async GetUsersEmails(){
 		let users = await this.GetAllDataOnce();
-		let emails = []
+		let userList = []
 		for(var i=0; i<users.length; i++){
 			if (users[i].email !== undefined)
-				emails.push(users[i].email)
+			userList.push(users[i])
 		}
-		return emails;
+		return userList;
 	}
 
   //authenticate function
@@ -58,6 +58,9 @@ class Firebase {
 				break;
 			case 'auth/user-not-found':
 				console.log(`Email address is not exist`);
+				break;
+			case 'auth/wrong-password':
+				console.log(`The entered password is not the current password of this user!`);
 				break;
 			default:
 				console.log(error.message);
@@ -283,16 +286,16 @@ async filtering(ar, price, typeP, typeS, start, end) {
 		}
 
 		await EnterTime({start, end});
-		async function EnterTime({start, end}){
+		async function EnterTime({start, end}) {
 			// get the specific free time obj
+			try{
 			if(document.freeTime != undefined){
 				for(var i=0; i<document.freeTime.length; i++){
 					if(document.freeTime[i].start == start && document.freeTime[i].end == end ||
 						document.freeTime[i].start <= start && document.freeTime[i].end == end ||
 						document.freeTime[i].start == start && document.freeTime[i].end >= end ||
 						document.freeTime[i].start <= start && document.freeTime[i].end >= end) {	
-							console.log("Cannot save free time on free time object")
-							return;
+							throw("Cannot save free time on free time object");
 						}
 					}
 				}
@@ -302,8 +305,7 @@ async filtering(ar, price, typeP, typeS, start, end) {
 							document.reservations[i].start <= start && document.reservations[i].end == end ||
 							document.reservations[i].start == start && document.reservations[i].end >= end ||
 							document.reservations[i].start <= start && document.reservations[i].end >= end) {	
-								console.log("Cannot save free time on reservation time object")
-								return;
+								throw("Cannot save free time on reservation time object");
 							}
 					}
 				}
@@ -314,9 +316,15 @@ async filtering(ar, price, typeP, typeS, start, end) {
 			await updateDoc(userRef, {
 				freeTime
 			});
+			callback()
+		} catch(e) {
+			if(e == "Cannot save free time on free time object")
+				console.log("Cannot save free time on free time object");
+			else
+				console.log("Cannot save free time on reservation time object");
+		}
 
 		}
-		callback()
 	}
 
 	async sendEmail(email, callback) {
@@ -393,7 +401,7 @@ async filtering(ar, price, typeP, typeS, start, end) {
 
 		await EnterTime({start, end});
 
-		async function EnterTime({start, end}){
+		async function EnterTime({start, end}) {
 			let reservationObj = {start, end, title: "Reservation", id: uniqueId(), color: 'red', providerName: provider.fullname, providerEmail: provider.email, 
 									price: provider.price_per_hour, providerPhone: provider.phonenumber, address: userData.address , clientEmail: userData.email, typeS: type_of_service,
 									clientName: userData.fullname};
