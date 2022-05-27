@@ -12,6 +12,55 @@
 <link rel='stylesheet' href='styling/portal.css'>
 <link rel='stylesheet' href='styling/schedule.css'>
 
+<script>
+	function validationFreetime() {
+	var freeTime = Array.from(<%- JSON.stringify(freeTime) %>)
+  	var reservations = Array.from(<%- JSON.stringify(reservations) %>)
+	let date = document.getElementById("date").valueAsDate;
+	let from = document.getElementById("from").options[ddl.selectedIndex].value;
+	let to = document.getElementById("to").options[ddl.selectedIndex].value;
+	from = from.concat(":00")
+	to = to.concat(":00")
+	const sdate = date.concat("T", from)
+	const start = +new Date(sdate)
+	const edate = date.concat("T", to)
+	var end = +new Date(edate)
+	if((end - start) <= 0) {
+		var d = new Date(end);
+		end = d.setDate(d.getDate() + 1);
+	}
+	var freetimeError = document.getElementById("freetimeError");
+	var reservationError =  document.getElementById("reservationError");
+	freetimeError.innerHTML = "";
+	reservationError.innerHTML = "";
+	for(var i; i<reservations.length; i++) {
+		if(freeTime != undefined){
+				for(var i=0; i<freeTime.length; i++){
+					if(freeTime[i].start == start && freeTime[i].end == end ||
+						freeTime[i].start <= start && freeTime[i].end == end ||
+						freeTime[i].start == start && freeTime[i].end >= end ||
+						freeTime[i].start <= start && freeTime[i].end >= end) {	
+							freetimeError.innerHTML = "Cannot save free time on reservation time object.";
+							return;
+						}
+					}
+				}
+				if(reservations != undefined){
+					for(var i=0; i<reservations.length; i++){
+						if(reservations[i].start == start && reservations[i].end == end ||
+							reservations[i].start <= start && reservations[i].end == end ||
+							reservations[i].start == start && reservations[i].end >= end ||
+							reservations[i].start <= start && reservations[i].end >= end) {	
+								reservation.innerHTML = "Cannot save free time on reservation time object.";
+								return;
+							}
+					}
+				}
+	}
+
+}
+</script>
+
 <!--Add free time button-->
 <button class="fc-dayGridMonth-button btn btn-primary" onclick="freetimePopup()" id='plus' type='submit'>+</button>
 
@@ -34,8 +83,6 @@
 						var today = new Date();
 						document.getElementById("date").valueAsDate = today;
 					</script>
-
-					
 				</div>
 				<div class="info-box">
 					<label for="children">From</label>
@@ -55,7 +102,9 @@
 					<br>
 				</div>
 			</div>
-			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='add' type="submit">Add</button>
+			<h5 style='font-size: 15px; color:brown !important;' id="freetimeError"></h5>
+			<h5 style='font-size: 15px; color:brown !important;' id="reservationError"></h5>
+			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" onsubmit='validationFreetime()' id='add' type="submit">Add</button>
 			<br>		
 		</div>
 	</div>

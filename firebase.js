@@ -291,7 +291,7 @@ async filtering(ar, price, typeP, typeS, start, end) {
 						document.freeTime[i].start <= start && document.freeTime[i].end == end ||
 						document.freeTime[i].start == start && document.freeTime[i].end >= end ||
 						document.freeTime[i].start <= start && document.freeTime[i].end >= end) {	
-							console.log("cannot save free time on free time object")
+							console.log("Cannot save free time on free time object")
 							return;
 						}
 					}
@@ -302,7 +302,7 @@ async filtering(ar, price, typeP, typeS, start, end) {
 							document.reservations[i].start <= start && document.reservations[i].end == end ||
 							document.reservations[i].start == start && document.reservations[i].end >= end ||
 							document.reservations[i].start <= start && document.reservations[i].end >= end) {	
-								console.log("cannot save free time on reservation time object")
+								console.log("Cannot save free time on reservation time object")
 								return;
 							}
 					}
