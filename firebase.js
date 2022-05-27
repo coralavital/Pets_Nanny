@@ -1,10 +1,9 @@
 const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword, 
-	deleteUser, sendPasswordResetEmail, reauthenticateWithCredential, EmailAuthProvider, listUsers } = require("firebase/auth");
+	deleteUser, sendPasswordResetEmail, reauthenticateWithCredential, EmailAuthProvider } = require("firebase/auth");
 const { initializeApp } = require('firebase/app');
 const { getFirestore, collection, doc, setDoc, getDoc, updateDoc, query, where, getDocs, deleteDoc, deleteField , arrayUnion } = require('firebase/firestore');
 const { use } = require("chai");
 const { async } = require('@firebase/util');
-const admin = require('firebase-admin');
 
 function containsAny(source,target)
 {
