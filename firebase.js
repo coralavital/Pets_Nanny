@@ -339,7 +339,7 @@ async filtering(ar, price, typeP, typeS, start, end) {
 		const sdate = date.concat("T", from)
 		const start = +new Date(sdate)
 		const edate = date.concat("T", to)
-		const end = +new Date(edate)
+		var end = +new Date(edate)
 		const userData = await this.CurrentUserData()
 		//get id for ecery reservation
 		const uniqueId = () => {
@@ -347,6 +347,12 @@ async filtering(ar, price, typeP, typeS, start, end) {
 			const randomness = Math.random().toString(36).substr(2);
 			return dateString + randomness;
 		};
+
+		if((end - start) <= 0) {
+			var d = new Date(end);
+			end = d.setDate(d.getDate() + 1);
+		}
+
 		var freeTimeItem;
 		var newFreeTime = []
 		var freeTimeObj;
