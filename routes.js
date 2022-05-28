@@ -17,7 +17,7 @@ module.exports = function (app) {
 	var providers;
 	var providerRef;
 	var types;
-	var pass;
+
   // index page
   app.get('/', async function (req, res) {
     editFlag.editFalse();
