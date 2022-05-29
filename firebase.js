@@ -252,36 +252,36 @@ async filtering(ar, price, typeP, typeS, start, end) {
 		var i=0;
 		const userData = await this.CurrentUserData()
 		if(userData.reservations != null && userData.typeOfUser == "1") {
-			var reserv = [];
-			const docRef = doc(this.db, 'users', userData.reservations[i].clientEmail);
-			const docSnap = await getDoc(docRef);
-			var usr = docSnap.data();
 			for(i=0; i<userData.reservations.length; i++) {
+				var reserv = [];
+				const docRef = doc(this.db, 'users', userData.reservations[i].clientEmail);
+				const docSnap = await getDoc(docRef);
+				var usr = docSnap.data();
 				for(var j=0; j<usr.reservations.length; j++) {
 					if(usr.reservations[j].start != userData.reservations[i].start && usr.reservations[j].end != userData.reservations[i].end) {
 						reserv.push(usr.reservations[j]);
 					}
 				}
+				await updateDoc(docRef, {
+					reservations: reserv
+				});
 			}
-			await updateDoc(docRef, {
-				reservations: reserv
-			});
 		}
 		else if(userData.reservations != null && userData.typeOfUser == "0") {
-			var reserv = [];
-			const docRef = doc(this.db, 'users', userData.reservations[i].providerEmail);
-			const docSnap = await getDoc(docRef);
-			var usr = docSnap.data();
 			for(i=0; i<userData.reservations.length; i++) {
+				var reserv = [];
+				const docRef = doc(this.db, 'users', userData.reservations[i].providerEmail);
+				const docSnap = await getDoc(docRef);
+				var usr = docSnap.data();
 				for(var j=0; j<usr.reservations.length; j++) {
 					if(usr.reservations[j].start != userData.reservations[i].start && usr.reservations[j].end != userData.reservations[i].end) {
 						reserv.push(usr.reservations[j]);
 					}
 				}
+				await updateDoc(docRef, {
+					reservations: reserv
+				});
 			}
-			await updateDoc(docRef, {
-				reservations: reserv
-			});
 		}
 		deleteDoc(doc(this.db, "users", this.auth._currentUser.email));
 		deleteUser(this.auth._currentUser).then(async() => {
