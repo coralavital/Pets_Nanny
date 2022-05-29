@@ -251,39 +251,37 @@ async filtering(ar, price, typeP, typeS, start, end) {
 	async deleteAccount(callback) {
 		var i=0;
 		const userData = await this.CurrentUserData()
-		var usrReservation = [] 
-
 		if(userData.reservations != null && userData.typeOfUser == "1") {
+			var reserv = [];
+			const docRef = doc(this.db, 'users', userData.reservations[i].clientEmail);
+			const docSnap = await getDoc(docRef);
+			var usr = docSnap.data();
 			for(i=0; i<userData.reservations.length; i++) {
-				var reserv = [];
-				const docRef = doc(this.db, 'users', userData.reservations[i].clientEmail);
-    			const docSnap = await getDoc(docRef);
-				var usr = docSnap.data();
 				for(var j=0; j<usr.reservations.length; j++) {
 					if(usr.reservations[j].start != userData.reservations[i].start && usr.reservations[j].end != userData.reservations[i].end) {
 						reserv.push(usr.reservations[j]);
 					}
 				}
-				await updateDoc(docRef, {
-					reservations: reserv
-				});
 			}
+			await updateDoc(docRef, {
+				reservations: reserv
+			});
 		}
 		else if(userData.reservations != null && userData.typeOfUser == "0") {
+			var reserv = [];
+			const docRef = doc(this.db, 'users', userData.reservations[i].providerEmail);
+			const docSnap = await getDoc(docRef);
+			var usr = docSnap.data();
 			for(i=0; i<userData.reservations.length; i++) {
-				var reserv = [];
-				const docRef = doc(this.db, 'users', userData.reservations[i].providerEmail);
-    			const docSnap = await getDoc(docRef);
-				var usr = docSnap.data();
 				for(var j=0; j<usr.reservations.length; j++) {
 					if(usr.reservations[j].start != userData.reservations[i].start && usr.reservations[j].end != userData.reservations[i].end) {
 						reserv.push(usr.reservations[j]);
 					}
 				}
-				await updateDoc(docRef, {
-					reservations: reserv
-				});
 			}
+			await updateDoc(docRef, {
+				reservations: reserv
+			});
 		}
 		deleteDoc(doc(this.db, "users", this.auth._currentUser.email));
 		deleteUser(this.auth._currentUser).then(async() => {
@@ -441,13 +439,15 @@ async filtering(ar, price, typeP, typeS, start, end) {
 			let reservationObj = {start, end, title: "Reservation", id: uniqueId(), color: 'red', providerName: provider.fullname, providerEmail: provider.email, 
 									price: provider.price_per_hour, providerPhone: provider.phonenumber, address: userData.address , clientEmail: userData.email, typeS: type_of_service,
 									clientName: userData.fullname};
-			const reservations = userData.reservations !== undefined ? userData.reservations :[];
-			reservations.push(reservationObj);
+			const clientReser = userData.reservations !== undefined ? userData.reservations :[];
+			const providerReser = document.reservations !== undefined ? document.reservations :[];
+			clientReser.push(reservationObj);
+			providerReser.push(reservationObj);
 			await updateDoc(clientRef, {
-				reservations
+				reservations: clientReser
 			});
 			await updateDoc(providerRef, {
-				reservations,
+				reservations: providerReser,
 				freeTime: newFreeTime
 			});
 
