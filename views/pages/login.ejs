@@ -5,13 +5,11 @@
 		var expr = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 		loginError.innerHTML = "";
 		if(!(userList.includes(emailVal.value)) && expr.test(emailVal.value)) {
-
 				loginError.innerHTML = "Incorrect email or password.";
 		}
-			else {
+		else {
 				loginError.innerHTML = "";
-			}
-		
+		}
 	}
 
 	function validationSignup(emailVal){
@@ -25,9 +23,6 @@
 		else {
 			signupError.innerHTML = "";
 		}
-	}
-	function validationPassword(pass) {
-
 	}
 </script>
 <!DOCTYPE html>

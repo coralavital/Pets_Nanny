@@ -7,11 +7,6 @@
 
 </head>
 <body class="container">
-<style>
-	.la{
-		padding-left: 40% !important;
-	}
-</style>
 <header>
 	<%- include('../partials/header'); %>
 </header>
@@ -34,9 +29,9 @@
 				</div>
 			</div>
 			<br>
-				<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='changep' type="submit">Change</button>
-			</form>	
-						
+			<h5 style='font-size: 15px; color:brown !important;' id="changeMessage"></h5>	
+				<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" onclick='changeMessage()' id='changep' type="submit">Change</button>
+			</form>			
 			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='open' onclick="popupp()" style='width: 30%;' type="submit">Delete my account</button>
 			<!-- The Modal -->
 				<div id="myModal" class="modal">
@@ -58,6 +53,9 @@
 	  </div>
 
 <style>
+	.la{
+		padding-left: 40% !important;
+	}
 	#changep, #open, #yes, #no{
 		width: 22%;
 		height: 40px;
@@ -109,6 +107,17 @@
 
 </style>	
 <script>
+	function changeMessage() {
+		var changeMessage = document.getElementById("changeMessage");
+		var change = <%- changePassword %>;
+		changeMessage.innerHTML = "";
+		if(change == true) {
+			changeMessage.innerHTML = "Password changed successfuly!";
+		}
+		else {
+			changeMessage.innerHTML = "";
+		}
+	}
 	function popupp() {
    document.getElementById('myModal').style.display ='block';
    };

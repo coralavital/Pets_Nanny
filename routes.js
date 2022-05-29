@@ -13,11 +13,12 @@ const { auth } = require('./firebase');
 const time = require('./controllers/time');
 
 
+
 module.exports = function (app) {
 	var providers;
 	var providerRef;
 	var types;
-
+	var changePassword = false;
   // index page
   app.get('/', async function (req, res) {
     editFlag.editFalse();
@@ -201,7 +202,6 @@ module.exports = function (app) {
 
 });
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////coral
   // edit-personal-info-provider page - provider
   app.get('/myPersonalInfo', async function (req, res) {
     const areasCities = areaCity.area_city
@@ -282,14 +282,14 @@ module.exports = function (app) {
   // setting page - provider
   app.get('/mySetting', async function (req, res) {
     editFlag.editFalse();
-    const userData = await firebase.CurrentUserData()
+    const userData = await firebase.CurrentUserData();
     res.render('pages/mySetting', {
-	  firebase,
-	  userData,
-      fullname: userData.fullname,
-      email: firebase.auth._currentUser.email,
-      phonenumber: userData.phonenumber,
-      errorMsg: errorMsg
+		firebase,
+		userData,
+		fullname: userData.fullname,
+		email: firebase.auth._currentUser.email,
+		phonenumber: userData.phonenumber,
+		errorMsg: errorMsg
     });
   });
 
@@ -325,8 +325,8 @@ module.exports = function (app) {
 
   app.post('/changePassword', async function (req, res) {
     const { cpassword, npassword } = req.body;
-    firebase.changePassword(cpassword, npassword)
-    res.redirect("/mySetting")
+    firebase.changePassword(cpassword, npassword);
+    res.redirect('/mySetting}')
 
   });
   app.post('/deleteAccount', async function (req, res) {
