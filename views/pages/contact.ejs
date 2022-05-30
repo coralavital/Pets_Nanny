@@ -39,7 +39,11 @@
 
             </div>
             <div class="row">
-              <div class="col-md-3 offset-md-9"><button type="submit" class="btn btn-primary">Send</button></div>
+              <div class="col-md-3 offset-md-0"><button type="submit" class="btn btn-primary">Send</button></div>
+			  <div class="col-md-3 offset-md-6"><input type="button" class="btn btn-primary" onclick="history.back()" value="Back"></input></div>
+			</div>
+		</div>
+        </div>
 		</form>
 		<% if(userData != null) { %>
 			<script>
@@ -47,8 +51,7 @@
 				document.getElementById("email").disabled = true;
 			</script>
 		<% } %>
-		<div class="col-md-3 offset-md-9"><input type="button" class="btn btn-primary" onclick="history.back()" value="Back"></input></div>
-        </div>   
+		   
     </div><!--col-->
   </div><!--row-->
 
