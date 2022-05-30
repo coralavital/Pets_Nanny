@@ -204,8 +204,6 @@ async filtering(ar, price, typeP, typeS, start, end) {
       const querySnapshot = await getDocs(collection(this.db, "users"));
       var users = [];
         querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-        // console.log(doc.id, " => ", doc.data());
           users.push(doc.data());
         });
         return users;
@@ -364,11 +362,11 @@ async filtering(ar, price, typeP, typeS, start, end) {
 		}
 	}
 
+	// send email to reser password
 	async sendEmail(email, callback) {
 		await sendPasswordResetEmail(this.auth, email).then(() => {
-			callback();
 			console.log("Sent reset password to you email!")
-
+			callback();
 		}).catch((e) => {
 			console.log(e)
 		})
