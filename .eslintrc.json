@@ -9,6 +9,7 @@
     },
     "rules": {
 		"position": "above",
-		"extends": "eslint:recommended"
+		"extends": "eslint:recommended",
+		"max-lines": ["error", {"max": 1500, "skipComments": true, "skipBlankLines": true}]
     }
 }
