@@ -11,6 +11,18 @@
 				loginError.innerHTML = "";
 		}
 	}
+	function validationForgetEmail(emailVal) {
+		let userList = <%- JSON.stringify(userList) %>;
+		var forgetError = document.getElementById("forgetError");
+		var expr = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+		forgetError.innerHTML = "";
+		if(!(userList.includes(emailVal.value)) && expr.test(emailVal.value)) {
+			forgetError.innerHTML = "Incorrect email.";
+		}
+		else {
+			forgetError.innerHTML = "";
+		}
+	}
 
 	function validationSignup(emailVal){
 		let userList = <%- JSON.stringify(userList) %>;
@@ -63,8 +75,9 @@
 				<span class="close" onclick='close1()'>&times;</span>
 
 				<div class="mb-3"><label class="form-label la" for="email"><strong>Enter the email for which you would like to reset your password</strong></label>
-					<input name='email' placeholder="Enter your email" class="form-control" type="email" id="email" style='width:50%' required/></div>
+					<input name='email' placeholder="Enter your email" onkeyup="validationForgetEmail(this)" class="form-control" type="email" id="email" style='width:50%' required/></div>
 					<br>
+					<h5 style='font-size: 15px; color:brown !important;' id="forgetError"></h5>
 					<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='forgot' type="submit">Reset password</button>
 
 			  </div>
