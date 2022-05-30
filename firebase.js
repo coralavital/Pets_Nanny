@@ -4,6 +4,7 @@ const { initializeApp } = require('firebase/app');
 const { getFirestore, collection, doc, setDoc, getDoc, updateDoc, query, where, getDocs, deleteDoc, deleteField , arrayUnion } = require('firebase/firestore');
 const { use } = require("chai");
 const { async } = require('@firebase/util');
+const errorMsg = require('./controllers/errorMsg');
 
 function containsAny(source,target)
 {
@@ -230,6 +231,7 @@ async filtering(ar, price, typeP, typeS, start, end) {
 		await reauthenticateWithCredential(usr, EmailAuthProvider.credential(email, cpassword))
 		.then(() => {
 			updatePassword(usr, npassword).then(() => {
+				errorMsg.changeMessage = true;
 				console.log("update password");
 			}).catch((error) => {
 				console.log("Error at updatePassword\n", error);
@@ -244,8 +246,6 @@ async filtering(ar, price, typeP, typeS, start, end) {
 				break;
 			  }
 		})
-		
-
 	}
 
 	//delete account

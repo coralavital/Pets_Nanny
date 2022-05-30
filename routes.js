@@ -18,7 +18,6 @@ module.exports = function (app) {
 	var providers;
 	var providerRef;
 	var types;
-	var changePassword = false;
   // index page
   app.get('/', async function (req, res) {
     editFlag.editFalse();
@@ -298,8 +297,6 @@ module.exports = function (app) {
     const type = userData.typeOfUser;
     res.redirect('/myPersonalInfo');
 
-
-
   });
 
   app.post('/home', async function (req, res) {
@@ -326,7 +323,7 @@ module.exports = function (app) {
   app.post('/changePassword', async function (req, res) {
     const { cpassword, npassword } = req.body;
     firebase.changePassword(cpassword, npassword);
-    res.redirect('/mySetting}')
+    res.redirect('/mySetting')
 
   });
   app.post('/deleteAccount', async function (req, res) {
