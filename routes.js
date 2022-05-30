@@ -322,10 +322,20 @@ module.exports = function (app) {
 
   app.post('/changePassword', async function (req, res) {
     const { cpassword, npassword } = req.body;
-    firebase.changePassword(cpassword, npassword);
-    res.redirect('/mySetting')
-
+    firebase.changePassword(cpassword, npassword, (flag) => {
+		if(flag == true) {
+			errorMsg.changeMessage = true;
+			errorMsg.errorChange = false;
+		}
+		else if (flag == false) {
+			errorMsg.errorChange = true;
+			errorMsg.changeMessage = false;
+		}
+		res.redirect('/mySetting');
+	})
   });
+
+
   app.post('/deleteAccount', async function (req, res) {
     firebase.deleteAccount (() => {
 		res.redirect("/")

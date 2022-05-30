@@ -224,19 +224,20 @@ async filtering(ar, price, typeP, typeS, start, end) {
     }
     
 	//change password of user
-	async changePassword(cpassword, npassword) {
+	async changePassword(cpassword, npassword, callback) {
 		const email = this.auth._currentUser.email;
 		const usr = this.auth._currentUser;
-
+		var flag = true;
 		await reauthenticateWithCredential(usr, EmailAuthProvider.credential(email, cpassword))
 		.then(() => {
 			updatePassword(usr, npassword).then(() => {
-				errorMsg.changeMessage = true;
 				console.log("update password");
 			}).catch((error) => {
+				flag = false;
 				console.log("Error at updatePassword\n", error);
 			})
 		}).catch((error) => {
+			flag = false;
 			switch (error.code) {
 				case 'auth/wrong-password':
 				  console.log(`The entered password is not the match to the current user password!`);
@@ -246,6 +247,7 @@ async filtering(ar, price, typeP, typeS, start, end) {
 				break;
 			  }
 		})
+		callback(flag);
 	}
 
 	//delete account
