@@ -459,9 +459,13 @@ async filtering(ar, price, typeP, typeS, start, end) {
 
 	//saving contact message details
 	async addContactMsg(name, emailSender, messageText, callback) {
+		if(emailSender == undefined) {
+			const userData = await this.CurrentUserData()
+			emailSender = userData.email;
+			name = userData.fullname;
+		}
 		// how the data will be saved in the obj arr
-		let msgObj = {title: "contactUs", date: new Date(), user: emailSender, name: name, messageText: messageText};
-
+		var msgObj = {title: "contactUs", date: new Date(), email: emailSender, name: name, messageText: messageText};
 		const email_msg_ref = doc(this.db, "contact", emailSender);
 
 		try{ 
@@ -470,13 +474,10 @@ async filtering(ar, price, typeP, typeS, start, end) {
 			const contactMsg = docSnap.data();
 			var msg_arr =  contactMsg !== undefined ? contactMsg.contactUs : []
 		} catch(e) {
-			console.log("Error! at addContactMsg function reseting array \n", e)
 			msg_arr = []
 		}
 
 		msg_arr.push(msgObj);
-
-
 		await setDoc(email_msg_ref, {
 			contactUs: msg_arr
 		});
