@@ -22,10 +22,10 @@
 			<form action="changePassword" method="post">
 			<div class="row">
 				<div class="col">
-					<div class="mb-3"><label class="form-label la" for="cpassword"><strong>Current password</strong></label><input name='cpassword' placeholder="••••••" class="form-control" type="text" id="cpassword" name="cpassword" maxlength="20" minlength='6' required/></div>
+					<div class="mb-3"><label class="form-label la" for="cpassword"><strong>Current password</strong></label><input name='cpassword' placeholder="••••••" class="form-control" type="password" id="cpassword" name="cpassword" maxlength="20" minlength='6' required/></div>
 				</div>
 				<div class="col">
-					<div class="mb-3"><label class="form-label la" for="npassword"><strong>New password</strong></label><input name='npassword' placeholder="••••••" class="form-control" type="text" id="npassword" name="npassword" maxlength="20" minlength='6' required/></div>
+					<div class="mb-3"><label class="form-label la" for="npassword"><strong>New password</strong></label><input name='npassword' placeholder="••••••" class="form-control" type="password" id="npassword" name="npassword" maxlength="20" minlength='6' required/></div>
 				</div>
 			</div>
 			<br>
@@ -41,7 +41,7 @@
 			</form>			
 			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='open' onclick="popupp()" style='width: 30%;' type="submit">Delete my account</button>
 			<!-- The Modal -->
-				<div id="myModal" class="modal">
+				<div id="deleteAccount" class="modal">
 					<!-- Modal content -->
 					<div class="modal-content">
 						<span class="close" onclick='closep()'>&times;</span>
@@ -115,20 +115,14 @@
 </style>	
 <script>
 	function popupp() {
-   document.getElementById('myModal').style.display ='block';
+   document.getElementById('deleteAccount').style.display ='block';
    };
 
    // When the user clicks on <span> (x), close the modal
    function closep() {
-   document.getElementById('myModal').style.display = 'none';
+   document.getElementById('deleteAccount').style.display = 'none';
    };
    
-   // When the user clicks anywhere outside of the modal, close it
-   window.onclick = function(event) {
-   if (event.target == document.getElementsByClassName('modal')) {
-	   document.getElementsByClassName('modal').style.display = 'none';
-   }
-   };
 </script>
 </main>
 <footer>
