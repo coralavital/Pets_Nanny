@@ -113,7 +113,7 @@
 			<div class="info-box" style='margin-left: 12%;'>
 					<label>Date</label>
 					<% let datee = (new Date()).toISOString().split('T')[0] %>					
-					<input type="date" id="date" min="<%= datee %>" name="date" value='<%= date %>' required/>
+					<input type="date" id="date"  name="date" value='<%= date %>' required/>
 					<%if (date == null) {%>
 						<script>document.getElementById("date").valueAsDate = new Date();</script>
 					<% } %>

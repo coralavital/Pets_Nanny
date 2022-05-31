@@ -14,14 +14,6 @@ class Filter{
     }
 
     fixParams(area_city,typeP,typeS) {
-        //all the selected checkboxes from the dropdown will be in dict data type
-        // let type_of_service = {take_for_walk: (typeP != null && typeP.includes('take_for_walk'))?1:0, 
-        // keep_at_home: (typeP != null && typeP.includes('keep_at_home'))?1:0};
-
-        // let type_of_pet = {type_dog: (typeS != null && typeS.includes('type_dog'))?1:0,
-        // type_cat: (typeS != null && typeS.includes('type_cat'))?1:0,
-        // type_other: (typeS != null && typeS.includes('type_other'))?1:0};
-
         // putting area_city into array named -> ar
         if(area_city == null) {
           // need to add all the cities ! 

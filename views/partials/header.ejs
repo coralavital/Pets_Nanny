@@ -4,7 +4,7 @@
   <% if (userData == null) { %>
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" href="/">Home</a>
+      <a class="nav-link" onclick='invite()' href="/">Home</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="/contact">Contact Us</a>
@@ -20,7 +20,7 @@
   <% } else { %>
 	<ul class="navbar-nav">
 		<li class="nav-item">
-		  <a class="nav-link" href="/portal">Home</a>
+		  <a class="nav-link" onclick='invite()' href="/portal">Home</a>
 		</li>
 		<li class="nav-item">
 		  <a class="nav-link" href="/contact">Contact Us</a>
@@ -53,9 +53,9 @@
     </li>
   </ul>
   <% } %>
-
 </nav>
-  <style>
+
+<style>
 	.nav-item {
 		  left: -20px;
 		  font-size: 22px;

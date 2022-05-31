@@ -323,16 +323,16 @@ async filtering(ar, price, typeP, typeS, start, end) {
 		await EnterTime({start, end});
 		async function EnterTime({start, end}) {
 			// get the specific free time obj
-			try{
-			if(document.freeTime != undefined){
-				for(var i=0; i<document.freeTime.length; i++){
-					if(document.freeTime[i].start == start && document.freeTime[i].end == end ||
-						document.freeTime[i].start <= start && document.freeTime[i].end == end ||
-						document.freeTime[i].start == start && document.freeTime[i].end >= end ||
-						document.freeTime[i].start <= start && document.freeTime[i].end >= end) {	
-							throw("Cannot save free time on free time object");
+			try {
+				if(document.freeTime != undefined){
+					for(var i=0; i<document.freeTime.length; i++){
+						if(document.freeTime[i].start == start && document.freeTime[i].end == end ||
+							document.freeTime[i].start <= start && document.freeTime[i].end == end ||
+							document.freeTime[i].start == start && document.freeTime[i].end >= end ||
+							document.freeTime[i].start <= start && document.freeTime[i].end >= end) {	
+								throw("Cannot save free time on free time object");
+							}
 						}
-					}
 				}
 				if(document.reservations != undefined){
 					for(var i=0; i<document.reservations.length; i++){
@@ -345,13 +345,13 @@ async filtering(ar, price, typeP, typeS, start, end) {
 					}
 				}
 
-			let freeTimeObj = {start, end, title: "Free Time", id: uniqueId(), color: "green"};
-			const freeTime = userData.freeTime !== undefined ? userData.freeTime :[];
-			freeTime.push(freeTimeObj);
-			await updateDoc(userRef, {
-				freeTime
-			});
-			callback()
+				let freeTimeObj = {start, end, title: "Free Time", id: uniqueId(), color: "green"};
+				const freeTime = userData.freeTime !== undefined ? userData.freeTime :[];
+				freeTime.push(freeTimeObj);
+				await updateDoc(userRef, {
+					freeTime
+				});
+				callback()
 		} catch(e) {
 			if(e == "Cannot save free time on free time object")
 				console.log("Cannot save free time on free time object");
@@ -513,22 +513,33 @@ async filtering(ar, price, typeP, typeS, start, end) {
 		const pdocSnap = await getDoc(providerRef);
 		const providerDOC = pdocSnap.data()
 		const cdocSnap = await getDoc(clientRef);
-		const clientDOC = cdocSnap.data()
+		const clientDOC = cdocSnap.data();
+		var newFreeTime =  providerDOC.freeTime !== undefined ? providerDOC.freeTime : []
+		var freeTimeObj;
+
 		for(var i=0; i<providerDOC.reservations.length; i++){
 			if(providerDOC.reservations[i].id != id) {	
-				newReservationsp.push(providerDOC.reservations[i])
+				newReservationsp.push(providerDOC.reservations[i]);				
 			}
-		}
-		//var newFreeTime = document.freeTime.filter(document.freeTime => obj)
+			else if(providerDOC.reservations[i].id == id && this.CurrentUserData().typeOfUser == 0) {
+				freeTimeObj = {start: providerDOC.reservations[i].start,
+					 end: providerDOC.reservations[i].end, title: "Free Time",
+					  id: providerDOC.reservations[i].id, color: "green"};
+				newFreeTime.push(freeTimeObj)
+			}
+		};
+
+
 		await updateDoc(providerRef, {
-			reservations: newReservationsp
+			reservations: newReservationsp,
+			freeTime: newFreeTime
 		});
 		for(var i=0; i<clientDOC.reservations.length; i++){
 			if(clientDOC.reservations[i].id != id) {	
 				newReservationsc.push(clientDOC.reservations[i])
 			}
 		}
-		//var newFreeTime = document.freeTime.filter(document.freeTime => obj)
+
 		await updateDoc(clientRef, {
 			reservations: newReservationsc
 		});

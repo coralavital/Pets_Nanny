@@ -62,6 +62,7 @@ module.exports = function (app) {
       providers = await filter.result;
       filter.flag = true
     }
+
 	const {date, from, to, typeP, typeS, price, area_city} = req.query;
     res.render('pages/portal', {
 	  date,
@@ -79,7 +80,8 @@ module.exports = function (app) {
       times: time,
       areaCities
     });
-  });
+});
+  
 
   // login-signup page
   app.get('/login', async function (req, res) {
@@ -118,9 +120,12 @@ module.exports = function (app) {
    */
   app.post('/authenticate', async function (req, res) {
 	  const { email, password } = req.body;
-    firebase.authenticate(email, password,  () => {
-		res.redirect('/portal');
-    })
+	  let userList = await firebase.GetUsersEmails();
+	  if(userList.includes(email)) {
+			firebase.authenticate(email, password,  () => {
+				res.redirect('/portal');
+			})
+		}
   });
 
   app.post('/signup', function (req, res) {
@@ -197,8 +202,7 @@ module.exports = function (app) {
 
 	filter.changeProvider(ar, parseInt(price), type_of_pet, type_of_service, sFilters.date, sFilters.from, sFilters.to, () => {
 		res.redirect(`/portal?date=${sFilters.date}&from=${sFilters.from}&to=${sFilters.to}&typeP=${typeP}&typeS=${typeS}&price=${price}&area_city=${area_city}`)
-	})
-
+	});
 });
 
   // edit-personal-info-provider page - provider
@@ -302,7 +306,7 @@ module.exports = function (app) {
   app.post('/home', async function (req, res) {
     const userData = await firebase.CurrentUserData();
     if (userData != null) {
-      res.redirect('/portal');
+      	res.redirect('/portal');
     } else {
       res.redirect('/');
     }
