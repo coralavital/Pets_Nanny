@@ -8,6 +8,9 @@
 	margin-top: 5%;
 }
 
+.dropdown-menu {
+	font-size: 15px !important;
+}
 
 /* search table  */
 #search-form {
@@ -30,12 +33,17 @@
 #header h1 {
     color: #FFF;
     margin-left: 20px;
-    font-size: 1.3em
+    font-size: 1.5em
 }
 
+.form-control {
+	width: 100% !important;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 15px;
+}
 .searchT input, select {
     color: #6B6A6A;
-
 }
 
 .info-box {
@@ -73,6 +81,7 @@
 .bootstrap-select.btn-group.show-tick .dropdown-menu li a span.text {
     font-size: initial;
 }
+
 #type {
     display: flex;
     justify-content: flex-start;
