@@ -18,6 +18,7 @@ module.exports = function (app) {
 	var providers;
 	var providerRef;
 	var types;
+	var dateFlag = false;
   // index page
   app.get('/', async function (req, res) {
     editFlag.editFalse();
@@ -62,9 +63,10 @@ module.exports = function (app) {
       providers = await filter.result;
       filter.flag = true
     }
-
+	
 	const {date, from, to, typeP, typeS, price, area_city} = req.query;
     res.render('pages/portal', {
+	  dateFlag,
 	  date,
 	  from,
 	  to,
@@ -80,6 +82,7 @@ module.exports = function (app) {
       times: time,
       areaCities
     });
+	dateFlag = false;
 });
   
 
@@ -199,7 +202,7 @@ module.exports = function (app) {
 	let type_of_pet = filters[1];
 	let type_of_service = filters[2];
 	types = filters[2];
-
+	dateFlag = true;
 	filter.changeProvider(ar, parseInt(price), type_of_pet, type_of_service, sFilters.date, sFilters.from, sFilters.to, () => {
 		res.redirect(`/portal?date=${sFilters.date}&from=${sFilters.from}&to=${sFilters.to}&typeP=${typeP}&typeS=${typeS}&price=${price}&area_city=${area_city}`)
 	});
@@ -306,6 +309,7 @@ module.exports = function (app) {
   app.post('/home', async function (req, res) {
     const userData = await firebase.CurrentUserData();
     if (userData != null) {
+		dateFlag = false;
       	res.redirect('/portal');
     } else {
       res.redirect('/');
@@ -426,7 +430,7 @@ module.exports = function (app) {
 	//add reservation to the documents
 	app.post('/addReservation', function (req, res) {
 		firebase.addReservation(sFilters.date, sFilters.from, sFilters.to, providerRef, types, () => {
-			sFilters.date = null;
+			dateFlag = false;
 			res.redirect('/portal')
 		})
 
