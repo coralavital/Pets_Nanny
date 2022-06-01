@@ -10,23 +10,8 @@
 <head>
 	<%- include('../partials/head'); %>
 	<link rel="stylesheet" href="styling/index.css"></link>
-	<style>
-		.pcoded {
-			display: none;
-		}
-
-        /* to center the address  */
-        .mb-3{
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-	</style>
 </head>
 <body class="container">
-
-
-
 
 <main>
   <div class="jumbotron">
@@ -79,20 +64,15 @@
 									</select>
 								</div>
 							</div>
-							
-							
-								<div class="mb-3">
-									<label class="col-md-6"><strong>Type of service</strong><br>
-									<select class="selectpicker" multiple data-live-search="true" id="field" name="typeS" required>
-										<option disabled>Type of Service</option>
-										<option  id='take_for_walk'>Take for a walk</option>
-										<option  id='keep_at_home' >Keep at home</option>
-									</select> 
-								</div>
-							
-						
+							<div class="mb-3">
+								<label class="col-md-6"><strong>Type of service</strong><br>
+								<select class="selectpicker" multiple data-live-search="true" id="field" name="typeS" required>
+									<option disabled>Type of Service</option>
+									<option  id='take_for_walk'>Take for a walk</option>
+									<option  id='keep_at_home' >Keep at home</option>
+								</select> 
+							</div>
 						</div>
-				
 					<br>
 					<br>
 					<br>
@@ -118,6 +98,24 @@
 </footer>
 </html>
 <style>
+	.dropdown-menu {
+		font-size: 15px !important;
+	}
+	.form-control {
+		width: 50% !important;
+		margin-left: auto;
+		margin-right: auto;
+		font-size: 15px;
+	}
+	.pcoded {
+		display: none;
+	}
+
+	/* to center the address  */
+	.mb-3{
+		margin-left: auto;
+		margin-right: auto;
+	}
 	#save{
 		width: 20%;
 		height: 40px;

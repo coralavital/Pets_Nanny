@@ -70,7 +70,7 @@
 				<div class="info-box" style='margin-left: 35px;'>
 					<label for="adults">Date</label>
 					<% let date = (new Date()).toISOString().split('T')[0] %>	
-					<input type="date" onchange="validationFreetime()" min="<%= date %>" id="date" name="date" >
+					<input type="date" onchange="validationFreetime()" id="date" name="date" >
 					<script>
 						var today = new Date();
 						document.getElementById("date").valueAsDate = today;

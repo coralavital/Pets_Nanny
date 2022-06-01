@@ -31,7 +31,7 @@
         <div id="depart">
         <div class="info-box">
           <label for="">Area/City</label>
-          <select class="selectpicker" id='area_city' multiple id='area_city' name="area_city">
+          <select class="selectpicker" id='area_city' multiple data-live-search="true" id='area_city' name="area_city">
               <option disabled>Area</option>
 				<% for(var i = 0 ; i < 3 ; i++) { %>
 					<% if (area_city != undefined) { %>
@@ -81,7 +81,7 @@
         <div id="dates">
         	<div class="info-box">
 				<label for="">Type of pets</label>
-				<select class="selectpicker" multiple id='typeP' name="typeP">
+				<select class="selectpicker" multiple data-live-search="true" id='typeP' name="typeP">
 					<option disabled>Type of pets</option>
 					<% typep = ["Dog", "Cat", "Other pet"] %>
 					<% for(var i = 0 ; i < typep.length ; i++) { %>
@@ -95,7 +95,7 @@
         	</div>
 			<div class="info-box">
 				<label for="">Type of Service</label>
-				<select class="selectpicker" multiple id='typeS' name="typeS">
+				<select class="selectpicker" multiple data-live-search="true" id='typeS' name="typeS">
 					<option disabled>Type of Service</option>
 					<% types = ["Take for a walk","Keep at home"] %>
 					<% for(var i = 0 ; i < types.length ; i++) { %>
@@ -118,6 +118,7 @@
 						<script>document.getElementById("date").valueAsDate = new Date();</script>
 					<% } %>
 				</div>
+
 				<div class="info-box" style='margin-left: 5px !important;'>
 					<label>From</label>
 					<select class="selectpicker" id="from" name="from" value='<%= from %>'>
