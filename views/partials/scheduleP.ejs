@@ -318,13 +318,13 @@ function closepStatistical() {
 };
 
 //Reservation info popup
-function reservationPopup(start, end, clientName, emailClient, emailProvider, phone, price, address, id) {
+function reservationPopup(start, end, clientName, emailClient, emailProvider, clientPhone, price, address, id) {
 	document.getElementById("rID").value = id;
 	document.getElementById("emailProvider").value = emailProvider;
 	document.getElementById("emailClient").value = emailClient;
-	document.getElementById("clientFullName").innerHTML = "The name of the provider \u27A1\uFE0F " + clientName;
+	document.getElementById("clientFullName").innerHTML = "The name of the client \u27A1\uFE0F " + clientName;
     document.getElementById("clientEmail").innerHTML = "The email of the client \u27A1\uFE0F " +  emailClient;
-	document.getElementById("providerPhone").innerHTML = "The phone of the provider \u27A1\uFE0F " +  phone;
+	document.getElementById("providerPhone").innerHTML = "The phone of the client \u27A1\uFE0F " +  clientPhone;
 	document.getElementById("providerPrice").innerHTML = "The price per hour for the service \u27A1\uFE0F " +  price;
 	document.getElementById("address").innerHTML = "The address \u27A1\uFE0F " + address;
     document.getElementById("startR").innerHTML = "The start time \u27A1\uFE0F " +  start.toLocaleString();
@@ -377,7 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	eventClick: function(info) {
 		if(info.event.title == "Reservation") {
 			reservationPopup(info.event.start, info.event.end, info.event.extendedProps.clientName, 
-		info.event.extendedProps.clientEmail, info.event.extendedProps.providerEmail, info.event.extendedProps.providerPhone, info.event.extendedProps.price, 
+		info.event.extendedProps.clientEmail, info.event.extendedProps.providerEmail, info.event.extendedProps.clientPhone, info.event.extendedProps.price, 
 		info.event.extendedProps.address, info.event.id);
 		}
 		else {

@@ -439,7 +439,7 @@ async filtering(ar, price, typeP, typeS, start, end) {
 		async function EnterTime({start, end}) {
 			let reservationObj = {start, end, title: "Reservation", id: uniqueId(), color: 'red', providerName: provider.fullname, providerEmail: provider.email, 
 									price: provider.price_per_hour, providerPhone: provider.phonenumber, address: userData.address , clientEmail: userData.email, typeS: type_of_service,
-									clientName: userData.fullname};
+									clientName: userData.fullname, clientPhone: userData.phonenumber};
 			const clientReser = userData.reservations !== undefined ? userData.reservations :[];
 			const providerReser = document.reservations !== undefined ? document.reservations :[];
 			clientReser.push(reservationObj);
@@ -516,12 +516,13 @@ async filtering(ar, price, typeP, typeS, start, end) {
 		const clientDOC = cdocSnap.data();
 		var newFreeTime =  providerDOC.freeTime !== undefined ? providerDOC.freeTime : []
 		var freeTimeObj;
-
+		var cuuretUser = await this.CurrentUserData();
 		for(var i=0; i<providerDOC.reservations.length; i++){
 			if(providerDOC.reservations[i].id != id) {	
 				newReservationsp.push(providerDOC.reservations[i]);				
 			}
-			else if(providerDOC.reservations[i].id == id && this.CurrentUserData().typeOfUser == 0) {
+			
+			else if(providerDOC.reservations[i].id == id && cuuretUser.typeOfUser == 0) {
 				freeTimeObj = {start: providerDOC.reservations[i].start,
 					 end: providerDOC.reservations[i].end, title: "Free Time",
 					  id: providerDOC.reservations[i].id, color: "green"};
