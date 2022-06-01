@@ -8,14 +8,14 @@ const ourStars = [
   },
   {
     name: "Shanni Malka",
-    description: "Shanni amazing with animals! I've been few times in vacations f and let her take care of my pets and know she's doing the best with them.",
+    description: "Shanni amazing with animals! I've been few times in vacations and let her take care of my pets and know she's doing the best with them and they love her so much.",
     rating: 5,
     img: "images/img2.jpg",
     icon: "images/star.jpg"
   },
   {
     name: "Michael Mor",
-    description: "Michael kept on our cat and let us enjoy a vacation in calm, the cat did not feel well and he took him to the vet and treated him with dedication",
+    description: "Michael kept on our cat and let us enjoy a vacation in calm, the cat did not feel well and he took him to the vet and treated him with dedication.",
     rating: 5,
     img: "images/img3.jpg",
     icon: "images/star.jpg"
