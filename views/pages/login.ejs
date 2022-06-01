@@ -1,7 +1,8 @@
 <script type="text/javascript">
-	function validationEmail(emailVal) {
+	function validationEmail() {
 		let userList = <%- JSON.stringify(userList) %>;
 		var loginError = document.getElementById("loginError");
+		var emailVal = document.getElementById("login-email");
 		var expr = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 		loginError.innerHTML = "";
 		if(!(userList.includes(emailVal.value)) && expr.test(emailVal.value)) {
@@ -11,8 +12,9 @@
 				loginError.innerHTML = "";
 		}
 	}
-	function validationForgetEmail(emailVal) {
+	function validationForgetEmail() {
 		let userList = <%- JSON.stringify(userList) %>;
+		var emailVal = document.getElementById("email-forget");
 		var forgetError = document.getElementById("forgetError");
 		var expr = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 		forgetError.innerHTML = "";
@@ -24,9 +26,10 @@
 		}
 	}
 
-	function validationSignup(emailVal){
+	function validationSignup(){
 		let userList = <%- JSON.stringify(userList) %>;
 		var signupError = document.getElementById("signupError");
+		var emailVal = document.getElementById("signup-email");
 		signupError.innerHTML = "";
 		var expr = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 		if (userList.includes(emailVal.value) && expr.test(emailVal.value)) {
@@ -57,14 +60,14 @@
       <div class="login" id="modal-login">
         <form action="/authenticate" method="post" id='login-form'>
           <label for="chk" aria-hidden="true">Login</label>
-          <input type='email' id="login-email" name="email" placeholder="Email" maxlength="30" onkeyup="validationEmail(this)" required/>
+          <input type='email' id="login-email" name="email" placeholder="Email" maxlength="30" 	 required/>
           <input type="password" id='login-password' name="password" placeholder="Password" maxlength="20" minlength='6' required />
           <br>
 		  <h5 style='margin-left:12%; font-size: 17px;' class="forgot" onclick="popup()">Forgot Password?</h5>
 		  </br>	
           <br>
 		  <h5 style='font-size: 15px; color:brown !important;' id="loginError"></h5>
-          <button type="submit" id='login'>Login</button>
+          <button type="submit" onclick="validationEmail()" id='login'>Login</button>
         </form>
 
 		<form action="/forgotPassword" method="post" id='forgot-form'>
@@ -75,10 +78,10 @@
 				<span class="close" onclick='close1()'>&times;</span>
 
 				<div class="mb-3"><label class="form-label la" for="email"><strong>Enter the email for which you <br> would like to reset your password</strong></label>
-					<input name='email' placeholder="Enter your email" onkeyup="validationForgetEmail(this)" class="form-control" type="email" id="email" style='width:50%' required/></div>
+					<input name='email' placeholder="Enter your email" class="form-control" type="email" id="email-forget" style='width:50%' required/></div>
 					<br>
 					<h5 style='font-size: 15px; color:brown !important;' id="forgetError"></h5>
-					<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" id='forgot' type="submit">Reset password</button>
+					<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" onclick="validationForgetEmail()" id='forgot' type="submit">Reset password</button>
 
 			  </div>
 		  </div>
@@ -87,8 +90,6 @@
 	  function popup() {
 	 	document.getElementById('myModal').style.display ='block';
 	 };
-  
-  
   
 	 // When the user clicks on <span> (x), close the modal
 	 function close1() {
@@ -102,7 +103,7 @@
         <form id='signup-form' action="signup" method="post">
           <label for="chk" aria-hidden="true">Sign up</label>
           <input type="text" id="fullname" name="fullname" placeholder="Full name" maxlength="20" required />
-          <input type="email" id="signup-email" name="email" placeholder="Email" onkeyup="validationSignup(this)" required />
+          <input type="email" id="signup-email" name="email" placeholder="Email" required />
           <input type="text" id="phonenumber" name="phone" placeholder="Phone Number" maxlength="15" required />
           <input type="password" id='signup-password' name="password" maxlength="20" minlength='6' placeholder="Password" required />
           <a class='title'>Type of user</a>
@@ -118,7 +119,7 @@
             </div>
           </div>
 		  <h5 style='font-size: 15px; color:brown !important' id="signupError"></h5>
-          <button type="submit">Sign up</button>
+          <button onclick="validationSignup()" type="submit">Sign up</button>
         </form>
   </main>
   </div>
