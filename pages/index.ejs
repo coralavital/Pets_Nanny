@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head'); %>
+  <link rel="stylesheet" href="styling/index.css"></link>
+</head>
+<body class="container">
+
+  
+<header>
+
+	<%- include('../partials/header'); %>
+
+</header>
+
+<main class='temp'>
+
+  <div class="jumbotron">
+    <div class="containerImg">
+		<div>
+			<img src="../images/img23.png" class='mainImg'>
+		</div>		
+	</div>
+  <!-- li didnt have class -->
+    <ul>
+      <% ourStars.forEach(function(star) { %>
+        <li class="lil">
+          <div class="card">
+            <div class="product-p">
+              <img class="profile-img" src=<%= star.img %> alt="">
+            </div>
+            <div class="product-info">
+              <h5 class="title"><%= star.name %></h5>
+              <h4 class="categories"><%=star.description %></h4>
+  
+              <% for(var i = 0 ; i < star.rating ; i++) { %>
+                <img class="star-img" src=<%= star.icon %> alt="">
+              <% }; %>
+            </div>
+          </div>
+        </li>
+      <% }); %>
+    </ul>
+  </div>
+</main>
+
+<footer style='position:relative; width: 100%;'>
+  <%- include('../partials/footer'); %>
+</footer>
+
+</body>
+</html>

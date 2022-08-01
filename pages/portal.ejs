@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- script area city -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="styling/portal.css"></link>
+
+<head>
+  <%- include('../partials/head'); %>
+  <link rel="stylesheet" href="styling/index.css"></link>
+
+</head>
+
+<header>
+  <%- include('../partials/header'); %>
+</header>
+
+<main class='temp'>
+</br>
+  <form  id="search-form" action="filtering" method="post">
+    <div id="header">
+      <h1>Find your pets nanny</h1>
+    </div>
+    <section>
+    <div class="searchT" id="searchbox">
+       <!-- Area/City -->
+        <div id="depart">
+        <div class="info-box">
+          <label for="">Area/City</label>
+          <select class="selectpicker" id='area_city' multiple data-live-search="true" id='area_city' name="area_city">
+              <option disabled>Area</option>
+				<% for(var i = 0 ; i < 3 ; i++) { %>
+					<% if (area_city != undefined) { %>
+						<option <%= area_city.includes(areaCities[i]) ? 'selected' : '' %>><%= areaCities[i] %></option>
+					<%} else { %>
+						<option><%= areaCities[i] %></option>
+					<% } %>
+				<% }; %>
+              <option disabled>Cities</option>
+				<% for(var i = 3 ; i < areaCities.length ; i++) { %>
+					<% if (area_city != undefined) { %>
+						<option <%= area_city.includes(areaCities[i]) ? 'selected' : '' %>><%= areaCities[i] %></option>
+					<%} else { %>
+						<option><%= areaCities[i] %></option>
+					<% } %>
+				<% }; %>
+          </select>
+        </div>
+          
+          <div class="info-box">
+            <label for="">Price</label>
+
+            <div class="jumbotron text-center disabledbutton" id='field_2' style='max-width: 60%;'>
+				<div class="slidecontainer">
+					<p><span id="demo"></span>₪</p>
+					<% if(price <= 200) { %>
+						<input type="range" name="price" min="1" max="200" class="slider" value='<%= price %>' id="price">
+					<% } else { %>
+						<input type="range" name="price" min="1" max="200" class="slider" value='200' id="price">
+					<% } %>
+				</div>
+				   
+				<script>
+				var slider = document.getElementById("price");
+				var output = document.getElementById("demo");
+				output.innerHTML = slider.value;
+				
+				slider.oninput = function() {
+					output.innerHTML = this.value;
+				}
+				</script>
+            </div>
+          </div>
+        </div>
+            
+        <!-- Type of pets-->
+        <div id="dates">
+        	<div class="info-box">
+				<label for="">Type of pets</label>
+				<select class="selectpicker" multiple data-live-search="true" id='typeP' name="typeP">
+					<option disabled>Type of pets</option>
+					<% typep = ["Dog", "Cat", "Other pet"] %>
+					<% for(var i = 0 ; i < typep.length ; i++) { %>
+						<% if (typeP != undefined) { %>
+								<option <%= typeP.includes(typep[i]) ? 'selected' : '' %>><%= typep[i] %></option>
+							<%} else { %>
+								<option><%= typep[i] %></option>
+							<% } %>
+					<% }; %>
+				</select>
+        	</div>
+			<div class="info-box">
+				<label for="">Type of Service</label>
+				<select class="selectpicker" multiple data-live-search="true" id='typeS' name="typeS">
+					<option disabled>Type of Service</option>
+					<% types = ["Take for a walk","Keep at home"] %>
+					<% for(var i = 0 ; i < types.length ; i++) { %>
+						<% if (typeS != undefined) { %>
+							<option <%= typeS.includes(types[i]) ? 'selected' : '' %>><%= types[i] %></option>
+						<%} else { %>
+							<option><%= types[i] %></option>
+						<% } %>
+					<% }; %>
+				</select> 
+			</div>
+        </div>
+		<div id="dates">
+			<!-- date from to -->
+			<div class="info-box" style='margin-left: 12%;'>
+					<label>Date</label>
+					<% let datee = (new Date()).toISOString().split('T')[0] %>					
+					<input type="date" id="date" min='<%= datee %>' name="date" value='<%= date %>' required/>
+					<%if (date == null) {%>
+						<script>document.getElementById("date").valueAsDate = new Date();</script>
+					<% } %>
+				</div>
+				<div class="info-box" style='margin-left: 5px !important;'>
+					<label>From</label>
+					<select class="selectpicker" id="from" name="from" value='<%= from %>'>
+					<% for(var i = 0 ; i < times.length ; i++) { %>
+						<option <%= times[i] == from ? 'selected' : '' %>><%= times[i] %></option>
+					<% }; %>
+					</select>
+				</div>
+				<div class="info-box" style='margin-left: 5px !important;'>
+					<label>To</label>
+					<select class="selectpicker" id="to" name="to" value='<%= to %>'>
+					<% for(var i = 0 ; i < times.length ; i++) { %>
+						<option <%= times[i] == to ? 'selected' : '' %>><%= times[i] %></option>
+					<% }; %>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+    <button type="submit" class="search">SEARCH</button>
+	</section>
+    </form>
+	<%- include('../partials/searchTable'); %>
+</br>
+</br>
+</br>
+</br>
+
+</main>
+<footer>
+  <%- include('../partials/footer'); %>
+</footer>
+
+</html>

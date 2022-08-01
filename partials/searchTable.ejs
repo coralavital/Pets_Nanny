@@ -1,0 +1,206 @@
+
+<div class="container w-70">
+	<table class="table table-gray" name='searchTable' id="table">
+		<thead>
+			<th>No.</th>
+			<th>Full name</th>
+			<th>Age</th>
+			<th>Phone number</th>
+			<th>Price per half hour </th>
+			<th></th>
+			<tbody>
+				<form action='selectProvider' method='post'>	
+					<% for(var j = 0 ; j < providers.length ; j++){ %>
+						<tr class='rows' name='rows'>
+						<td> <%= j+1 %> </td>
+						<td> <%= providers[j].fullname%> </td>
+						<td> <%= providers[j].age%> </td>
+						<td> <%= providers[j].phonenumber%> </td>
+						<td> <%= (providers[j].price_per_hour)/2 %> </td>
+						<td> 
+							<% if (userData.typeOfUser == 0) { %>
+								<% if(dateFlag == true) { %>
+									<button id="tableButton" class='inviteP' type="submit" name='invite' onclick='invitebtn()' value="<%= j %>">Invite</button> 
+								<% } %>
+								<a style='display:inline-block;' href='mailto:<%= providers[j].email %>'><button type="button" id="tableButton"> Send Email</button> </a>
+								<button id="tableButton" onclick='profilebtn()'> Profile</button></td>
+							<% } else { %>
+								<button id="tableButton" onclick='profilebtn()'> Profile</button></td>
+							<% } %>
+						</tr>
+					<% }  %>
+				</form>
+			</tbody>
+		</thead>
+	</table>
+
+</div> 
+<!-- pop up for invite  -->
+<div id="inviteModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick='inviteClose()'>&times;</span>
+        <h1>Pet’s-Nanny Reservation</h1>
+        <br>
+		<form action="addReservation" method="post">
+			<p id="fullname"></p>
+			<p id="phonenumber"></p>
+			<p id="pricePerHour"></p>	
+			<p>Address <%= userData.address %></p>
+			<p>Date: <%= time.date %> From: <%= time.from %> To:<%= time.to %></p>
+
+			<p><center>Are you sure that want to reserve the provider?</center></p>
+			<div class="invitButton">
+				<button id="tableButton" style='margin-bottom: 1px;' type="submit">Confirm</button>
+			</div>
+		</form>
+			<div class="invitButton">
+				<button id="tableButton" onclick="inviteClose()"> Cancel </button>
+			</div>  
+    </div>
+</div>
+
+<!-- pop up for profile  -->
+<div id="profileModal" class="modal">	
+	<div class="modal-content">
+		<span class="close" onclick='profileClose()'>&times;</span>
+		<h1>Details of the provider </h1>
+		<br>
+		<p id="name"></p>
+		<p id="pemail"></p>
+		<p id="phone"></p>
+		<p id="age"></p>
+		<p id="price"></p>
+		<p id="areacity"></p>
+		<p id="typeSe"></p>
+		<p id="typePe"></p>
+
+	</div>
+</div>
+<style>
+	.modal {
+		display: none; /* Hidden by default */
+		position: fixed; /* Stay in place */
+		z-index: 1; /* Sit on top */
+		padding-top: 100px; /* Location of the box */
+		left: 0;
+		top: 0;
+		width: 100%; /* Full width */
+		height: 100%; /* Full height */
+		overflow: auto; /* Enable scroll if needed */
+		background-color: rgb(0,0,0); /* Fallback color */
+		background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
+  
+  /* Modal Content */
+    .modal-content {
+		background-color: #ffff;
+		margin:  auto;
+		padding-right: 30px;
+		padding: 20px;
+		border: 1px solid #888;
+		width: 60%;
+		text-align: center;
+		font-size: 15px;
+    }
+
+    /* The Close Button */
+    .close {
+		width: 15px;
+		text-align: right;
+		color: black;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+		color: black;
+		text-decoration: none;
+		cursor: pointer;
+    }
+
+    .modal h1{
+        font-weight: bolder;
+		color: #573b8a;
+		
+    }
+    #profileModal p{
+        text-align: center;
+    }
+	.tablee{
+		background: rgba(185, 185, 185, 0.5);
+		font-family: "Nunito" !important;
+	}
+	.table-gray
+	{
+		width: 100%;
+		border-collapse: collapse;
+		margin-top: 10px;
+		margin-bottom: 50px;
+		text-align: center;
+	
+	}
+	.table {
+		border-radius: 50px !important;
+	}
+	.table-gray td, .table-grays th {
+		border: 1px solid rgb(32, 30, 30);
+		padding: 8px;
+		
+	}
+	.table-gray th {
+		padding-top: 12px;
+		padding-bottom: 12px;
+		text-align: left;
+		background-color: #573b8a;
+		color: white;
+		text-align: center;
+	}
+	.info-box input[type=text] {
+		color: black;
+	}
+</style>
+<script>
+	var table = document.getElementById('table');
+		for(var i = 0; i < table.rows.length; i++)
+		{
+			table.rows[i].onclick = function()
+			{
+				var providers = <%- JSON.stringify(providers) %>;
+				let temp = this.cells[0].innerHTML;
+                let index = Number(temp);
+				//for the invite modal
+				document.getElementById("fullname").innerHTML = "Provider's full name: "+providers[index-1].fullname;
+                document.getElementById("phonenumber").innerHTML = "Provider's phone number: "+ providers[index-1].phonenumber;
+				document.getElementById("pricePerHour").innerHTML = "Provider's price per hour: "+ providers[index-1].price_per_hour;
+				//for the profile modal
+				document.getElementById("name").innerHTML = "Provider's full name: "+providers[index-1].fullname;
+                document.getElementById("phone").innerHTML = "Provider's phone number: "+ providers[index-1].phonenumber;
+                document.getElementById("price").innerHTML = "Provider's price per hour: "+ providers[index-1].price_per_hour;
+                document.getElementById("areacity").innerHTML = "Provider's areas and cities: "+ providers[index-1].area_city;
+                document.getElementById("typeSe").innerHTML = "Provider's services: "+ providers[index-1].type_of_service;
+                document.getElementById("typePe").innerHTML = "Provider's pets: "+ providers[index-1].type_of_pet;
+                document.getElementById("pemail").innerHTML = "Provider's email: "+ providers[index-1].email;
+				document.getElementById("age").innerHTML = "Provider's age: "+ providers[index-1].age;
+			}
+		}
+
+	function invitebtn() {
+    	document.getElementById('inviteModal').style.display ='block';
+    };
+
+    function profilebtn() {
+    	document.getElementById('profileModal').style.display ='block';
+    };
+
+    // When the user clicks on <span> (x), close the modal
+    function inviteClose() {
+    	document.getElementById('inviteModal').style.display = 'none';
+    };
+
+    function profileClose() {
+    	document.getElementById('profileModal').style.display = 'none';
+    };
+
+</script>

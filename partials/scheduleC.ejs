@@ -1,0 +1,88 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+<link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.css'>
+<link rel='stylesheet' href='styling/schedule.css'>
+
+<!--calendar-->
+<div id='calendar'></div>
+
+<!--Event info popup-->
+<form action="cancelReservation" method="post">
+	<div id="reservationPopup" class="modal">
+		<div class="modal-content">
+			<div class="modal-title" style='font-size:xx-large; font-size:xx-large; margin-bottom: 15px;'>
+				Reservation Information
+				<span class="close" onclick='closeReservation()'>&times;</span>			 
+			</div>
+			<input name='emailProvider' id='emailProvider' value='' style='display: none;'/>
+			<input name='emailClient' id='emailClient' value='' style='display: none;'/>
+			<input name='rID' id='rID' value='' style='display: none;'/>
+			<span id='startR'></span>
+			<span id='endR'></span>
+			<span id='address'></span>
+			<span id='providerFullName'></span>
+			<span id='providerEmail'></span>
+			<span id='providerPhone'></span>
+			<span id='providerPrice'></span>
+			
+			<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" style='width: 35%;' id='add' type="submit">Cancel reservation</button>
+			<br>	
+		</div>
+	</div>
+</form>
+
+
+
+
+
+
+<!--calendar script-->
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.js'></script>
+<script>
+//Reservation info popup
+function reservationPopup(start, end, fullname, emailClient, emailProvider, phone, price, address, id) {
+	document.getElementById("rID").value = id;
+	document.getElementById("emailProvider").value = emailProvider;
+	document.getElementById("emailClient").value = emailClient;
+	document.getElementById("providerFullName").innerHTML = "The name of the provider \u27A1\uFE0F " + fullname;
+    document.getElementById("providerEmail").innerHTML = "The email of the provider \u27A1\uFE0F " +  emailProvider;
+	document.getElementById("providerPhone").innerHTML = "The phone of the provider \u27A1\uFE0F " +  phone;
+	document.getElementById("providerPrice").innerHTML = "The price per hour for the service \u27A1\uFE0F " +  price;
+	document.getElementById("address").innerHTML = "The address \u27A1\uFE0F " + address;
+    document.getElementById("startR").innerHTML = "The start time \u27A1\uFE0F " +  start.toLocaleString();
+	document.getElementById("endR").innerHTML = "The end time \u27A1\uFE0F " +  end.toLocaleString();
+	document.getElementById('reservationPopup').style.display ='block';
+};
+// When the user clicks on <span> (x), close the modal
+function closeReservation() {
+	document.getElementById('reservationPopup').style.display = 'none';
+};
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  var calendarEl = document.getElementById('calendar');
+  var reservations = Array.from(<%- JSON.stringify(reservations) %>)
+
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    initialDate: new Date(),
+    themeSystem: "bootstrap",
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+    },
+    events: reservations,
+	eventClick: function(info) {
+		reservationPopup(info.event.start, info.event.end, info.event.extendedProps.providerName, 
+		info.event.extendedProps.clientEmail, info.event.extendedProps.providerEmail, info.event.extendedProps.providerPhone, info.event.extendedProps.price, 
+		info.event.extendedProps.address, info.event.id);
+    },
+
+	
+});
+
+  calendar.render();
+});
+
+</script>

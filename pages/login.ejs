@@ -1,0 +1,179 @@
+<script type="text/javascript">
+	function validationEmail() {
+		let userList = <%- JSON.stringify(userList) %>;
+		var loginError = document.getElementById("loginError");
+		var emailVal = document.getElementById("login-email");
+		var expr = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+		loginError.innerHTML = "";
+		if(!(userList.includes(emailVal.value)) && expr.test(emailVal.value)) {
+				loginError.innerHTML = "Incorrect email or password.";
+		}
+		else {
+				loginError.innerHTML = "";
+		}
+	}
+	function validationForgetEmail() {
+		let userList = <%- JSON.stringify(userList) %>;
+		var emailVal = document.getElementById("email-forget");
+		var forgetError = document.getElementById("forgetError");
+		var expr = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+		forgetError.innerHTML = "";
+		if(!(userList.includes(emailVal.value)) && expr.test(emailVal.value)) {
+			forgetError.innerHTML = "Incorrect email.";
+		}
+		else {
+			forgetError.innerHTML = "";
+		}
+	}
+
+	function validationSignup(){
+		let userList = <%- JSON.stringify(userList) %>;
+		var signupError = document.getElementById("signupError");
+		var emailVal = document.getElementById("signup-email");
+		signupError.innerHTML = "";
+		var expr = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+		if (userList.includes(emailVal.value) && expr.test(emailVal.value)) {
+			signupError.innerHTML = "The email exists in the system.";
+		}
+		else {
+			signupError.innerHTML = "";
+		}
+	}
+</script>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/head'); %>
+    <link rel="stylesheet" href="styling/login-signup.css">
+    </link>
+</head>
+
+<body class="container">
+
+  <main>
+    <div class="main">
+      <div class="back">
+        <button onclick="history.back()">Back</button>
+      </div>
+      <input type="checkbox" id="chk" aria-hidden="true">
+      <div class="login" id="modal-login">
+        <form action="/authenticate" method="post" id='login-form'>
+          <label for="chk" aria-hidden="true">Login</label>
+          <input type='email' id="login-email" name="email" placeholder="Email" maxlength="30" 	 required/>
+          <input type="password" id='login-password' name="password" placeholder="Password" maxlength="20" minlength='6' required />
+          <br>
+		  <h5 style='margin-left:12%; font-size: 17px;' class="forgot" onclick="popup()">Forgot Password?</h5>
+		  </br>	
+          <br>
+		  <h5 style='font-size: 15px; color:brown !important;' id="loginError"></h5>
+          <button type="submit" onclick="validationEmail()" id='login'>Login</button>
+        </form>
+
+		<form action="/forgotPassword" method="post" id='forgot-form'>
+			<!-- The Modal -->
+		  <div id="myModal" class="modal">
+			  <!-- Modal content -->
+			  <div class="modal-content">
+				<span class="close" onclick='close1()'>&times;</span>
+
+				<div class="mb-3"><label class="form-label la" for="email"><strong>Enter the email for which you <br> would like to reset your password</strong></label>
+					<input name='email' placeholder="Enter your email" class="form-control" type="email" id="email-forget" style='width:50%' required/></div>
+					<br>
+					<h5 style='font-size: 15px; color:brown !important;' id="forgetError"></h5>
+					<button class="btn btn-primary btn-sm border rounded-pill float-center align-content-center" onclick="validationForgetEmail()" id='forgot' type="submit">Reset password</button>
+
+			  </div>
+		  </div>
+	  </form>	
+<script>
+	  function popup() {
+	 	document.getElementById('myModal').style.display ='block';
+	 };
+  
+	 // When the user clicks on <span> (x), close the modal
+	 function close1() {
+		document.getElementById('myModal').style.display = 'none';
+	 };
+	 
+
+</script>
+      </div>
+      <div class="signup" id="modal-signup">
+        <form id='signup-form' action="signup" method="post">
+          <label for="chk" aria-hidden="true">Sign up</label>
+          <input type="text" id="fullname" name="fullname" placeholder="Full name" maxlength="20" required />
+          <input type="email" id="signup-email" name="email" placeholder="Email" required />
+          <input type="text" id="phonenumber" name="phone" placeholder="Phone Number" maxlength="15" required />
+          <input type="password" id='signup-password' name="password" maxlength="20" minlength='6' placeholder="Password" required />
+          <a class='title'>Type of user</a>
+          <h5>you can choose only one of this</h5>
+          <div class="row">
+            <div class="col">
+              <a class='type-of-user'>As a Client</a>
+              <input class='checkbox' type="radio" name="type" id="client" value="0" required />
+            </div>
+            <div class="col">
+              <a class='type-of-user'>As a Provider</a>
+              <input class='checkbox' type="radio" name="type" id="provider" value="1" required />
+            </div>
+          </div>
+		  <h5 style='font-size: 15px; color:brown !important' id="signupError"></h5>
+          <button onclick="validationSignup()" type="submit">Sign up</button>
+        </form>
+  </main>
+  </div>
+</body>
+
+</html>
+<style>
+	#forgot{
+		width: 55%;
+		height: 30px;
+		/*margin: 10px auto;*/
+		justify-content: center;
+		display: block;
+		color: #fff;
+		background: #573b8a;
+		font-size: 1.5rem;
+		font-weight: bold;
+		/*margin-top: 15px;*/
+		outline: none;
+		border: none;
+		border-radius: 10px;
+		transition: .2s ease-in;
+		cursor: pointer;
+	}
+	#changep:hover, #open:hover{
+		background: #6d44b8;
+
+	}
+	.modal-content {
+		margin:  auto;
+		margin-top: 10%;
+		padding-right: 30px;
+		padding: 20px;
+		/*border: 1px solid #888;*/
+		width: 40%;
+		text-align: center;
+		font-size: 10px;
+	
+	}
+	.close {
+
+	text-align: right;
+	width: 15px;
+	color: black;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+	}
+
+	.close:hover,
+	.close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+	}
+		
+</style>

@@ -1,0 +1,165 @@
+<head>
+	<link rel="stylesheet" href="styling/footer.css"></link>
+  </head>
+  <div class="bottom-nav">
+	  <div class="container">
+		  <input type="button" id="abutton" onclick="myBtn()" value="About Us"></input>
+		  <!-- The Modal -->
+			  <div id="myModal" class="modal">
+				  <!-- Modal content -->
+				  <div class="modal-content">
+					<span class="close" onclick='close1()'>&times;</span>
+					  <h1>About Us</h1>
+					  <br>
+					  <p>Aviva Malko, Shir Halimi, Yoni Ifrach and Coral Avital developed the site in 2022,</p>
+					  <p>In order to address the problem of keeping pets while their owners are not at home and can care for them.</p>
+					  <p>The site is for people who love pets and want to keep other people's pets for money</p>
+					  <p>And for people who need to keep their pets.</p>
+					  <p>Pet owners can travel safely knowing that they have promised the best care for their best friend.</p>
+					  <p> It’s a win-win for everyone… especially for the pets!</p>
+				  </div>
+			  </div>
+			  
+			  <!-- The Modal -->
+			  <input type="button" id="hbutton" onclick="myBtn1()" value="Help"></input>
+			  <div id="myModal1" class="modal">
+  
+			  <!-- Modal content -->
+			  <div class="modal-content" style='overflow-y: scroll; max-height: 80%;'>
+				  <span class="close" onclick='close2()'>&times;</span>
+				  <h1>Help</h1>
+				  <br>
+				  <H6>1. To register on the site as a provider</H6>
+				  <p>a. Click on "Login / Signup" button </p>
+				  <p>b. Enter details </p>
+				  <p>c. Select "As a provider"</p>
+				  <p>d. Fill the details in the next page</p>
+  
+				  <H6>2. To register on the site as a client</H6>
+				  <p>a. Click on "Login / Signup" button </p>
+				  <p>b. Enter details </p>
+				  <p>c. Select "As a client"</p>
+				  <p>d. Fill the details in the next page</p>
+					  
+				  <H6>3. To log out from account</H6>
+				  <p>a. Click on user button</p>
+				  <p>b. Click on Logout button</p>
+					  
+				  <H6>4. To find a provider service</H6>
+				  <p>a. Click on Home button</p>
+				  <p>b. Search provider by the filters</p>
+				  <p>c. Choose specific provider and clickes on Invite</p>
+					  
+				  <H6>5. To see reservations</H6>
+				  <p>a. Click on user button</p>
+				  <p>b. Click on "My  schedule"</p>
+				  <p>c. Choose date filter the reservations by this date</p>
+					  
+				  <H6>6. To cencel reservation</H6>
+				  <p>a. Click on user button </p>
+				  <p>b. Click on "My  schedule"</p>
+				  <p>c. Choose a specific reservation</p>
+				  <p>d. Click on Cencel</p>
+  
+				  <br>
+				  <h3>If you have any problem or question you can call us:</h3>
+				  <h3>+972546777442/ +972585885489</h3>
+			  </div>
+  
+			  </div>
+  
+			  <input type="button" id="tbutton" onclick="myBtn2()" value="Terms"></input>
+  
+			  <!-- The Modal -->
+			  <div id="myModal2" class="modal">
+  
+				  <!-- Modal content -->
+				  <div class="modal-content">
+					  <span class="close" onclick='close3()'>&times;</span>
+					  <h1>Terms of Service</h1>
+					  <br>
+					  <p style="display:inline">Pet's Nanny is a company that provides babysitting services to live.</p>
+					  <p>When you create an account with Pet's nanny by completing the registration process on our website,</p> 
+					  <p>You agree to the terms that we are not responsible for any damage caused to any animal or anything else</p>
+					  <p>We are only responsible for coordinating the appointments.</p>
+					  <p>If you have any questions regarding these terms and conditions, please contact us by clicking the countact us button</p>
+				  </div>
+  
+			  </div>
+  
+			  <input type="button" id="pbutton" onclick="myBtn3()" value="Privecy"></input>
+  
+			  <!-- The Modal -->
+			  <div id="myModal3" class="modal">
+  
+			  <!-- Modal content -->
+			  <div class="modal-content" style='overflow-y: scroll; max-height: 80%;'>
+				  <span class="close" onclick='close4()'>&times;</span>
+				  <h1>Privacy Policy</h1>
+				  <br>
+				  <p>Thank you for visiting Daily.  </p>
+				  <p>We think privacy is seriously important! We never sell or share any information you give us. </p>
+				  <p>We don’t collect or keep any data other than what’s necessary.</p>
+				  <p>This Privacy Policy provides our policies for collecting, using, and disclosing your information and personally identifiable data (“Personal Data”).
+				  </p>
+				  <br>
+				  <h3>Information We Collect</h3>
+				  <p>When you interact with any of our services, we collect both information you provide. </p>
+				  <p>Information you voluntarily provide, for example when registering for a Daily account. This includes information like your email address and name
+  
+				  </p>
+				  <br>
+				  <h3>Why and How We Use The Data We Collect</h3>
+				  <p>
+					  The information you provide voluntarily is used to store the data.</p>
+					  <p> We retain this information until you change / remove it or until your account is deleted.</p>
+					  <p>The settings are saved in the database.</p>
+				  
+				  <br>
+				  <h3>Security</h3>
+				  <p>We follow industry standards with regards to data security.</p>
+				  <p>We take our obligation to safeguard the data we have very seriously. </p>
+				  <br>
+				  <h3>Contacting Us</h3>
+				  <p>If you have any questions about this Privacy Policy, or would like us to take any action regarding the data we hold about you,</p>
+					<p>Please contact us at help@daily.com
+				  </p>
+			  </div>
+  
+			  </div>
+		  </div>
+			  <p class="footer text-center text-muted">&copy; Copyright 2020 Pets-Nanny</p>
+	  </div>
+  </div>
+  <script>
+	   function myBtn() {
+	  	document.getElementById('myModal').style.display ='block';
+	  };
+  
+	  function myBtn1() {
+	  	document.getElementById('myModal1').style.display ='block';
+	  };
+  
+	  function myBtn2() {
+	  	document.getElementById('myModal2').style.display ='block';
+	  };
+  
+	  function myBtn3() {
+	  	document.getElementById('myModal3').style.display ='block';
+	  };
+  
+	  // When the user clicks on <span> (x), close the modal
+	  function close1() {
+	  	document.getElementById('myModal').style.display = 'none';
+	  };
+	  function close2() {
+	  	document.getElementById('myModal1').style.display = 'none';
+	  };
+	  function close3() {
+	  	document.getElementById('myModal2').style.display = 'none';
+	  };
+	  function close4() {
+	  	document.getElementById('myModal3').style.display = 'none';
+	  };
+  
+  </script>
