@@ -2,7 +2,6 @@ const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sig
 	deleteUser, sendPasswordResetEmail, reauthenticateWithCredential, EmailAuthProvider} = require("firebase/auth");
 const { initializeApp } = require('firebase/app');
 const { getFirestore, collection, doc, setDoc, getDoc, updateDoc, query, where, getDocs, deleteDoc, deleteField , arrayUnion } = require('firebase/firestore');
-const { use } = require("chai");
 const { async } = require('@firebase/util');
 const errorMsg = require('./controllers/errorMsg');
 
