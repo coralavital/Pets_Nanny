@@ -125,8 +125,25 @@ module.exports = function (app) {
 	  const { email, password } = req.body;
 	  let userList = await firebase.GetUsersEmails();
 	  if(userList.includes(email)) {
-			firebase.authenticate(email, password,  () => {
-				res.redirect('/portal');
+			firebase.authenticate(email, password, async () => {
+				const userData = await firebase.CurrentUserData()
+				if(userData.typeOfUser == 1) {
+					if(userData.area_city != null && userData.age != null &&
+						userData.type_of_pet != null && userData.type_of_service != null) {
+							res.redirect('/portal');
+						}
+					else {
+						res.redirect('/enter_personal_p');
+					}
+				}
+				else {
+					if(userData.address != null && userData.age != null) {
+							res.redirect('/portal');
+						}
+					else {
+						res.redirect('/enter_personal_c');
+					}
+				}
 			})
 		}
   });
@@ -154,7 +171,6 @@ module.exports = function (app) {
   //1.1 provider page
   app.post('/personalInfo_provider', function (req, res) {
     var { age, area_city, price, typeP, typeS, about_me } = req.body;
-
     // if the user didnt fill the minimum reqiure fields
     if (typeS == null || typeP == null || area_city == null) {
       errorMsg.flag = true
@@ -167,7 +183,6 @@ module.exports = function (app) {
       let type_of_pet = filter.toArray(typeP)
       let type_of_service = filter.toArray(typeS)
       area_city = filter.toArray(area_city)
-
       firebase.UpdateDocProvider(parseInt(age), area_city, parseInt(price), type_of_pet, type_of_service, about_me, () => {
         res.redirect('/portal');
       })

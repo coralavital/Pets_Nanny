@@ -4,6 +4,7 @@ const { initializeApp } = require('firebase/app');
 const { getFirestore, collection, doc, setDoc, getDoc, updateDoc, query, where, getDocs, deleteDoc, deleteField , arrayUnion } = require('firebase/firestore');
 const { async } = require('@firebase/util');
 const errorMsg = require('./controllers/errorMsg');
+const e = require('connect-flash');
 
 function containsAny(source,target)
 {
@@ -76,11 +77,23 @@ class Firebase {
     createUserWithEmailAndPassword(this.auth, email, password).then(async (cred) => {
     	const coll = collection(this.db, 'users');
         const user = doc(this.db, 'users', email)
-        const result = await setDoc(user, {
-          fullname: fullname,
-          phonenumber: phone,
-          typeOfUser: type
-        });
+		if(type == 1) {
+			const result = await setDoc(user, {
+				fullname: fullname,
+				phonenumber: phone,
+				typeOfUser: type,
+				email: email,
+				price_per_hour: 50,
+			});
+		}
+		else {
+			const result = await setDoc(user, {
+				fullname: fullname,
+				phonenumber: phone,
+				typeOfUser: type,
+				email: email,
+			  });
+		}
         callback();
     }).catch(error => {
 		switch (error.code) {
@@ -118,7 +131,7 @@ class Firebase {
 
 
   // updating provider details from personal info after sign up
-  async UpdateDocProvider(age, area_city, price_per_hour, type_of_pet, type_of_service, about_me, callback){
+  async UpdateDocProvider(age, area_city, price_per_hour, type_of_pet, type_of_service, about_me, callback) {
     const docRef = doc(this.db, 'users', this.auth._currentUser.email);
     console.log(`updating...  ${this.auth._currentUser.email}`)
     await updateDoc(docRef, {
@@ -128,7 +141,6 @@ class Firebase {
       type_of_service: type_of_service,
       type_of_pet: type_of_pet,
       about_me: about_me,
-	  email: this.auth._currentUser.email,
     });
     callback();
   }
@@ -295,7 +307,6 @@ async filtering(ar, price, typeP, typeS, start, end) {
 	
 	//update provider document
 	async addFreeTime(date, from, to, callback) {
-
 		const userRef = doc(this.db, "users", this.auth._currentUser.email);
 		const docSnap = await getDoc(userRef);
 		const document = docSnap.data()

@@ -1,19 +1,19 @@
 <div class="slidecontainer">
 	<label class="col-md-13" style='text-align: center;'><strong>Price per hour</strong>
-    <p><span id="demo"></span>₪</p>
-     <input type="range" min="1" max="200" value='50' class="slider" id="myRange" name="price">
+    <p><span id="icon"></span>₪</p>
+     <input type="range" min="1" max="200" value="50" class="slider" id="myRange" name="price"/>
     
 </div>
    
-   <script>
-   var slider = document.getElementById("myRange");
-   var output = document.getElementById("demo");
-   output.innerHTML = slider.value;
-   
-   slider.oninput = function() {
-     output.innerHTML = this.value;
-   }
-   </script>
+	<script>
+		var slider = document.getElementById("myRange");
+		var output = document.getElementById("icon");
+		output.innerHTML = slider.value;
+		
+		slider.oninput = function() {
+			output.innerHTML = this.value;
+		}
+	</script>
 
    <style>
        .slidecontainer{
@@ -26,8 +26,5 @@
        }
 	   input#myRange.slider{
 		   width: 200px;
-		   
 	   }
-  
-
    </style>

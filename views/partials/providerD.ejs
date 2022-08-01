@@ -31,11 +31,11 @@
 	<div class="row">
 		<div class="slidecontainer mb-3">
 			<strong>Price per hour</strong>
-			<p><span id="demo"></span>₪</p>
+			<p><span id="icon"></span>₪</p>
 			<input type="range" min="1" max="200" value="<%= price %>" class="slider" id="myRange" disabled name="price">
 			<script>
 				var slider = document.getElementById("myRange");
-				var output = document.getElementById("demo");
+				var output = document.getElementById("icon");
 				output.innerHTML = slider.value;
 			
 				slider.oninput = function() {

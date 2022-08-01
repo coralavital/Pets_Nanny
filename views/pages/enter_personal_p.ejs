@@ -19,7 +19,8 @@
 		<!-- <nav class="navbar navbar-light navbar-expand shadow mb-4 topbar static-top">
 			<div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button></div>
 		</nav> -->
-		<h3 class="text-dark mb-0" style='font-weight: bolder; font-size: 30px;'>Enter your personal info</h3>
+		<h3 class="text-dark mb-0" -'>Enter your personal info</h3>
+		<h6 class="text-dark mb-0" style='color: red !important;'>* You have mandatory fields</h6>
 		</br>
 		<div class="container">
 			<div class="col text-center">
@@ -30,7 +31,7 @@
                             <br>
 						<div class='row'>
 							<div class="mb-3" >
-								<strong>Area/Cities</strong>
+								<strong>Area/Cities </strong><strong style='color: red !important; font-size: 1.2rem;'>*</strong>
 								<div class="mb-3 float-center" id="field"> 
 									<select class="selectpicker" value='6' id='field' class="field" multiple data-live-search="true" name ="area_city" required>
 										<option disabled>Area</option>
@@ -55,7 +56,7 @@
 						<br>
 						<div id="row">
 							<div class="mb-3">
-								<div class="col-md-6"><strong>Type of pets</strong><br>
+								<div class="col-md-6"><strong>Type of pets </strong><strong style='color: red !important; font-size: 1.2rem;'>*</strong><br>
 									<select class="selectpicker" multiple data-live-search="true" id="field" name="typeP" required>
 										<option disabled>Type of pets</option>
 										<option id ='type_dog'>Dog</option>
@@ -65,7 +66,7 @@
 								</div>
 							</div>
 							<div class="mb-3">
-								<label class="col-md-6"><strong>Type of service</strong><br>
+								<label class="col-md-6"><strong>Type of service </strong><strong style='color: red !important; font-size: 1.2rem;'>*</strong><br>
 								<select class="selectpicker" multiple data-live-search="true" id="field" name="typeS" required>
 									<option disabled>Type of Service</option>
 									<option  id='take_for_walk'>Take for a walk</option>
