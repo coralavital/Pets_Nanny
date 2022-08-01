@@ -21,7 +21,6 @@
   "bugs": {
     "url": "https://github.com/coralavital/pets_nanny/issues"
   },
-  "homepage": "https://github.com/coralavital/pets_nanny#readme",
   "dependencies": {
     "body-parser": "^1.20.0",
     "connect-flash": "^0.1.1",
