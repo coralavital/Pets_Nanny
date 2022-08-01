@@ -16,7 +16,7 @@ const ourStars = [
   {
     name: "Michael Mor",
     description: "Michael kept on our cat and let us enjoy a vacation in calm, the cat did not feel well and he took him to the vet and treated him with dedication.",
-    rating: 3,
+    rating: 5,
     img: "images/img3.jpg",
     icon: "images/star.jpg"
     
