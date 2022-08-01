@@ -1,0 +1,113 @@
+<% if (editFlag.edit == false) { 
+	var action = "edit"
+ } else { 
+	var action = "updateC"
+ }%>
+ 
+<form action=<%= action %> method="post">
+<div class="row">
+    <div class="col">
+        <div class="mb-3"><label class="form-label" for="username"><strong>Full name</strong></label><input placeholder= "<%= fullname %>" class="form-control" type="text" id="username" name="fullname" disabled=""></div>
+    </div>
+    <div class="col">
+        <div class="mb-3"><label class="form-label" for="email"><strong>Email Address</strong></label><input placeholder="<%= email %>" class="form-control" type="email" id="email" name="email" disabled=""></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="mb-3"><label class="form-label" for="age"><strong>Age</strong><br></label><input class="form-control" type="text" id="field" maxlength='2' placeholder="<%= age %>" name="age" disabled=""></div>
+    </div>
+    <div class="col">
+        <div class="mb-3"><label class="form-label" for="phone_number"><strong>Phone number</strong><br></label><input placeholder="<%= phonenumber %>" class="form-control" type="text" name="phonenumber" disabled=""></div>
+    </div>
+</div>
+
+
+<div class="row">
+	<div class="container mt-3" >
+
+	<label class="form-label address" for="my_address"><strong>Adress</strong><br></label>
+	<div class="mb-3">
+	<textarea class="my_address" placeholder="<%= address %>" id="field" name="address" disabled></textarea>
+	</div>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="container mt-3" >
+	<label class="form-label aboutme" for="about_me"><strong>About me</strong><br></label>
+	<div class="mb-3">
+	<textarea class="about_me" placeholder="<%= about_me %>" maxlength="250" name="about_me" id="field" disabled></textarea>
+	</div>
+	</div>
+</div>
+<% if (editFlag.edit == false) { %>
+	<button class="btn btn-primary btn-sm border rounded-pill float-end align-content-center" id='edit' type="submit">Edit</button>
+</form>
+
+
+<% } else { %>
+	<button class="btn btn-primary btn-sm border rounded-pill float-start align-content-center" id='save' type="submit">Save</button>
+</form>
+
+	<form action="cancel" method="post">
+		<button class="btn btn-primary btn-sm border rounded-pill float-end align-content-center" id='cancel' type="submit" >Cancel</button>
+	</form>
+<% } %>
+<style>
+	.my_address {
+		width: 500px !important;
+		margin-left: auto;
+    	margin-right: auto;
+	}
+	.about_me{
+		width: 500px !important;
+    	margin-left: auto;
+    	margin-right: auto;
+	}
+
+
+	.mt-3{
+		padding-left: 30% !important;
+	}
+
+	.aboutme{
+		padding-left: 35% !important;
+	}
+
+	.jumbotron p{
+		font-size: small;
+		background-color: rgb(238 238 238);
+	}
+
+	
+	.mt-5{
+		padding-left: 37% !important;
+	}
+	.col-md-6 {
+		padding-left: 15% !important;
+	}
+	
+	.mt-3{
+		padding-left: 20% !important;
+	}
+	.aboutme{
+		padding-left: 35% !important;
+	}
+	.address {
+		padding-left: 35% !important;
+	}
+
+	.pcoded {
+		display: none !important;
+	}
+	
+	/* to center the address  */
+	.mb-3{
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
+
+	
+</style>
