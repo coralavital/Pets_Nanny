@@ -1,3 +1,6 @@
+---
+permalink: /index.html
+---
 # Website Name: 
 Pet's-Nanny
 
