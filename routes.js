@@ -168,7 +168,7 @@ module.exports = function (app) {
       let type_of_service = filter.toArray(typeS)
       area_city = filter.toArray(area_city)
 
-      firebase.UpdateDocProvider(parseInt(age), area_city, parseInt(price), type_of_service, type_of_pet, about_me, () => {
+      firebase.UpdateDocProvider(parseInt(age), area_city, parseInt(price), type_of_pet, type_of_service, about_me, () => {
         res.redirect('/portal');
       })
     }
