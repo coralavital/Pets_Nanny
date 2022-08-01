@@ -1,11 +1,10 @@
 {
-  "homepage": "http://coralavital.github.io/pets_nanny",
+  "homepage": "",
   "name": "pets_nanny",
   "version": "1.0.0",
   "description": "pets_nanny",
   "main": "server.js",
   "scripts": {
-	"deploy": "gh-pages -d views",
     "dev": "node server.js",
     "start": "node server.js",
     "test": "mocha tests/*.spec.js --color",
