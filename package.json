@@ -5,8 +5,7 @@
   "description": "pets_nanny",
   "main": "server.js",
   "scripts": {
-	"predeploy": "npm run build",
-	"deploy": "gh-page -d build",
+	"deploy": "gh-pages -d views",
     "dev": "node server.js",
     "start": "node server.js",
     "test": "mocha tests/*.spec.js --color",
