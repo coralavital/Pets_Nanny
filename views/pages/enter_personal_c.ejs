@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<%- include('../partials/head'); %>
-	<link rel="stylesheet" href="styling/index.css"></link>
+	<link rel="stylesheet" href="styling/index.css"/>
 </head>
 <body class="container">
 
@@ -11,28 +11,31 @@
 <main>
   <div class="jumbotron">
 	<div id="content">
-		<h3 class="text-dark mb-0" style='font-weight: bolder; font-size: 30px;'>Enter your personal info</h3>
-		<h6 class="text-dark mb-0" style='color: red !important;'>* You have mandatory fields</h6>
-		</br>
-		</br>
 		<div class="container">
+			<h3 class="text-dark mb-0" style='font-weight: bolder; font-size: 30px;'>Enter your personal info</h3>
+			</br>
 			<div class="col text-center">
 				<div class="card shadow mb-3">
 					<div class="card-body text-center">
 						<form id='enter-personal-info' action="/personalInfo_client" method="post">
 							<%- include('../partials/NamePhoneAgeEmail'); %>
-                            <br>
-                            <div class="row">
-                                <div class="mb-3"><label class="form-label" for="address"><strong>Address </strong><strong style='color: red !important; font-size: 1.2rem;'>*</strong><br></label><input class="form-control" type="text" id="address" placeholder="Enter your address" name="address" required/></div>
-                            </div>
 							<br>
-							<%- include('../partials/about_me'); %>
+							<div class="row">
+								<div class="col">
+									<div class="mb-3"><label class="form-label" for="address"><strong>Address </strong><strong style='color: red !important;'>*</strong><br></label><input style='border-radius: 20px !important;' placeholder= "Enter your address" class="form-control" type="text" name="address"></div>
+								</div>
+								<br>
+								<div class="col">
+									<div class="mb-3"><label class="form-label" for="aboutme"><strong>About me </strong><br></label><input style='border-radius: 20px !important;' placeholder= "Enter your bio" class="form-control aboutme" type="text" name="about_me"></div>
+									
+								</div>
+							</div>
 						</div>
 					</div>
 					<button class="btn btn-primary btn-sm border rounded-pill float-end align-content-center" id='save' type="submit">Save</button>
 				</form>
 			</div>
-			
+				
 		</div>
 	</div>
 </main>
@@ -44,24 +47,24 @@
 </body>
 </html>
 <style>
+	body {
+		font-size: medium !important;
+		margin-top: 50px;
+	}
+
 	.form-control {
-		width: 50% !important;
+		width: 70% !important;
 		margin-left: auto;
 		margin-right: auto;
 		font-size: 15px;
 	}
 	#address{
-		width: 100% !important;
+		width: 50% !important;
 	}
 	.pcoded {
 		display: none;
 	}
 
-	/* to center the address  */
-	.mb-3 {
-		margin-left: auto;
-		margin-right: auto;
-	}
 	#save {
 		width: 20%;
 		height: 40px;
@@ -81,7 +84,6 @@
 	}
 	#save:hover{
 		background: #6d44b8;
-
 	}
 
 </style>

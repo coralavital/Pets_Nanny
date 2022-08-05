@@ -19,10 +19,10 @@
 		<!-- <nav class="navbar navbar-light navbar-expand shadow mb-4 topbar static-top">
 			<div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button></div>
 		</nav> -->
-		<h3 class="text-dark mb-0" -'>Enter your personal info</h3>
-		<h6 class="text-dark mb-0" style='color: red !important;'>* You have mandatory fields</h6>
-		</br>
+
 		<div class="container">
+			<h3 class="text-dark mb-0" style='font-weight: bolder; font-size: 30px;'>Enter your personal info</h3>
+			</br>
 			<div class="col text-center">
 				<div class="card shadow mb-3">
 					<div class="card-body text-center">
@@ -30,8 +30,8 @@
 							<%- include('../partials/NamePhoneAgeEmail'); %>
                             <br>
 						<div class='row'>
-							<div class="mb-3" >
-								<strong>Area/Cities </strong><strong style='color: red !important; font-size: 1.2rem;'>*</strong>
+							<div class="col" >
+								<strong>Area/Cities </strong><strong style='color: red !important; font-size: 1.2rem; border-radius:50px;'>*</strong>
 								<div class="mb-3 float-center" id="field"> 
 									<select class="selectpicker" value='6' id='field' class="field" multiple data-live-search="true" name ="area_city" required>
 										<option disabled>Area</option>
@@ -44,13 +44,10 @@
 										<% }; %>
 									</select>
 								</div>
-						</div>
-						</div>
-						<br>
-
-						<div class="row">	
-							<%- include('../partials/slidebar'); %>
-
+							</div>
+							<div class="col" >
+								<%- include('../partials/slidebar'); %>
+							</div>
 						</div>
 						<br>
 						<br>
@@ -74,12 +71,13 @@
 								</select> 
 							</div>
 						</div>
-					<br>
-					<br>
-					<br>
-
-							<%- include('../partials/about_me'); %>
+						<br>
+						<br>
+						<br>
+						<div class="col">
+							<div class="mb-3"><label class="form-label" for="aboutme"><strong>About me </strong><br></label><input style='border-radius: 20px !important; height: 50px;' placeholder= "Enter your bio" class="form-control aboutme" type="text" name="about_me"></div>
 						</div>
+					</div>
 					<button class="btn btn-primary btn-sm border rounded-pill float-end align-content-center" id='save' type="submit">Save</button>
 					<br>
 					<br>
@@ -114,11 +112,9 @@
 	.pcoded {
 		display: none;
 	}
-
-	/* to center the address  */
-	.mb-3{
-		margin-left: auto;
-		margin-right: auto;
+	body {
+		font-size: medium !important;
+		margin-top: 50px;
 	}
 	#save{
 		width: 20%;
